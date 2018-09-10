@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import {
   getFile
 } from 'blockstack'
+import play from '../images/play.png'
+import pause from '../images/pause.png'
 
 export default class Player extends React.Component {
 
@@ -9,11 +11,9 @@ export default class Player extends React.Component {
     super(props)
     this.state = {
       isLoading: false,
-      file: null
+      file: null,
+      playing: false
     }
-  }
-  componentDidMount() {
-    this.fetchData()
   }
 
   fetchData() {
@@ -46,16 +46,8 @@ export default class Player extends React.Component {
     }
   }
 
-  playAudio() {
-    document.getElementById("myAudio").play();
-  }
-
-  pauseAudio() {
-    document.getElementById("myAudio").pause();
-  }
-
-  getType() {
-    return 'audio/' + this.props.audio.audio.substring(this.props.audio.audio.length-3, this.props.audio.audio.length)
+  play_pause() {
+    this.setState({playing: !this.state.playing})
   }
 
   render() {
@@ -64,12 +56,10 @@ export default class Player extends React.Component {
     }
     else {
       return (
-        <span>
-
-          <audio id="myAudio" controls>
-            <source src={this.state.file} type={this.getType()} />
-            Your browser does not support the audio element.
-          </audio>
+        <span className="myAudio">
+          <img src={this.state.playing ? pause:play}
+               alt="play/pause"
+               onClick={() => this.play_pause()}/>
         </span>
       )
     }
