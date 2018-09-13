@@ -106,7 +106,7 @@ export default class Profile extends Component {
 
       putFile(path, result)
       .then(fileUrl => {
-        // console.log('uploaded: url',fileUrl)
+        console.log('uploaded: url')
       })
       .catch((e) => {
         console.error(e)
