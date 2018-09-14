@@ -24,6 +24,17 @@ export default class AudioEngine {
     this.audioContext.suspend()
   }
 
+  addtoqueue(file) {
+    this.queue.append(file)
+  }
+
+  removefromqueue(file) {
+    var index = array.indexOf(file);
+    if (index > -1) {
+      array.splice(index, 1);
+    }
+  }
+
   loadfile(file) {
     if (this.suspended) {
       this.audioContext.resume()
