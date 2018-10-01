@@ -6,7 +6,13 @@ import play from '../images/play.png'
 import pause from '../images/pause.png'
 import loading from '../images/loader.gif'
 
-import AudioEngine from '../assets/audio_engine.js'
+import {
+  aud_stopPlaying,
+  aud_pausePlaying,
+  aud_addtoqueue,
+  aud_removefromqueue,
+  aud_loadfile
+} from '../assets/audio_engine.js'
 
 export default class Player extends React.Component {
 
@@ -17,12 +23,6 @@ export default class Player extends React.Component {
       file: null,
       playing: false
     }
-    this.audeng = new AudioEngine()
-    var _this = this
-    this.audeng.source.onended = function(event) {
-      event.preventDefault()
-      _this.onend()
-    }
   }
 
   fetchData() {
@@ -32,8 +32,7 @@ export default class Player extends React.Component {
         getFile(this.props.audio.audio)
           .then((file) => {
             this.setState({file: file})
-            this.audeng.loadfile(file)
-
+            aud_loadfile(file).then(() => {this.setState({ playing: false})})
           })
           .catch((error) => {
             console.log('could not fetch audio')
@@ -47,7 +46,7 @@ export default class Player extends React.Component {
         getFile(this.props.audio.audio)
           .then((file) => {
             this.setState({file: file})
-            this.audeng.loadfile(file)
+            aud_loadfile(file).then(() => {this.setState({ playing: false})})
           })
           .catch((error) => {
             console.log('could not fetch audio')
@@ -60,31 +59,19 @@ export default class Player extends React.Component {
       }
     }
     else {
-      this.audeng.loadfile(this.state.file)
+      aud_loadfile(this.state.file).then(() => {this.setState({ playing: false})})
       this.setState({ isLoading: false,
                       playing: true})
-      var _this = this
-      this.audeng.source.onended = function(event) {
-        event.preventDefault()
-        _this.onend()
-      }
-
     }
-  }
-
-  onend() {
-    this.setState({ playing: false})
-    this.audeng.stopPlaying()
   }
 
   play_pause() {
     if (!this.state.playing) {
       this.fetchData()
-
     }
     else {
       this.setState({playing: false})
-      this.audeng.pausePlaying()
+      aud_pausePlaying()
     }
   }
 

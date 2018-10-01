@@ -94,37 +94,37 @@ export default class Profile extends Component {
       audio: audio.name
     }
 
-    posts.unshift(post)
-
     // upload audio
     let filereader = new FileReader()
 
     filereader.onload = (event) => {
       let result = event.target.result
-
       let path = audio.name// md5(result)
 
       putFile(path, result)
       .then(fileUrl => {
         console.log('uploaded: url')
       })
+      .then(() => {
+        // update list of posts on user account
+        // post options
+        const options = { encrypt: false }
+        putFile(postFileName, JSON.stringify(posts), options)
+        // update state
+        .then(() => {
+          // console.log('index updated');
+          posts.unshift(post)
+          this.setState({
+            posts: posts
+          })
+        })
+      })
       .catch((e) => {
         console.error(e)
       })
     }
-
     filereader.readAsDataURL(audio)
 
-    // upload post to user list of posts
-    const options = { encrypt: false }
-    putFile(postFileName, JSON.stringify(posts), options)
-    // update state
-      .then(() => {
-        // console.log('index updated');
-        this.setState({
-          posts: posts
-        })
-      })
   }
 
   fetchData() {
