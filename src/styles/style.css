@@ -22,6 +22,11 @@ body {
   font-weight: 400;
 }
 
+.controls {
+  margin-left: 15px;
+  cursor: pointer;
+}
+
 /* Container */
 .container {
   height: 100%;

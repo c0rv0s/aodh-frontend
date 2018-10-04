@@ -9,22 +9,43 @@ var source = audioContext.createBufferSource();
 var suspended = false
 var playfrom = 0
 var ended = 0
+var playing = false
 
-export function aud_stopPlaying() {
-    source.disconnect();
-    source.stop();
+export function song_ended() {
+  ended += 1
+}
+
+export function aud_over() {
     playfrom = 0
-    ended += 1
-    console.log('done');
+    playing = false
+    song_ended()
+    queue.shift()
+    // if (queue.length > 0) {
+    //   aud_loadfile(queue[0])
+    // }
 }
 
 export function aud_pausePlaying() {
   suspended = true
+  playing = false
   audioContext.suspend()
 }
 
 export function aud_addtoqueue(file) {
-  queue.append(file)
+  queue.push(file)
+  // promise to change player to pause
+  var o_start = ended+queue.length - 1
+  var promise = new Promise(function(resolve, reject) {
+    setInterval(function(){
+      if (ended == o_start) {
+        resolve("Stuff worked!");
+      }
+      else if (ended > o_start + 1) {
+        reject(Error("It broke"));
+      }
+    }, 100);
+  });
+  return promise
 }
 
 export function aud_removefromqueue(file) {
@@ -34,11 +55,20 @@ export function aud_removefromqueue(file) {
   }
 }
 
+export function aud_queuereplace(index, file) {
+  queue[index] = file
+}
+
 export function aud_loadfile(file) {
-  console.log('load');
+  if (playing) {
+    // stop what's currently playing
+    source.stop();
+    source.disconnect()
+  }
   if (suspended) {
     audioContext.resume()
     suspended = false
+    playing = true
   }
   else {
     source = audioContext.createBufferSource();
@@ -63,22 +93,24 @@ export function aud_loadfile(file) {
     }
     // Send the request which kicks off
     request.send();
-  }
+    playing = true
 
-  source.onended = function(event) {
-    event.preventDefault()
-    aud_stopPlaying()
+    // do the promise stuff
+    source.onended = function(event) {
+      event.preventDefault()
+      aud_over()
+    }
+    var o_ended = ended
+    var promise = new Promise(function(resolve, reject) {
+      setInterval(function(){
+        if (ended == o_ended + 1) {
+          resolve("Stuff worked!");
+        }
+        else if (ended > o_ended + 1) {
+          reject(Error("It broke"));
+        }
+      }, 100);
+    });
+    return promise
   }
-  var o_ended = ended
-  var promise = new Promise(function(resolve, reject) {
-    setInterval(function(){
-      if (ended == o_ended + 1) {
-        resolve("Stuff worked!");
-      }
-      else if (ended != o_ended) {
-        reject(Error("It broke"));
-      }
-    }, 250);
-  });
-  return promise
 }

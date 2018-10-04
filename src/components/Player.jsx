@@ -4,14 +4,16 @@ import {
 } from 'blockstack'
 import play from '../images/play.png'
 import pause from '../images/pause.png'
+import next from '../images/next.png'
 import loading from '../images/loader.gif'
 
 import {
-  aud_stopPlaying,
   aud_pausePlaying,
   aud_addtoqueue,
   aud_removefromqueue,
-  aud_loadfile
+  aud_loadfile,
+  song_ended,
+  aud_queuereplace
 } from '../assets/audio_engine.js'
 
 export default class Player extends React.Component {
@@ -27,38 +29,23 @@ export default class Player extends React.Component {
 
   fetchData() {
     if (this.state.file == null) {
-      if (this.props.local) {
-        this.setState({ isLoading: true })
-        getFile(this.props.audio.audio)
-          .then((file) => {
-            this.setState({file: file})
-            aud_loadfile(file).then(() => {this.setState({ playing: false})})
-          })
-          .catch((error) => {
-            console.log('could not fetch audio')
-          })
-          .finally(() => {
-            this.setState({ isLoading: false,
-                            playing: true})
-          })
-      } else {
-        this.setState({ isLoading: true })
-        getFile(this.props.audio.audio)
-          .then((file) => {
-            this.setState({file: file})
-            aud_loadfile(file).then(() => {this.setState({ playing: false})})
-          })
-          .catch((error) => {
-            console.log('could not fetch audio')
-          })
-          .finally(() => {
-            this.setState({ isLoading: false,
-                            playing: true})
-
-          })
-      }
+      this.setState({ isLoading: true })
+      getFile(this.props.audio.audio)
+        .then((file) => {
+          aud_queuereplace(0, file)
+          this.setState({file: file})
+          aud_loadfile(file).then(() => {this.setState({ playing: false})})
+        })
+        .catch((error) => {
+          console.log('could not fetch audio')
+        })
+        .finally(() => {
+          this.setState({ isLoading: false,
+                          playing: true})
+        })
     }
     else {
+      aud_queuereplace(0, this.state.file)
       aud_loadfile(this.state.file).then(() => {this.setState({ playing: false})})
       this.setState({ isLoading: false,
                       playing: true})
@@ -67,11 +54,34 @@ export default class Player extends React.Component {
 
   play_pause() {
     if (!this.state.playing) {
+      song_ended()
       this.fetchData()
     }
     else {
       this.setState({playing: false})
       aud_pausePlaying()
+    }
+  }
+
+  play_next() {
+    if (this.state.file == null) {
+      getFile(this.props.audio.audio)
+        .then((file) => {
+          aud_addtoqueue(file).then(() => {
+            this.setState({ playing: true})
+            aud_loadfile(this.state.file).then(() => {this.setState({ playing: false})})
+          })
+          this.setState({file: file})
+        })
+        .catch((error) => {
+          console.log('could not fetch audio')
+        })
+    }
+    else {
+      aud_addtoqueue(this.state.file).then(() => {
+        this.setState({ playing: true})
+        aud_loadfile(this.state.file).then(() => {this.setState({ playing: false})})
+      })
     }
   }
 
@@ -90,7 +100,12 @@ export default class Player extends React.Component {
         <span className="myAudio">
           <img src={this.state.playing ? pause:play}
                alt="play/pause"
+               className="controls"
                onClick={() => this.play_pause()}/>
+          <img src={next}
+              alt="play next"
+              className="controls"
+              onClick={() => this.play_next()}/>
         </span>
       )
     }
