@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import {
-  getFile
+  getFile,
+  putFile
 } from 'blockstack'
 import play from '../images/play.png'
 import pause from '../images/pause.png'
 import next from '../images/next.png'
 import loading from '../images/loader.gif'
+import more from '../images/more.png'
 
 import {
   aud_pausePlaying,
@@ -85,6 +87,14 @@ export default class Player extends React.Component {
     }
   }
 
+  delete() {
+    this.props.handleDelete(this.props.id)
+    putFile(this.props.audio.audio, JSON.stringify(""))
+    .then(() => {
+      console.log('replaced with empty file');
+    })
+  }
+
   render() {
     if (this.state.isLoading) {
       return (
@@ -106,6 +116,16 @@ export default class Player extends React.Component {
               alt="play next"
               className="controls"
               onClick={() => this.play_next()}/>
+            {this.props.local ?
+              <div className="dropdown">
+                <img src={more}
+                    alt="more options"
+                    className="controls dropbtn"/>
+                  <div className="dropdown-content">
+                  <a  onClick={() => this.delete()}>Delete</a>
+                </div>
+              </div>
+            : null}
         </span>
       )
     }

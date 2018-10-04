@@ -55,6 +55,7 @@ export default class Profile extends Component {
       isLoading: false
   	}
     this.handleAccept = this.handleAccept.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
   }
 
   componentDidMount() {
@@ -124,7 +125,17 @@ export default class Profile extends Component {
       })
     }
     filereader.readAsDataURL(audio)
+  }
 
+  handleDelete(id) {
+    const posts = this.state.posts.filter((post) => post.id !== id)
+    const options = { encrypt: false }
+    putFile(postFileName, JSON.stringify(posts), options)
+      .then(() => {
+        this.setState({
+          posts: posts
+        })
+      })
   }
 
   fetchData() {
@@ -196,6 +207,8 @@ export default class Profile extends Component {
               audio={this.state.posts[index]}
               username={this.state.username}
               local={this.isLocal}
+              id={id}
+              handleDelete={this.handleDelete}
             />
     }
   }

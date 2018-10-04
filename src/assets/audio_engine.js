@@ -20,9 +20,6 @@ export function aud_over() {
     playing = false
     song_ended()
     queue.shift()
-    // if (queue.length > 0) {
-    //   aud_loadfile(queue[0])
-    // }
 }
 
 export function aud_pausePlaying() {
