@@ -116,7 +116,7 @@ export default class Player extends React.Component {
               alt="play next"
               className="controls"
               onClick={() => this.play_next()}/>
-            {this.props.local ?
+            {this.props.local &&
               <div className="dropdown">
                 <img src={more}
                     alt="more options"
@@ -125,7 +125,7 @@ export default class Player extends React.Component {
                   <a  onClick={() => this.delete()}>Delete</a>
                 </div>
               </div>
-            : null}
+            }
         </span>
       )
     }

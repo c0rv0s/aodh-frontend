@@ -1,10 +1,15 @@
 /* Globals */
 a {
-  color: #E5E5E5;
+  color: #FF40FF;
+}
+a.logout {
+  color: #8F8F8F
 }
 a:focus,
 a:hover {
-
+  cursor: pointer;
+  color: #FF408B;
+  text-decoration: none;
 }
 html,
 body {

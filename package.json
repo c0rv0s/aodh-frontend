@@ -7,14 +7,6 @@
     "start": "webpack-dev-server",
     "build": "webpack -p"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/blockstack/hello-blockstack.git"
-  },
-  "bugs": {
-    "url": "https://github.com/blockstack/hello-blockstack/issues"
-  },
-  "homepage": "https://github.com/blockstack/hello-blockstack#readme",
   "author": "",
   "license": "MIT",
   "devDependencies": {

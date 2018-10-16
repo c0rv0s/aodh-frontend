@@ -52,14 +52,19 @@ export default class Profile extends Component {
       audio: "",
       posts: [],
       postIndex: 0,
-      isLoading: false
+      isLoading: false,
+      follows: []
   	}
     this.handleAccept = this.handleAccept.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
+    this.handleFollow = this.handleFollow.bind(this)
   }
 
   componentDidMount() {
+    // Posts
     this.fetchData()
+    // follow or not
+    this.fetchFollows()
   }
 
   handleNewPostChange(event) {
@@ -81,6 +86,20 @@ export default class Profile extends Component {
       description: "",
       audio: ""
     })
+  }
+
+  fetchFollows() {
+    if (!this.isLocal()) {
+      const options = { decrypt: false}
+      getFile("follows.json", options)
+        .then((file) => {
+          var follows = JSON.parse(file || '[]')
+          this.setState({follows: follows})
+        })
+        .catch((error) => {
+          console.log('could not fetch follow info')
+        })
+    }
   }
 
   saveNewPost() {
@@ -190,7 +209,28 @@ export default class Profile extends Component {
   }
 
   isLocal() {
-    return this.props.match.params.username ? false : true
+    return this.props.match.params.username == loadUserData().username ? true : false
+  }
+
+  handleFollow(event) {
+    event.preventDefault()
+    var follows = this.state.follows
+    if (follows.includes(this.props.match.params.username)) {
+      follows.splice(follows.indexOf(this.props.match.params.username))
+    }
+    else {
+      follows.push(this.props.match.params.username)
+    }
+    const options = { encrypt: false }
+
+    putFile("follows.json", JSON.stringify(follows), options)
+    // update state
+    .then(() => {
+      console.log("follow saved");
+      this.setState({
+        follows: follows
+      })
+    })
   }
 
   showPlayer(id) {
@@ -205,8 +245,7 @@ export default class Profile extends Component {
       }
       return <Player
               audio={this.state.posts[index]}
-              username={this.state.username}
-              local={this.isLocal}
+              local={this.isLocal()}
               id={id}
               handleDelete={this.handleDelete}
             />
@@ -239,7 +278,7 @@ export default class Profile extends Component {
                   {this.isLocal() &&
                     <span>
                       {'\u00A0'}{'\u00A0'}
-                      <a onClick={ handleSignOut.bind(this) }>(Logout)</a>
+                      <a className="logout" onClick={ handleSignOut.bind(this) }>(Logout)</a>
                     </span>
                   }
                 </div>
@@ -268,15 +307,23 @@ export default class Profile extends Component {
                 </div>
               </div>
             }
+            {!this.isLocal() &&
+              <button
+                className="btn btn-primary btn-lg"
+                onClick={e => this.handleFollow(e)}
+              >
+                {this.state.follows.includes(this.props.match.params.username)? "Following" : "Follow"}
+              </button>
+            }
             <div className="col-md-12 posts">
-            {this.state.isLoading && <span>Loading...</span>}
-            {this.state.posts.map((post) => (
-                <div className="post" key={post.id} >
-                  {post.text}
-                  {this.showPlayer(post.id)}
-                </div>
-                )
-            )}
+              {this.state.isLoading && <span>Loading...</span>}
+              {this.state.posts.map((post) => (
+                  <div className="post" key={post.id} >
+                    {post.text}
+                    {this.showPlayer(post.id)}
+                  </div>
+                  )
+              )}
             </div>
           </div>
         </div>

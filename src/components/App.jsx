@@ -1,5 +1,6 @@
 import React, { Component, Link } from 'react'
 import Profile from './Profile.jsx'
+import Front from './Front.jsx'
 import Signin from './Signin.jsx'
 import { Switch, Route } from 'react-router-dom'
 import {
@@ -36,8 +37,14 @@ export default class App extends Component {
             <Signin handleSignIn={ this.handleSignIn } />
             :
             <Switch>
+              <Route exact
+                path='/'
+                render={
+                  routeProps => <Front {...routeProps} />
+                }
+              />
               <Route
-                path='/:username?'
+                path='/:username'
                 render={
                   routeProps => <Profile handleSignOut={ this.handleSignOut } {...routeProps} />
                 }
