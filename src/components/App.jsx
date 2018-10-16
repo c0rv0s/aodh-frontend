@@ -9,6 +9,7 @@ import {
   redirectToSignIn,
   handlePendingSignIn,
   signUserOut,
+  loadUserData
 } from 'blockstack'
 
 export default class App extends Component {
@@ -32,6 +33,10 @@ export default class App extends Component {
   render() {
     return (
       <div className="site-wrapper">
+        <div className="navbar">
+          <a href={loadUserData().username}><b>My Profile</b></a>
+        </div>
+
         <div className="site-wrapper-inner">
           { !isUserSignedIn() ?
             <Signin handleSignIn={ this.handleSignIn } />
