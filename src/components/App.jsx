@@ -34,6 +34,7 @@ export default class App extends Component {
     return (
       <div className="site-wrapper">
         <div className="navbar">
+          <a href="/"><b>Home</b></a>
           <a href={loadUserData().username}><b>My Profile</b></a>
         </div>
 
