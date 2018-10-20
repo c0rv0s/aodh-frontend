@@ -41,3 +41,6 @@ jspm_packages
 
 #node modules
 node_modules/
+
+#public build
+public/
