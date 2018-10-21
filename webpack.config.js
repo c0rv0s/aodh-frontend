@@ -5,7 +5,12 @@ const webpack = require('webpack');
 // this will allow for the authRequest to see the file at www.example.com/manifest.json
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ManifestAssetPlugin = new CopyWebpackPlugin([ { from: 'src/assets/manifest.json', to: 'manifest.json' } ]);
-const IconAssetPlugin = new CopyWebpackPlugin([ { from: 'src/images/icon-192x192.png', to: 'icon-192x192.png' } ]);
+const IconAssetPlugin = new CopyWebpackPlugin([ { from: 'src/images/icon-192x192.png', to: 'images/icon-192x192.png' } ]);
+const FavIconAssetPlugin = new CopyWebpackPlugin([ { from: 'src/images/favicon.ico', to: 'images/favicon.ico' } ]);
+const MoreAssetPlugin = new CopyWebpackPlugin([ { from: 'src/images/more.png', to: 'images/more.png' } ]);
+const PlayAssetPlugin = new CopyWebpackPlugin([ { from: 'src/images/play.png', to: 'images/play.png' } ]);
+const NextAssetPlugin = new CopyWebpackPlugin([ { from: 'src/images/next.png', to: 'images/next.png' } ]);
+const PauseAssetPlugin = new CopyWebpackPlugin([ { from: 'src/images/pause.png', to: 'images/pause.png' } ]);
 const UglifyEsPlugin = require('uglify-es-webpack-plugin');
 const UglifyEsPluginConfig = new UglifyEsPlugin({
 	mangle: {
