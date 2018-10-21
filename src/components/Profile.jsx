@@ -270,7 +270,7 @@ export default class Profile extends Component {
                     <span id="heading-name">{ person.name() ? person.name()
                       : 'Nameless Person' }</span>
                   </h1>
-                  <span>{username}</span>
+                  <span>{username.split('.')[0]}</span>
                   {this.isLocal() &&
                     <span>
                       {'\u00A0'}{'\u00A0'}

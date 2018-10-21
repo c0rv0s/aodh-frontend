@@ -6,7 +6,6 @@ import {
 import play from '../images/play.png'
 import pause from '../images/pause.png'
 import next from '../images/next.png'
-import loading from '../images/loader.gif'
 import more from '../images/more.png'
 
 import {
@@ -99,15 +98,14 @@ export default class Player extends React.Component {
     if (this.state.isLoading) {
       return (
         <span className="myAudio">
-          <img src={loading}
-               alt="loading..."
-               height="64" width="64" />
-           </span>
+          <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        </span>
       )
     }
     else {
       return (
         <span className="myAudio">
+
           <img src={this.state.playing ? pause:play}
                alt="play/pause"
                className="controls"
