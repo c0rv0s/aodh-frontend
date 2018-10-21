@@ -19,15 +19,14 @@ export default class App extends Component {
   }
 
   handleSignIn(e) {
-    e.preventDefault()
-    redirectToSignIn()
+    e.preventDefault();
     const origin = window.location.origin
     redirectToSignIn(origin, origin + '/manifest.json', ['store_write', 'publish_data'])
   }
 
   handleSignOut(e) {
-    e.preventDefault()
-    signUserOut(window.location.origin)
+    e.preventDefault();
+    signUserOut(window.location.origin);
   }
 
   render() {
@@ -35,7 +34,9 @@ export default class App extends Component {
       <div className="site-wrapper">
         <div className="navbar">
           <a href="/"><b>Home</b></a>
-          <a href={loadUserData().username}><b>My Profile</b></a>
+            { !isUserSignedIn() ? null :
+              <a href={loadUserData().username}><b>My Profile</b></a>
+            }
         </div>
 
         <div className="site-wrapper-inner">
