@@ -6,6 +6,23 @@ const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ManifestAssetPlugin = new CopyWebpackPlugin([ { from: 'src/assets/manifest.json', to: 'manifest.json' } ]);
 const IconAssetPlugin = new CopyWebpackPlugin([ { from: 'src/images/icon-192x192.png', to: 'icon-192x192.png' } ]);
+const UglifyEsPlugin = require('uglify-es-webpack-plugin');
+const UglifyEsPluginConfig = new UglifyEsPlugin({
+	mangle: {
+		reserved: [
+                	'Buffer',
+                        'BigInteger',
+                        'Point',
+                        'ECPubKey',
+                        'ECKey',
+                        'sha512_asm',
+                        'asm',
+                        'ECPair',
+                        'HDNode'
+                ]
+        }
+})
+
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
@@ -41,8 +58,13 @@ module.exports = {
         test: /\.(eot|woff|woff2|ttf|svg|png|jpe?g|gif)(\?\S*)?$/,
         loader: 'file-loader',
       },
-      { test: /\.css$/, loader: 'style-loader!css-loader' },
+      { test: /\.css$/, loader: 'style-loader!css-loader' }
     ]
   },
-  plugins: [HtmlWebpackPluginConfig, ManifestAssetPlugin, IconAssetPlugin]
+  plugins: [
+	HtmlWebpackPluginConfig,
+	ManifestAssetPlugin,
+	IconAssetPlugin,
+	UglifyEsPluginConfig
+ ]
 }
