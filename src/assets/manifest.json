@@ -1,5 +1,6 @@
 {
   "name": "Aodh",
+  "start_url": "aodh.xyz",
   "description": "proof of concept decentralized music streaming",
   "icons": [{
     "src": "http://aodh.xyz/images/icon-192x192.png",
