@@ -53,7 +53,8 @@ export default class Profile extends Component {
       posts: [],
       postIndex: 0,
       isLoading: false,
-      follows: []
+      follows: [],
+      isUploading: false
   	}
     this.handleAccept = this.handleAccept.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
@@ -84,7 +85,8 @@ export default class Profile extends Component {
     this.saveNewPost()
     this.setState({
       description: "",
-      audio: ""
+      audio: "",
+      isUploading: true
     })
   }
 
@@ -114,6 +116,7 @@ export default class Profile extends Component {
       audio: audio.name
     }
 
+
     // upload audio
     let filereader = new FileReader()
 
@@ -123,19 +126,18 @@ export default class Profile extends Component {
 
       putFile(path, result)
       .then(fileUrl => {
-        console.log('uploaded: url')
-      })
-      .then(() => {
+        console.log('uploaded: audio')
         // update list of posts on user account
         // post options
         const options = { encrypt: false }
+        posts.unshift(post)
         putFile(postFileName, JSON.stringify(posts), options)
         // update state
         .then(() => {
-          // console.log('index updated');
-          posts.unshift(post)
+          console.log('index updated');
           this.setState({
-            posts: posts
+            posts: posts,
+            isUploading: false
           })
         })
       })
@@ -152,7 +154,8 @@ export default class Profile extends Component {
     putFile(postFileName, JSON.stringify(posts), options)
       .then(() => {
         this.setState({
-          posts: posts
+          posts: posts,
+          postIndex: posts.length,
         })
       })
   }
@@ -233,20 +236,13 @@ export default class Profile extends Component {
     })
   }
 
-  showPlayer(id) {
+  showPlayer(i) {
     if (this.state.isLoading) return null
     else {
-      var index = 0
-      for (var i=0; i < this.state.posts.length; i++) {
-        if (this.state.posts[i].id == id) {
-          index = i
-          break
-        }
-      }
       return <Player
-              audio={this.state.posts[index]}
+              audio={this.state.posts[i]}
               local={this.isLocal()}
-              id={id}
+              id={i}
               handleDelete={this.handleDelete}
             />
     }
@@ -284,7 +280,10 @@ export default class Profile extends Component {
                 </div>
               </div>
             </div>
-            {this.isLocal() &&
+            {this.state.isUploading &&
+            <div className="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+            }
+            {this.isLocal() && !this.state.isUploading &&
               <div className="new-post">
                 <div className="col-md-12">
                   <textarea className="input-post"
@@ -317,10 +316,10 @@ export default class Profile extends Component {
             }
             <div className="col-md-12 posts">
               {this.state.isLoading && <span>Loading...</span>}
-              {this.state.posts.map((post) => (
-                  <div className="post" key={post.id} >
+              {this.state.posts.map((post, i) => (
+                  <div className="post" key={i} >
                     {post.text}
-                    {this.showPlayer(post.id)}
+                    {this.showPlayer(i)}
                   </div>
                   )
               )}

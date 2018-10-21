@@ -78,23 +78,15 @@ export default class Front extends Component {
         })
       }
     }, 5);
-
   }
 
-  showPlayer(id) {
+  showPlayer(i) {
     if (this.state.isLoading) return null
     else {
-      var index = 0
-      for (var i=0; i < this.state.posts.length; i++) {
-        if (this.state.posts[i].id == id) {
-          index = i
-          break
-        }
-      }
       return <Player
-              audio={this.state.posts[index]}
+              audio={this.state.posts[i]}
               local={false}
-              id={id}
+              id={i}
               handleDelete={this.handleDelete}
             />
     }
@@ -112,11 +104,11 @@ export default class Front extends Component {
               {!this.state.isLoading && this.state.follows.length == 0 &&
               <h3>You aren't following anyone yet!</h3>}
               {this.state.posts.map((post, i) => (
-                  <div className="post" key={post.id} >
+                  <div className="post" key={i} >
                     {post.text}
-                    {this.showPlayer(post.id)}<br/>
+                    {this.showPlayer(i)}<br/>
                     {"by "}
-                    <a href={this.state.follows[i]}>{this.state.follows[i]}</a>
+                    <a href={this.state.follows[i]}>{this.state.follows[i].split('.')[0]}</a>
                   </div>
                   )
               )}
