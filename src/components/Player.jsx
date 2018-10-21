@@ -98,7 +98,7 @@ export default class Player extends React.Component {
     if (this.state.isLoading) {
       return (
         <span className="myAudio">
-          <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+          <div className="lds-ellipsis"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
         </span>
       )
     }
