@@ -3,10 +3,10 @@ import {
   getFile,
   putFile
 } from 'blockstack'
-import play from 'images/play.png'
-import pause from 'images/pause.png'
-import next from 'images/next.png'
-import more from 'images/more.png'
+import play from '../images/play.png'
+import pause from '../images/pause.png'
+import next from '../images/next.png'
+import more from '../images/more.png'
 
 import {
   aud_pausePlaying,

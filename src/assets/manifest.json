@@ -1,6 +1,6 @@
 {
   "name": "Aodh",
-  "start_url": "localhost:8080",
+  "start_url": "aodh.xyz",
   "description": "proof of concept decentralized music streaming",
   "icons": [{
     "src": "images/icon-192x192.png",
