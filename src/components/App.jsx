@@ -16,13 +16,12 @@ export default class App extends Component {
 
   constructor(props) {
   	super(props)
-    console.log('origin',origin);
   }
 
   handleSignIn(e) {
     e.preventDefault();
     const origin = window.location.origin
-    redirectToSignIn(origin, 'https://aodh.xyz/manifest.json', ['store_write', 'publish_data'])
+    redirectToSignIn(origin, origin + '/manifest.json', ['store_write', 'publish_data'])
   }
 
   handleSignOut(e) {
