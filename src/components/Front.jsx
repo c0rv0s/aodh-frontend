@@ -46,7 +46,7 @@ export default class Front extends Component {
 
   fetchData() {
     // fetch post list from every follow
-    // compile a list by randomly sorting the first post in each uesr's list
+    // compile a list by date sorting the first post in each uesr's list
     // set componenet state posts to this list
     var counter = 0
     var posts = this.state.posts
