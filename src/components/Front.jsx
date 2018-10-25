@@ -41,6 +41,7 @@ export default class Front extends Component {
       })
       .catch((error) => {
         console.log('could not fetch follow info')
+        this.setState({isLoading: false})
       })
   }
 
@@ -55,8 +56,10 @@ export default class Front extends Component {
       getFile(postFileName, options)
         .then((file) => {
           var userposts = JSON.parse(file || '[]')
-          posts.push(userposts[0])
-          counter += 1
+          if (userposts.length > 0) {
+            posts.push(userposts[0])
+            counter += 1
+          }
         })
         .catch((error) => {
           console.log('could not fetch posts')
