@@ -58,14 +58,16 @@ export default class Front extends Component {
           var userposts = JSON.parse(file || '[]')
           if (userposts.length > 0) {
             posts.push(userposts[0])
-            counter += 1
           }
         })
         .catch((error) => {
           console.log('could not fetch posts')
         })
+        .finally(() => {
+          counter += 1
+        })
     })
-    setInterval(() => {
+    var sortInt = setInterval(() => {
       if (counter == this.state.follows.length) {
         if (posts.length > 0){
           posts.sort(function(a, b){
@@ -81,6 +83,7 @@ export default class Front extends Component {
           posts: posts,
           isLoading: false
         })
+        clearInterval(sortInt)
       }
     }, 5);
   }
