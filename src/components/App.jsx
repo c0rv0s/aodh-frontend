@@ -44,14 +44,14 @@ export default class App extends Component {
             <Signin handleSignIn={ this.handleSignIn } />
             :
             <Switch>
-              <Route exact
-                path='/'
+              <Route
+                exact path='/'
                 render={
                   routeProps => <Front {...routeProps} />
                 }
               />
               <Route
-                path='/:username?'
+                path='/:username'
                 render={
                   routeProps => <Profile handleSignOut={ this.handleSignOut } {...routeProps} />
                 }
