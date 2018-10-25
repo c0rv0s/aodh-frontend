@@ -111,6 +111,9 @@ export default class Front extends Component {
               {this.state.isLoading && <span>Loading...</span>}
               {!this.state.isLoading && this.state.follows.length == 0 &&
               <h3>You aren't following anyone yet!</h3>}
+              {!this.state.isLoading && this.state.follows.length > 0 &&
+                this.state.posts.length == 0 &&
+                <h3>Your follows haven't posted anything yet!</h3>}
               {this.state.posts.map((post, i) => (
                   <div className="post" key={i} >
                     {post.text}

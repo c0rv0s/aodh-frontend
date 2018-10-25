@@ -51,7 +51,7 @@ export default class App extends Component {
                 }
               />
               <Route
-                path='/:username'
+                path='/:username?'
                 render={
                   routeProps => <Profile handleSignOut={ this.handleSignOut } {...routeProps} />
                 }
