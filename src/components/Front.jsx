@@ -67,14 +67,16 @@ export default class Front extends Component {
     })
     setInterval(() => {
       if (counter == this.state.follows.length) {
-        posts.sort(function(a, b){
-            var keyA = new Date(a.created_at),
-                keyB = new Date(b.created_at);
-            // Compare the 2 dates
-            if(keyA < keyB) return -1;
-            if(keyA > keyB) return 1;
-            return 0;
-        });
+        if (posts.length > 0){
+          posts.sort(function(a, b){
+              var keyA = new Date(a.created_at),
+                  keyB = new Date(b.created_at);
+              // Compare the 2 dates
+              if(keyA < keyB) return -1;
+              if(keyA > keyB) return 1;
+              return 0;
+          });
+        }
         this.setState({
           posts: posts,
           isLoading: false
