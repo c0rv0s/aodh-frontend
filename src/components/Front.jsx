@@ -108,7 +108,7 @@ export default class Front extends Component {
         <div className="row">
           <div className="col-md-offset-3 col-md-6">
             <div className="col-md-12 posts">
-              {this.state.isLoading && <span>Loading...</span>}
+              {this.state.isLoading && <div className="lds-circle"></div>}
               {!this.state.isLoading && this.state.follows.length == 0 &&
               <h3>You aren't following anyone yet!</h3>}
               {!this.state.isLoading && this.state.follows.length > 0 &&
