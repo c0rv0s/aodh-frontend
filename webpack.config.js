@@ -27,12 +27,6 @@ const UglifyEsPluginConfig = new UglifyEsPlugin({
         }
 })
 
-const prodPlugin = new webpack.DefinePlugin({
-    'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-    },
-})
-
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: './src/index.html',
@@ -75,6 +69,6 @@ module.exports = {
 	ManifestAssetPlugin,
 	IconAssetPlugin,
 	UglifyEsPluginConfig,
-	prodPlugin,
+	
  ]
 }
