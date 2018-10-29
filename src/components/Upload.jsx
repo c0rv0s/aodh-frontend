@@ -157,7 +157,7 @@ export default class Upload extends Component {
               <div className="new-post">
                 <div className="col-md-12">
                   <div className="input-wrapper">
-                    <input type="text" placeholder="title" onChange={e => this.handleNewTitleChange(e)}/>
+                    <input type="text" autofocus="autofocus" placeholder="title" onChange={e => this.handleNewTitleChange(e)}/>
                   </div>
                 <br />
                   <textarea className="input-post"
