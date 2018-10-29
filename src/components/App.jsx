@@ -2,6 +2,7 @@ import React, { Component, Link } from 'react'
 import Profile from './Profile.jsx'
 import Front from './Front.jsx'
 import Signin from './Signin.jsx'
+import Upload from './Upload.jsx'
 import { Switch, Route } from 'react-router-dom'
 import {
   isSignInPending,
@@ -33,10 +34,17 @@ export default class App extends Component {
     return (
       <div className="site-wrapper">
         <div className="navbar">
-          <a href="/"><b>Home</b></a>
+          <span className="left">
+            <a href="/"><b>Home</b></a>
             { !isUserSignedIn() ? null :
               <a href={loadUserData().username}><b>My Profile</b></a>
             }
+          </span>
+
+          <span className="right">
+            <a href="/upload"><b>Upload</b></a>
+          </span>
+
         </div>
 
         <div className="site-wrapper-inner">
@@ -48,6 +56,12 @@ export default class App extends Component {
                 exact path='/'
                 render={
                   routeProps => <Front {...routeProps} />
+                }
+              />
+              <Route
+                exact path='/upload'
+                render={
+                  routeProps => <Upload {...routeProps} />
                 }
               />
               <Route

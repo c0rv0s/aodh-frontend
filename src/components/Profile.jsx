@@ -8,7 +8,6 @@ import {
   lookupProfile
 } from 'blockstack'
 
-import Accept from './Accept.jsx'
 import Player from './Player.jsx'
 
 const avatarFallbackImage = 'https://s3.amazonaws.com/onename/avatar-placeholder.png'
@@ -56,7 +55,6 @@ export default class Profile extends Component {
       follows: [],
       isUploading: false
   	}
-    this.handleAccept = this.handleAccept.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
     this.handleFollow = this.handleFollow.bind(this)
   }
@@ -74,22 +72,6 @@ export default class Profile extends Component {
     })
   }
 
-  handleAccept(accepted) {
-    this.setState({
-      audio: accepted[accepted.length - 1]
-    })
-  }
-
-  handleNewPostSubmit(event) {
-    event.preventDefault()
-    this.saveNewPost()
-    this.setState({
-      description: "",
-      audio: "",
-      isUploading: true
-    })
-  }
-
   fetchFollows() {
     if (!this.isLocal()) {
       const options = { decrypt: false}
@@ -104,52 +86,9 @@ export default class Profile extends Component {
     }
   }
 
-  saveNewPost() {
-    let postText = this.state.description
-    let audio = this.state.audio
-    let posts = this.state.posts
-
-    let post = {
-      id: this.state.postIndex++,
-      text: postText.trim(),
-      created_at: Date.now(),
-      audio: audio.name
-    }
-
-
-    // upload audio
-    let filereader = new FileReader()
-
-    filereader.onload = (event) => {
-      let result = event.target.result
-      let path = audio.name// md5(result)
-
-      putFile(path, result)
-      .then(fileUrl => {
-        console.log('uploaded: audio')
-        // update list of posts on user account
-        // post options
-        const options = { encrypt: false }
-        posts.unshift(post)
-        putFile(postFileName, JSON.stringify(posts), options)
-        // update state
-        .then(() => {
-          console.log('index updated');
-          this.setState({
-            posts: posts,
-            isUploading: false
-          })
-        })
-      })
-      .catch((e) => {
-        console.error(e)
-      })
-    }
-    filereader.readAsDataURL(audio)
-  }
-
   handleDelete(id) {
-    const posts = this.state.posts.filter((post) => post.id !== id)
+    const posts = this.state.posts
+    posts.splice(id, 1);
     const options = { encrypt: false }
     putFile(postFileName, JSON.stringify(posts), options)
       .then(() => {
@@ -280,35 +219,6 @@ export default class Profile extends Component {
                 </div>
               </div>
             </div>
-            {this.state.isUploading &&
-              <div>
-            <div className="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-            <p>Please don't navigate away or refresh the page until the upload is complete</p>
-            </div>
-          }
-            {this.isLocal() && !this.state.isUploading &&
-              <div className="new-post">
-                <div className="col-md-12">
-                  <textarea className="input-post"
-                    value={this.state.description}
-                    onChange={e => this.handleNewPostChange(e)}
-                    placeholder="Track Title/Description"
-                  />
-                </div>
-                {'\u00A0'}
-                <Accept
-                  onAccept={this.handleAccept}
-                />
-                <div className="col-md-12 text-right">
-                  <button
-                    className="btn btn-primary btn-lg"
-                    onClick={e => this.handleNewPostSubmit(e)}
-                  >
-                    Submit
-                  </button>
-                </div>
-              </div>
-            }
             {!this.isLocal() &&
               <button
                 className="btn btn-primary btn-lg"
@@ -321,7 +231,7 @@ export default class Profile extends Component {
               {this.state.isLoading && <span>Loading...</span>}
               {this.state.posts.map((post, i) => (
                   <div className="post" key={i} >
-                    {post.text}
+                    {post.title}
                     {this.showPlayer(i)}
                   </div>
                   )

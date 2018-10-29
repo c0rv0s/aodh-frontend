@@ -116,7 +116,7 @@ export default class Front extends Component {
                 <h3>Your follows haven't posted anything yet!</h3>}
               {this.state.posts.map((post, i) => (
                   <div className="post" key={i} >
-                    {post.text}
+                    {post.title}
                     {this.showPlayer(i)}<br/>
                     {"by "}
                     <a href={this.state.follows[i]}>{this.state.follows[i].split('.')[0]}</a>
