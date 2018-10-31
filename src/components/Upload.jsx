@@ -18,6 +18,7 @@ export default class Upload extends Component {
       description: "",
       title: "",
       audio: "",
+      tags: "",
       posts: [],
       postIndex: 0,
       isUploading: false,
@@ -64,6 +65,12 @@ export default class Upload extends Component {
     })
   }
 
+  handleNewTagChange(event) {
+    this.setState({
+      tags: event.target.value
+    })
+  }
+
   handleAccept(accepted) {
     this.setState({
       audio: accepted[accepted.length - 1]
@@ -80,6 +87,8 @@ export default class Upload extends Component {
       this.setState({
         description: "",
         audio: "",
+        title: "",
+        tags: "",
         isUploading: true
       })
     }
@@ -90,15 +99,16 @@ export default class Upload extends Component {
     let audio = this.state.audio
     let posts = this.state.posts
     let title = this.state.title
-
+    let tags = this.state.tags
     let post = {
       id: this.state.postIndex++,
       title: title,
       text: postText.trim(),
+      tags: tags.replace(/, /gi, ',').split(','),
       created_at: Date.now(),
       audio: audio.name
     }
-
+    console.log(post.tags);
     // upload audio
     let filereader = new FileReader()
 
@@ -157,13 +167,18 @@ export default class Upload extends Component {
               <div className="new-post">
                 <div className="col-md-12">
                   <div className="input-wrapper">
-                    <input type="text" autofocus="autofocus" placeholder="title" onChange={e => this.handleNewTitleChange(e)}/>
+                    <input type="text" autoFocus placeholder="title" onChange={e => this.handleNewTitleChange(e)}/>
                   </div>
                 <br />
                   <textarea className="input-post"
                     value={this.state.description}
                     onChange={e => this.handleNewPostChange(e)}
                     placeholder="Description"
+                  />
+                <textarea className="input-tags"
+                    value={this.state.tags}
+                    onChange={e => this.handleNewTagChange(e)}
+                    placeholder="Tags (seperate with commas)"
                   />
                 </div>
                 {'\u00A0'}
