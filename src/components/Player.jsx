@@ -24,7 +24,8 @@ export default class Player extends React.Component {
     this.state = {
       isLoading: false,
       file: null,
-      playing: false
+      playing: false,
+      saved: this.props.saved
     }
   }
 
@@ -94,40 +95,55 @@ export default class Player extends React.Component {
     })
   }
 
-  render() {
-    if (this.state.isLoading) {
-      return (
-        <span className="myAudio">
-          <div className="lds-ellipsis"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-        </span>
-      )
-    }
-    else {
-      return (
-        <span className="myAudio">
-
-          <img src={this.state.playing ? pause:play}
-               alt="play/pause"
-               className="controls"
-               onClick={() => this.play_pause()}/>
-          <img src={next}
-              alt="play next"
-              className="controls"
-              onClick={() => this.play_next()}/>
-            {this.props.local &&
-              <div className="dropdown">
-                <img src={more}
-                    alt="more options"
-                    className="controls dropbtn"/>
-                  <div className="dropdown-content">
-                  <a  onClick={() => this.delete()}>Delete</a>
-                </div>
-              </div>
-            }
-        </span>
-      )
-    }
+  save() {
+    this.props.handleSave(this.props.id)
+    if (!this.props.always)
+      this.setState({saved: !this.state.saved})
   }
+
+  render() {
+      return (
+        <span>
+          <span>
+            <input type='button'
+                   className="save-button"
+                   onClick={() => this.save()}
+                   value={this.state.saved? "\u2713" : "+"}/>
+            {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+            {this.props.audio.title}
+          </span>
+          {this.state.isLoading &&
+              <span className="myAudio">
+                <div className="lds-ellipsis"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+              </span>
+          }
+          {!this.state.isLoading &&
+            <span className="myAudio">
+
+              <img src={this.state.playing ? pause:play}
+                   alt="play/pause"
+                   className="controls"
+                   onClick={() => this.play_pause()}/>
+              <img src={next}
+                  alt="play next"
+                  title="Add to queue"
+                  className="controls"
+                  onClick={() => this.play_next()}/>
+                {this.props.local &&
+                  <div className="dropdown">
+                    <img src={more}
+                        alt="more options"
+                        className="controls dropbtn"/>
+                      <div className="dropdown-content">
+                      <a  onClick={() => this.delete()}>Delete</a>
+                    </div>
+                  </div>
+                }
+            </span>
+          }
+        </span>
+      )
+    }
 
 
 }

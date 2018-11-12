@@ -136,7 +136,11 @@ export default class Upload extends Component {
         })
       })
       .catch((e) => {
+        this.setState({
+          isUploading: false,
+        })
         console.error(e)
+        alert("Sorry, something didn't work out")
       })
     }
     filereader.readAsDataURL(audio)
@@ -167,15 +171,18 @@ export default class Upload extends Component {
               <div className="new-post">
                 <div className="col-md-12">
                   <div className="input-wrapper">
-                    <input type="text" autoFocus placeholder="title" onChange={e => this.handleNewTitleChange(e)}/>
+                    <input className="upload-ting input-big"
+                           type="text" autoFocus
+                           placeholder="title"
+                           onChange={e => this.handleNewTitleChange(e)}/>
                   </div>
                 <br />
-                  <textarea className="input-post"
+                  <textarea className="upload-ting input-post"
                     value={this.state.description}
                     onChange={e => this.handleNewPostChange(e)}
                     placeholder="Description"
                   />
-                <textarea className="input-tags"
+                <textarea className="upload-ting input-tags"
                     value={this.state.tags}
                     onChange={e => this.handleNewTagChange(e)}
                     placeholder="Tags (seperate with commas)"

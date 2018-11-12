@@ -3,6 +3,7 @@ import Profile from './Profile.jsx'
 import Front from './Front.jsx'
 import Signin from './Signin.jsx'
 import Upload from './Upload.jsx'
+import Saved from './Saved.jsx'
 import { Switch, Route } from 'react-router-dom'
 import {
   isSignInPending,
@@ -42,6 +43,13 @@ export default class App extends Component {
           </span>
 
           <span className="right">
+            <div className="dropdown">
+                <b>Collection</b>
+                  <div className="dropdown-content">
+                  <a  href="/saved">Saved</a>
+                  <a  href="/playlists">Playlists</a>
+                </div>
+            </div>
             <a href="/upload"><b>Upload</b></a>
           </span>
 
@@ -62,6 +70,12 @@ export default class App extends Component {
                 exact path='/upload'
                 render={
                   routeProps => <Upload {...routeProps} />
+                }
+              />
+              <Route
+                exact path='/saved'
+                render={
+                  routeProps => <Saved {...routeProps} />
                 }
               />
               <Route

@@ -23,11 +23,29 @@ export default class Front extends Component {
       posts: [],
       isLoading: true
   	}
+    this.handleSave = this.handleSave.bind(this)
+    this.isSaved = this.isSaved.bind(this)
   }
 
   componentDidMount() {
+    // get saved items
+    this.fetchSaved()
     // follow or not
     this.fetchFollows()
+  }
+
+  handleDelete(){console.log("can't delete from front");}
+
+  fetchSaved() {
+    const options = { decrypt: false}
+    getFile("saved.json", options)
+      .then((file) => {
+        var saved = JSON.parse(file || '[]')
+        this.setState({saved: saved})
+      })
+      .catch((error) => {
+        console.log('could not fetch follow info')
+      })
   }
 
   fetchFollows() {
@@ -88,6 +106,38 @@ export default class Front extends Component {
     }, 5);
   }
 
+  handleSave(id) {
+    var saved = this.state.saved
+    const posts = this.state.posts
+    if (this.isSaved(id))
+      for(var j=0; j<saved.length; j++) {
+        if (saved[j].audio == posts[id].audio &&
+            saved[j].created_at == posts[id].created_at)
+              saved.splice(j, 1);
+      }
+
+    else
+      saved.unshift(this.state.posts[id])
+    const options = { encrypt: false }
+    putFile("saved.json", JSON.stringify(saved), options)
+      .then(() => {
+        this.setState({
+          saved: saved
+        })
+      })
+  }
+
+  isSaved(i) {
+    const saved = this.state.saved
+    const posts = this.state.posts
+    for(var j=0; j<saved.length; j++) {
+      if (saved[j].audio == posts[i].audio &&
+          saved[j].created_at == posts[i].created_at)
+            return true
+    }
+    return false
+  }
+
   showPlayer(i) {
     if (this.state.isLoading) return null
     else {
@@ -96,6 +146,9 @@ export default class Front extends Component {
               local={false}
               id={i}
               handleDelete={this.handleDelete}
+              saved={this.isSaved(i)}
+              always={false}
+              handleSave={this.handleSave}
             />
     }
   }
@@ -116,7 +169,6 @@ export default class Front extends Component {
                 <h3>Your follows haven't posted anything yet!</h3>}
               {this.state.posts.map((post, i) => (
                   <div className="post" key={i} >
-                    {post.title}
                     {this.showPlayer(i)}<br/>
                     {"by "}
                     <a href={this.state.follows[i]}>{this.state.follows[i].split('.')[0]}</a>
