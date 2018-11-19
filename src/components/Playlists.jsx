@@ -209,7 +209,7 @@ export default class Playlists extends Component {
 
             </div>
             <div className="col-md-12 posts">
-              {!this.state.isLoading && this.state.saved.length == 0 &&
+              {!this.state.isLoading && this.state.playlists.length == 0 &&
               <h3>You don't have any playlists yet!</h3>}
               <table className="table-center">
                 <tbody>
