@@ -100,6 +100,9 @@ export default class Player extends React.Component {
     if (!this.props.always)
       this.setState({saved: !this.state.saved})
   }
+  addToPlaylist() {
+    this.props.addToPlaylist(this.props.id)
+  }
 
   render() {
       return (
@@ -129,16 +132,19 @@ export default class Player extends React.Component {
                   title="Add to queue"
                   className="controls"
                   onClick={() => this.play_next()}/>
-                {this.props.local &&
-                  <div className="dropdown">
-                    <img src={more}
-                        alt="more options"
-                        className="controls dropbtn"/>
-                      <div className="dropdown-content">
+
+              <div className="dropdown">
+                <img src={more}
+                    alt="more options"
+                    className="controls dropbtn"/>
+                  <div className="dropdown-content">
+                    <a  onClick={() => this.props.addToPlaylist(this.props.id)}>Add to Playlist</a>
+                    {this.props.local &&
                       <a  onClick={() => this.delete()}>Delete</a>
-                    </div>
+                    }
                   </div>
-                }
+              </div>
+
             </span>
           }
         </span>

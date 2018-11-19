@@ -4,6 +4,7 @@ import Front from './Front.jsx'
 import Signin from './Signin.jsx'
 import Upload from './Upload.jsx'
 import Saved from './Saved.jsx'
+import Playlists from './Playlists.jsx'
 import { Switch, Route } from 'react-router-dom'
 import {
   isSignInPending,
@@ -76,6 +77,12 @@ export default class App extends Component {
                 exact path='/saved'
                 render={
                   routeProps => <Saved {...routeProps} />
+                }
+              />
+              <Route
+                exact path='/playlists'
+                render={
+                  routeProps => <Playlists {...routeProps} />
                 }
               />
               <Route

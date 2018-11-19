@@ -10,9 +10,11 @@ import {
 } from 'blockstack'
 
 import Player from './Player.jsx'
+import ListPopup from './ListPopup.jsx'
 
 const avatarFallbackImage = 'https://s3.amazonaws.com/onename/avatar-placeholder.png'
 const postFileName = 'posts.json'
+const playlistsFileName = "playlists.json"
 
 export default class Front extends Component {
   constructor(props) {
@@ -21,10 +23,15 @@ export default class Front extends Component {
   	this.state = {
       follows: [],
       posts: [],
-      isLoading: true
+      isLoading: true,
+      showPlaylists: false,
+      playlistSong: 0
   	}
     this.handleSave = this.handleSave.bind(this)
     this.isSaved = this.isSaved.bind(this)
+    this.closePopup = this.closePopup.bind(this)
+    this.addToPlaylist = this.addToPlaylist.bind(this)
+    this.showPopup = this.showPopup.bind(this)
   }
 
   componentDidMount() {
@@ -106,18 +113,17 @@ export default class Front extends Component {
     }, 5);
   }
 
-  handleSave(id) {
+  handleSave(i) {
     var saved = this.state.saved
     const posts = this.state.posts
-    if (this.isSaved(id))
-      for(var j=0; j<saved.length; j++) {
-        if (saved[j].audio == posts[id].audio &&
-            saved[j].created_at == posts[id].created_at)
+    if (this.isSaved(i))
+      saved.forEach(function(save, j) {
+        if (save.audio == posts[i].audio &&
+            save.created_at == posts[i].created_at)
               saved.splice(j, 1);
-      }
-
+      })
     else
-      saved.unshift(this.state.posts[id])
+      saved.unshift(this.state.posts[i])
     const options = { encrypt: false }
     putFile("saved.json", JSON.stringify(saved), options)
       .then(() => {
@@ -130,12 +136,46 @@ export default class Front extends Component {
   isSaved(i) {
     const saved = this.state.saved
     const posts = this.state.posts
-    for(var j=0; j<saved.length; j++) {
-      if (saved[j].audio == posts[i].audio &&
-          saved[j].created_at == posts[i].created_at)
-            return true
-    }
-    return false
+    var retval = false
+    saved.forEach(function(save) {
+      if (save.audio == posts[i].audio &&
+          save.created_at == posts[i].created_at)
+            retval = true
+    })
+    return retval
+  }
+
+  showPopup(i) {
+    const options = { decrypt: false, zoneFileLookupURL: 'https://core.blockstack.org/v1/names/' }
+    getFile(playlistsFileName, options)
+      .then((file) => {
+        var playlists = JSON.parse(file || '[]')
+        this.setState({
+          showPlaylists: true,
+          playlistSong: i,
+          playlists: playlists
+        })
+      })
+  }
+  closePopup() {
+    const playlists = this.state.playlists
+    const options = { encrypt: false }
+    putFile(playlistsFileName, JSON.stringify(playlists), options)
+      .then(() => {
+        this.setState({showPlaylists: false, playlistSong: 0})
+      })
+  }
+  fetchListNames() {
+    var set = []
+    this.state.playlists.forEach(function(list){
+      set.push(list.name)
+    })
+    return set
+  }
+  addToPlaylist(i) {
+    const playlists = this.state.playlists
+    playlists[i].songs.push(this.state.posts[this.state.playlistSong])
+    this.setState({playlists: playlists})
   }
 
   showPlayer(i) {
@@ -149,6 +189,7 @@ export default class Front extends Component {
               saved={this.isSaved(i)}
               always={false}
               handleSave={this.handleSave}
+              addToPlaylist={this.showPopup}
             />
     }
   }
@@ -160,6 +201,12 @@ export default class Front extends Component {
         <h1>Posts From People You Follow</h1>
         <div className="row">
           <div className="col-md-offset-3 col-md-6">
+            {this.state.showPlaylists &&
+              <ListPopup playlists={this.fetchListNames()}
+                         closePopup={this.closePopup}
+                         add={this.addToPlaylist}
+              />
+            }
             <div className="col-md-12 posts">
               {this.state.isLoading && <div className="lds-circle"></div>}
               {!this.state.isLoading && this.state.follows.length == 0 &&
