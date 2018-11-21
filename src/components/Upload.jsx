@@ -79,8 +79,8 @@ export default class Upload extends Component {
 
   handleNewPostSubmit(event) {
     event.preventDefault()
-    if (this.state.posts == false) alert("Something went wrong, try reloading the page")
-    else if (this.state.title == "") alert("Title missing")
+    // if (this.state.posts == false) alert("Something went wrong, try reloading the page")
+    if (this.state.title == "") alert("Title missing")
     else if (this.state.audio == "") alert("Audio missing")
     else {
       this.saveNewPost()
@@ -106,9 +106,10 @@ export default class Upload extends Component {
       text: postText.trim(),
       tags: tags.replace(/, /gi, ',').split(','),
       created_at: Date.now(),
-      audio: audio.name
+      audio: audio.name,
+      op: loadUserData().username
     }
-    console.log(post.tags);
+    console.log(post);
     // upload audio
     let filereader = new FileReader()
 

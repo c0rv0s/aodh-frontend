@@ -252,7 +252,9 @@ export default class Playlists extends Component {
                   this.state.view >= 0 &&
                   this.state.playlists[this.state.view].songs.map((post, i) => (
                     <div className="post" key={i} >
-                      {this.showPlayer(i)}
+                      {this.showPlayer(i)} <br/>
+                      {"by "}
+                      <a href={post.op}>{post.op.split('.')[0]}</a>
                     </div>
                     )
                 )}

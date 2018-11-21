@@ -127,6 +127,7 @@ export default class Saved extends Component {
                   <div className="post" key={i} >
                     {this.showPlayer(i)}<br/>
                     {"by "}
+                    <a href={this.state.saved[i].op}>{this.state.saved[i].op.split('.')[0]}</a>
                   </div>
                   )
               )}
