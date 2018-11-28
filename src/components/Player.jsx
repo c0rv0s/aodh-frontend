@@ -104,6 +104,37 @@ export default class Player extends React.Component {
     this.props.addToPlaylist(this.props.id)
   }
 
+  download() {
+    var element = document.createElement('a');
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    if (this.state.file == null) {
+      this.setState({ isLoading: true })
+      getFile(this.props.audio.audio)
+        .then((file) => {
+          element.setAttribute('href', file);
+          element.setAttribute('download', this.props.audio.title);
+          element.click();
+          document.body.removeChild(element);
+          this.setState({file: file})
+        })
+        .catch((error) => {
+          console.log('could not fetch audio')
+        })
+        .finally(() => {
+          this.setState({ isLoading: false})
+        })
+    }
+    else {
+      element.setAttribute('href', this.state.file);
+      element.setAttribute('download', this.props.audio.title);
+      element.click();
+      document.body.removeChild(element);
+    }
+
+  }
+
   render() {
       return (
         <span>
@@ -141,6 +172,9 @@ export default class Player extends React.Component {
                     <a  onClick={() => this.props.addToPlaylist(this.props.id)}>Add to Playlist</a>
                     {this.props.local &&
                       <a  onClick={() => this.delete()}>Delete</a>
+                    }
+                    {this.props.audio.downloadable &&
+                      <a onClick={() => this.download()}>Download</a>
                     }
                   </div>
               </div>

@@ -107,7 +107,8 @@ export default class Upload extends Component {
       tags: tags.replace(/, /gi, ',').split(','),
       created_at: Date.now(),
       audio: audio.name,
-      op: loadUserData().username
+      op: loadUserData().username,
+      downloadable: document.getElementById("downloadable").checked
     }
     console.log(post);
     // upload audio
@@ -187,8 +188,11 @@ export default class Upload extends Component {
                     value={this.state.tags}
                     onChange={e => this.handleNewTagChange(e)}
                     placeholder="Tags (seperate with commas)"
-                  />
-                </div>
+                  /> <br />
+                <input type="checkbox" name="downloadable"id="downloadable" />
+                <label htmlFor="downloadable"> Allow downloads</label>
+              </div>
+
                 {'\u00A0'}
                 <Accept
                   onAccept={this.handleAccept}
