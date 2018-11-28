@@ -159,7 +159,7 @@ export default class Profile extends Component {
           console.log('could not resolve profile')
         })
 
-      const options = { username: username, decrypt: false, zoneFileLookupURL: 'https://core.blockstack.org/v1/names/'}
+      const options = { username: username, decrypt: false}
 
       getFile(postFileName, options)
         .then((file) => {

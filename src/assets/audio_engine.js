@@ -62,6 +62,7 @@ export function aud_queuereplace(index, file) {
 }
 
 export function aud_loadfile(file, current) {
+  // console.log(file);
   if (playing || (suspended && current != paused)) {
     // stop what's currently playing
     source.stop();

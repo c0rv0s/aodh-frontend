@@ -110,20 +110,18 @@ export default class Upload extends Component {
       op: loadUserData().username,
       downloadable: document.getElementById("downloadable").checked
     }
-    console.log(post);
+    //console.log(post);
     // upload audio
     let filereader = new FileReader()
-
+    const options = { encrypt: false }
     filereader.onload = (event) => {
       let result = event.target.result
       let path = audio.name// md5(result)
 
-      putFile(path, result)
+      putFile(path, result, options)
       .then(fileUrl => {
         console.log('uploaded: audio')
         // update list of posts on user account
-        // post options
-        const options = { encrypt: false }
         posts.unshift(post)
         putFile(postFileName, JSON.stringify(posts), options)
         // update state

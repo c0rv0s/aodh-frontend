@@ -32,23 +32,44 @@ export default class Player extends React.Component {
   }
 
   fetchData() {
+    const options = {username: this.props.audio.op, decrypt: false}
     if (this.state.file == null) {
       this.setState({ isLoading: true })
-      getFile(this.props.audio.audio)
-        .then((file) => {
-          aud_queuereplace(0, file)
-          this.setState({file: file})
-          aud_loadfile(file,this.props.audio.created_at).then(
-            () => {this.setState({ playing: false})}
-          )
-        })
-        .catch((error) => {
-          console.log('could not fetch audio')
-        })
-        .finally(() => {
-          this.setState({ isLoading: false,
-                          playing: true})
-        })
+      if (this.props.local) {
+        getFile(this.props.audio.audio, {decrypt: false})
+          .then((file) => {
+            aud_queuereplace(0, file)
+            this.setState({file: file})
+            aud_loadfile(file,this.props.audio.created_at).then(
+              () => {this.setState({ playing: false})}
+            )
+          })
+          .catch((error) => {
+            console.log('could not fetch audio')
+          })
+          .finally(() => {
+            this.setState({ isLoading: false,
+                            playing: true})
+          })
+      }
+      else {
+        getFile(this.props.audio.audio, options)
+          .then((file) => {
+            aud_queuereplace(0, file)
+            this.setState({file: file})
+            aud_loadfile(file,this.props.audio.created_at).then(
+              () => {this.setState({ playing: false})}
+            )
+          })
+          .catch((error) => {
+            console.log('could not fetch audio')
+          })
+          .finally(() => {
+            this.setState({ isLoading: false,
+                            playing: true})
+          })
+      }
+
     }
     else {
       aud_queuereplace(0, this.state.file)

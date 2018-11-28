@@ -183,7 +183,7 @@ export default class Front extends Component {
     else {
       return <Player
               audio={this.state.posts[i]}
-              local={false}
+              local={this.state.posts[i].op == loadUserData().username}
               id={i}
               handleDelete={this.handleDelete}
               saved={this.isSaved(i)}
@@ -218,7 +218,7 @@ export default class Front extends Component {
                   <div className="post" key={i} >
                     {this.showPlayer(i)}<br/>
                     {"by "}
-                    <a href={this.state.follows[i]}>{this.state.follows[i].split('.')[0]}</a>
+                    <a href={post.op}>{post.op.split('.')[0]}</a>
                   </div>
                   )
               )}
