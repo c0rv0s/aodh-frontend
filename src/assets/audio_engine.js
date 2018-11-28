@@ -10,9 +10,13 @@ var suspended = false
 var playfrom = 0
 var ended = 0
 var playing = false
+var paused = ""
 
 export function song_ended() {
   ended += 1
+}
+export function get_paused() {
+  return paused
 }
 
 export function aud_over() {
@@ -22,9 +26,10 @@ export function aud_over() {
     queue.shift()
 }
 
-export function aud_pausePlaying() {
+export function aud_pausePlaying(current) {
   suspended = true
   playing = false
+  paused = current
   audioContext.suspend()
 }
 
@@ -56,16 +61,19 @@ export function aud_queuereplace(index, file) {
   queue[index] = file
 }
 
-export function aud_loadfile(file) {
-  if (playing) {
+export function aud_loadfile(file, current) {
+  if (playing || (suspended && current != paused)) {
     // stop what's currently playing
     source.stop();
     source.disconnect()
-  }
-  if (suspended) {
     audioContext.resume()
     suspended = false
-    playing = true
+  }
+  if (suspended && current == paused) {
+       audioContext.resume()
+       suspended = false
+       playing = true
+       paused = ""
   }
   else {
     source = audioContext.createBufferSource();
@@ -91,7 +99,7 @@ export function aud_loadfile(file) {
     // Send the request which kicks off
     request.send();
     playing = true
-
+  }
     // do the promise stuff
     source.onended = function(event) {
       event.preventDefault()
@@ -109,5 +117,5 @@ export function aud_loadfile(file) {
       }, 100);
     });
     return promise
-  }
+
 }

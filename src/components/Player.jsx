@@ -14,7 +14,8 @@ import {
   aud_removefromqueue,
   aud_loadfile,
   song_ended,
-  aud_queuereplace
+  aud_queuereplace,
+  get_paused
 } from '../assets/audio_engine.js'
 
 export default class Player extends React.Component {
@@ -27,6 +28,7 @@ export default class Player extends React.Component {
       playing: false,
       saved: this.props.saved
     }
+    this.fetchData = this.fetchData.bind(this)
   }
 
   fetchData() {
@@ -36,7 +38,9 @@ export default class Player extends React.Component {
         .then((file) => {
           aud_queuereplace(0, file)
           this.setState({file: file})
-          aud_loadfile(file).then(() => {this.setState({ playing: false})})
+          aud_loadfile(file,this.props.audio.created_at).then(
+            () => {this.setState({ playing: false})}
+          )
         })
         .catch((error) => {
           console.log('could not fetch audio')
@@ -48,7 +52,7 @@ export default class Player extends React.Component {
     }
     else {
       aud_queuereplace(0, this.state.file)
-      aud_loadfile(this.state.file).then(() => {this.setState({ playing: false})})
+      aud_loadfile(this.state.file,this.props.audio.created_at).then(() => {this.setState({ playing: false})})
       this.setState({ isLoading: false,
                       playing: true})
     }
@@ -56,12 +60,13 @@ export default class Player extends React.Component {
 
   play_pause() {
     if (!this.state.playing) {
-      song_ended()
+      if (get_paused() != this.props.audio.created_at)
+        song_ended()
       this.fetchData()
     }
     else {
       this.setState({playing: false})
-      aud_pausePlaying()
+      aud_pausePlaying(this.props.audio.created_at)
     }
   }
 
@@ -71,7 +76,7 @@ export default class Player extends React.Component {
         .then((file) => {
           aud_addtoqueue(file).then(() => {
             this.setState({ playing: true})
-            aud_loadfile(this.state.file).then(() => {this.setState({ playing: false})})
+            aud_loadfile(this.state.file,this.props.audio.created_at).then(() => {this.setState({ playing: false})})
           })
           this.setState({file: file})
         })
@@ -82,7 +87,7 @@ export default class Player extends React.Component {
     else {
       aud_addtoqueue(this.state.file).then(() => {
         this.setState({ playing: true})
-        aud_loadfile(this.state.file).then(() => {this.setState({ playing: false})})
+        aud_loadfile(this.state.file,this.props.audio.created_at).then(() => {this.setState({ playing: false})})
       })
     }
   }
