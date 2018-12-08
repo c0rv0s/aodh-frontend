@@ -29,6 +29,10 @@ body {
   font-weight: 400;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 .controls {
   margin-left: 15px;
   cursor: pointer;
@@ -171,6 +175,22 @@ body {
   text-align: left;
   /* top: 50%;
   position: absolute; */
+}
+
+.selectable {
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -ms-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.selectable:hover {
+  background-color: #B5B5B5;
 }
 
 .myAudio {

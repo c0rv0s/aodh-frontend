@@ -48,14 +48,11 @@ export default class Profile extends Component {
   	  	  return avatarFallbackImage
   	  	},
   	  },
-      username: "",
-      description: "",
-      audio: "",
       posts: [],
+      username: "",
       postIndex: 0,
       isLoading: false,
       follows: [],
-      isUploading: false,
       saved: [],
       showPlaylists: false,
       playlistSong: 0
@@ -71,9 +68,6 @@ export default class Profile extends Component {
 
   componentDidMount() {
     this.fetchSaved()
-    // Posts
-    // this.fetchData()
-    // follow or not
     this.fetchFollows()
 
   }
@@ -329,6 +323,12 @@ export default class Profile extends Component {
               >
                 {this.state.follows.includes(this.props.match.params.username)? "Following" : "Follow"}
               </button>
+            }
+            {this.isLocal() && false &&
+              <div>
+                <input type="checkbox" name="discoverable"id="discoverable" />
+                <label htmlFor="discoverable"> Discoverable</label>
+              </div>
             }
             <div className="col-md-12 posts">
               {this.state.isLoading && <span>Loading...</span>}

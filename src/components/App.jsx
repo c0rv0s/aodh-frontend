@@ -5,6 +5,8 @@ import Signin from './Signin.jsx'
 import Upload from './Upload.jsx'
 import Saved from './Saved.jsx'
 import Playlists from './Playlists.jsx'
+import Discover from './Discover.jsx'
+
 import { Switch, Route } from 'react-router-dom'
 import {
   isSignInPending,
@@ -41,6 +43,7 @@ export default class App extends Component {
             { !isUserSignedIn() ? null :
               <a href={loadUserData().username}><b>My Profile</b></a>
             }
+            <a href="/discover"><b>Discover</b></a>
           </span>
 
           <span className="right">
@@ -83,6 +86,12 @@ export default class App extends Component {
                 exact path='/playlists'
                 render={
                   routeProps => <Playlists {...routeProps} />
+                }
+              />
+              <Route
+                exact path='/discover'
+                render={
+                  routeProps => <Discover {...routeProps} />
                 }
               />
               <Route
