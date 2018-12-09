@@ -83,7 +83,7 @@ export default class Profile extends Component {
   }
 
   fetchDiscover() {
-    fetch('https://aodh.xyz/api/fetch_user?username='+this.state.username)
+    fetch('https://aodh.xyz/api/fetch_user?username='+this.state.username.split('.')[0])
       .then((response) => {
         response.json()
         .then((data) => {
