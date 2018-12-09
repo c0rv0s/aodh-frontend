@@ -110,12 +110,13 @@ export default class Discover extends Component {
                   </div>
                   )
               )}
-
+              <br /><br />
+              {(this.state.discover.length >= 3) &&
               <button
                 className="btn btn-primary btn-lg"
                 onClick={() => this.fetchDiscover()}
               >Load More</button>
-
+            }
             </div>
           </div>
         </div>
