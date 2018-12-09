@@ -87,7 +87,7 @@ export default class Profile extends Component {
       .then((response) => {
         response.json()
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           if (data.discoverable == 1) {
             document.getElementById("discoverable").checked = true
           }
@@ -115,7 +115,7 @@ export default class Profile extends Component {
 
     fetch(request)
     .then((response) => {
-      console.log(response);
+      // console.log(response);
     })
     .catch((err) => {
       console.log(err);
