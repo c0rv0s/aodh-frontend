@@ -53,7 +53,8 @@ export default class Discover extends Component {
         response.json()
         .then((data) => {
           data.forEach(function(entry) {
-            discover.push(entry.username)
+            if (entry.username != "derpderpderp.id.blockstack")
+              discover.push(entry.username)
           })
           that.setState({
             discover: discover
@@ -109,6 +110,12 @@ export default class Discover extends Component {
                   </div>
                   )
               )}
+
+              <button
+                className="btn btn-primary btn-lg"
+                onClick={() => this.fetchDiscover()}
+              >Load More</button>
+
             </div>
           </div>
         </div>
