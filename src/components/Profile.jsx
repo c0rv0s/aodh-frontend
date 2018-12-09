@@ -115,10 +115,7 @@ export default class Profile extends Component {
 
     fetch(request)
     .then((response) => {
-      response.json()
-      .then((data) => {
-        console.log(data);
-      })
+      console.log(response);
     })
     .catch((err) => {
       console.log(err);
