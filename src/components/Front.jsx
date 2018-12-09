@@ -39,21 +39,6 @@ export default class Front extends Component {
     this.fetchSaved()
     // follow or not
     this.fetchFollows()
-
-    //make sure user is added
-    var request = new Request('https://aodh.xyz/api/add_user', {
-      method: 'POST',
-      headers: new Headers({'Content-Type': 'application/json'}),
-      body: JSON.stringify({username: loadUserData().username})
-    })
-
-    fetch(request)
-    .then((response) => {
-      // console.log(response);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
   }
 
   handleDelete(){console.log("can't delete from front");}
