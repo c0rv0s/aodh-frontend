@@ -111,21 +111,6 @@ export default class App extends Component {
     if (isSignInPending()) {
       handlePendingSignIn().then((userData) => {
         window.location = window.location.origin
-
-        var request = new Request('https://aodh.xyz/api/add_user', {
-          method: 'POST',
-          headers: new Headers({'Content-Type': 'application/json'}),
-          body: JSON.stringify({username: userData.username})
-        })
-
-        fetch(request)
-        .then((response) => {
-          // console.log(response);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-
       })
     }
   }
