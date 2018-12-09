@@ -41,8 +41,12 @@ export default class DiscoverPerson extends React.Component {
   	  	avatarUrl() {
   	  	  return avatarFallbackImage
   	  	},
+        description() {
+          return ""
+        }
   	  },
-      following: false
+      following: false,
+      bio: ""
     }
     this.fetchData = this.fetchData.bind(this)
     this.doClick = this.doClick.bind(this)
@@ -97,8 +101,10 @@ export default class DiscoverPerson extends React.Component {
                 <span>{this.props.username.split('.')[0]}</span>
               </div>
             </div>
-        </span>
-        <span >
+            <div className="left-text">
+              <p>{person.description()}</p>
+            </div>
+            <br /><hr />
             <button
               className="btn btn-primary btn-lg"
               onClick={() => this.handleFollow()}

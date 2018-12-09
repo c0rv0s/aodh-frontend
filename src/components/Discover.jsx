@@ -20,7 +20,6 @@ export default class Discover extends Component {
       discover: []
   	}
     this.handleFollow = this.handleFollow.bind(this)
-    // this.fetchDiscover = this.fetchDiscover.bind(this)
   }
 
   componentDidMount() {

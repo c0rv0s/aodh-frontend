@@ -47,6 +47,9 @@ export default class Profile extends Component {
   	  	avatarUrl() {
   	  	  return avatarFallbackImage
   	  	},
+        description() {
+          return ""
+        }
   	  },
       posts: [],
       username: "",
@@ -64,17 +67,61 @@ export default class Profile extends Component {
     this.closePopup = this.closePopup.bind(this)
     this.addToPlaylist = this.addToPlaylist.bind(this)
     this.showPopup = this.showPopup.bind(this)
+    this.fetchDiscover = this.fetchDiscover.bind(this)
+    this.changeDiscover = this.changeDiscover.bind(this)
   }
 
   componentDidMount() {
     this.fetchSaved()
     this.fetchFollows()
-
   }
 
   handleNewPostChange(event) {
     this.setState({
       description: event.target.value
+    })
+  }
+
+  fetchDiscover() {
+    fetch('https://aodh.xyz/api/fetch_user?username='+this.state.username)
+      .then((response) => {
+        response.json()
+        .then((data) => {
+          console.log(data);
+          if (data.discoverable == 1) {
+            document.getElementById("discoverable").checked = true
+          }
+          else {
+            document.getElementById("discoverable").checked = false
+          }
+        })
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
+  changeDiscover() {
+    let val = 0
+    if (document.getElementById("discoverable").checked)
+      val = 1
+    let username = this.state.username
+    let data = {val: val, username:username}
+    var request = new Request('https://aodh.xyz/api/user', {
+      method: 'POST',
+      headers: new Headers({'Content-Type': 'application/json'}),
+      body: JSON.stringify(data)
+    })
+
+    fetch(request)
+    .then((response) => {
+      response.json()
+      .then((data) => {
+        console.log(data);
+      })
+    })
+    .catch((err) => {
+      console.log(err);
     })
   }
 
@@ -123,7 +170,6 @@ export default class Profile extends Component {
     this.setState({ isLoading: true })
 
     if (this.isLocal()) {
-
       getFile(postFileName, options)
         .then((file) => {
           var posts = JSON.parse(file || '[]')
@@ -138,6 +184,7 @@ export default class Profile extends Component {
           console.log('could not fetch posts')
         })
         .finally(() => {
+          this.fetchDiscover() //get discoverable also
           this.setState({ isLoading: false })
         })
     } else {
@@ -314,6 +361,17 @@ export default class Profile extends Component {
                     </span>
                   }
                 </div>
+
+              </div>
+              <div className="left-text">
+                <p>{person.description()}</p>
+                  {this.isLocal() &&
+                    <div>
+                      <input type="checkbox" name="discoverable"id="discoverable"
+                             onClick={this.changeDiscover}/>
+                      <label htmlFor="discoverable">{'\u00A0'}Discoverable</label>
+                    </div>
+                  }
               </div>
             </div>
             {!this.isLocal() &&
@@ -324,12 +382,7 @@ export default class Profile extends Component {
                 {this.state.follows.includes(this.props.match.params.username)? "Following" : "Follow"}
               </button>
             }
-            {this.isLocal() && false &&
-              <div>
-                <input type="checkbox" name="discoverable"id="discoverable" />
-                <label htmlFor="discoverable"> Discoverable</label>
-              </div>
-            }
+
             <div className="col-md-12 posts">
               {this.state.isLoading && <span>Loading...</span>}
               {!this.state.isLoading && this.state.posts.length == 0 && this.isLocal() &&

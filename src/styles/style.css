@@ -38,6 +38,18 @@ body {
   cursor: pointer;
 }
 
+.left-text {
+  float: left;
+}
+
+#discoverable {
+  text-decoration: none;
+}
+
+hr {
+  border-color: #BBBBBB;
+}
+
 /* Container */
 .container {
   height: 100%;
