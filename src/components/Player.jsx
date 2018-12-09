@@ -131,13 +131,14 @@ export default class Player extends React.Component {
   }
 
   download() {
+    const options = {username: this.props.audio.op, decrypt: false}
     var element = document.createElement('a');
     element.style.display = 'none';
     document.body.appendChild(element);
 
     if (this.state.file == null) {
       this.setState({ isLoading: true })
-      getFile(this.props.audio.audio)
+      getFile(this.props.audio.audio, options)
         .then((file) => {
           element.setAttribute('href', file);
           element.setAttribute('download', this.props.audio.title);
@@ -146,7 +147,7 @@ export default class Player extends React.Component {
           this.setState({file: file})
         })
         .catch((error) => {
-          console.log('could not fetch audio')
+          console.log('could not complete download')
         })
         .finally(() => {
           this.setState({ isLoading: false})

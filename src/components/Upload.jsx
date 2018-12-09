@@ -188,7 +188,7 @@ export default class Upload extends Component {
                     placeholder="Tags (seperate with commas)"
                   /> <br />
                 <input type="checkbox" name="downloadable"id="downloadable" />
-                <label htmlFor="downloadable"> Allow downloads</label>
+                <label htmlFor="downloadable">{'\u00A0'}Allow downloads</label>
               </div>
 
                 {'\u00A0'}
