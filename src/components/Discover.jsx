@@ -116,7 +116,7 @@ export default class Discover extends Component {
                 className="btn btn-primary btn-lg"
                 onClick={() => this.fetchDiscover()}
               >Load More</button>
-            }
+              } <br/><br/><br/>
             </div>
           </div>
         </div>

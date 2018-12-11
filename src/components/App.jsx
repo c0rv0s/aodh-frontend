@@ -7,6 +7,7 @@ import Saved from './Saved.jsx'
 import Playlists from './Playlists.jsx'
 import Discover from './Discover.jsx'
 import Contact from './Contact.jsx'
+import Faq from './Faq.jsx'
 
 import { Switch, Route } from 'react-router-dom'
 import {
@@ -48,12 +49,19 @@ export default class App extends Component {
           </span>
 
           <span className="right">
-            <a href="/contact"><b>Contact</b></a>
+
+            <div className="dropdown">
+                <b>Support</b>
+                  <div className="dropdown-content">
+                  <a href="/faq">FAQ</a>
+                  <a href="/contact">Contact</a>
+                </div>
+            </div>
             <div className="dropdown">
                 <b>Collection</b>
                   <div className="dropdown-content">
-                  <a  href="/saved">Saved</a>
-                  <a  href="/playlists">Playlists</a>
+                  <a href="/saved">Saved</a>
+                  <a href="/playlists">Playlists</a>
                 </div>
             </div>
             <a href="/upload"><b>Upload</b></a>
@@ -101,6 +109,12 @@ export default class App extends Component {
                 exact path='/contact'
                 render={
                   routeProps => <Contact {...routeProps} />
+                }
+              />
+              <Route
+                exact path='/faq'
+                render={
+                  routeProps => <Faq {...routeProps} />
                 }
               />
               <Route

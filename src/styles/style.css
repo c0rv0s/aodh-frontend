@@ -42,6 +42,10 @@ body {
   float: left;
 }
 
+.left-align {
+  text-align: left;
+}
+
 #discoverable {
   text-decoration: none;
 }
