@@ -64,16 +64,23 @@ export default class Discover extends Component {
     .then((response) => {
       response.json()
       .then((data) => {
-        data.rows.forEach(function(entry) {
-          if (entry.username != "derpderpderp.id.blockstack" &&
-              entry.username != null)
-            discover.push(entry.username)
-        })
-        var new_ids = ids.concat(data.ids)
-        that.setState({
-          discover: discover,
-          ids: new_ids
-        })
+        if (data.rows.length === 0) {
+          that.setState({
+            max: true
+          })
+        }
+        else {
+          data.rows.forEach(function(entry) {
+            if (entry.username != "derpderpderp.id.blockstack" &&
+                entry.username != null)
+              discover.push(entry.username)
+          })
+          var new_ids = ids.concat(data.ids)
+          that.setState({
+            discover: discover,
+            ids: new_ids
+          })
+        }
       })
     })
     .catch((err) => {
