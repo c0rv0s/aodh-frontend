@@ -64,7 +64,7 @@ export default class Discover extends Component {
     .then((response) => {
       response.json()
       .then((data) => {
-        if (data.rows.length === 0) {
+        if (typeof data.rows === "undefined" || data.rows.length === 0) {
           that.setState({
             max: true
           })
