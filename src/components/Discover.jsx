@@ -17,7 +17,9 @@ export default class Discover extends Component {
   	this.state = {
       isLoading: true,
       follows: [],
-      discover: []
+      discover: [],
+      ids: [],
+      max: false
   	}
     this.handleFollow = this.handleFollow.bind(this)
   }
@@ -46,21 +48,56 @@ export default class Discover extends Component {
 
   //retrive items from postgres
   fetchDiscover() {
-    var discover = []
+    var ids = this.state.ids
+    var discover = this.state.discover
     var that = this
-    fetch('https://aodh.xyz/api/list_ten')
-      .then((response) => {
-        response.json()
-        .then((data) => {
-          data.forEach(function(entry) {
-            if (entry.username != "derpderpderp.id.blockstack")
-              discover.push(entry.username)
-          })
-          that.setState({
-            discover: discover
-          })
+
+
+    var data = {d: ids}
+    var request = new Request('https://aodh.xyz/api/list_ten', {
+      method: 'POST',
+      headers: new Headers({'Content-Type': 'application/json'}),
+      body: JSON.stringify(data)
+    })
+
+    fetch(request)
+    .then((response) => {
+      response.json()
+      .then((data) => {
+        data.rows.forEach(function(entry) {
+          if (entry.username != "derpderpderp.id.blockstack" &&
+              entry.username != null)
+            discover.push(entry.username)
+        })
+        var new_ids = ids.concat(data.ids)
+        that.setState({
+          discover: discover,
+          ids: new_ids
         })
       })
+    })
+    .catch((err) => {
+      console.log(err);
+      that.setState({
+        max: true
+      })
+    })
+
+
+    // fetch('https://aodh.xyz/api/list_ten')
+    //   .then((response) => {
+    //     response.json()
+    //     .then((data) => {
+    //       data.forEach(function(entry) {
+    //         if (entry.username != "derpderpderp.id.blockstack" &&
+    //             entry.username != null)
+    //           discover.push(entry.username)
+    //       })
+    //       that.setState({
+    //         discover: discover
+    //       })
+    //     })
+    //   })
   }
 
   handleFollow(username) {
@@ -111,11 +148,14 @@ export default class Discover extends Component {
                   )
               )}
               <br /><br />
-              {(this.state.discover.length >= 3) &&
-              <button
-                className="btn btn-primary btn-lg"
-                onClick={() => this.fetchDiscover()}
-              >Load More</button>
+              {this.state.max &&
+                <h3>That's everyone!</h3>
+              }
+              {(this.state.discover.length >= 3) && !this.state.max &&
+                <button
+                  className="btn btn-primary btn-lg"
+                  onClick={() => this.fetchDiscover()}
+                >Load More</button>
               } <br/><br/><br/>
             </div>
           </div>

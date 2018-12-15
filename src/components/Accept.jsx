@@ -20,7 +20,7 @@ export default class Accept extends React.Component {
   }
 
   handleDrop(accepted, rejected) {
-    this.setState({ accepted, rejected }, this.props.onAccept(accepted))
+      this.setState({ accepted, rejected }, this.props.onAccept(accepted))
   }
 
   render() {
@@ -32,7 +32,9 @@ export default class Accept extends React.Component {
               style={dropzoneStyle}
             >
               <aside>
-                <p>Drop an audio file here or click to select</p>
+                <p>Drop an audio file here or click to select<br/>
+                   Note: Aodh Beta doesn't currently support file sizes over 5mb.
+                </p>
                 <ul>
                   {
                     this.state.accepted.map(f => <li key={f.name}>{f.name}</li>)

@@ -140,7 +140,7 @@ export default class Upload extends Component {
           isUploading: false,
         })
         console.error(e)
-        alert("Sorry, something didn't work out")
+        alert("Something went wrong. If your file is over 5mb reduce its size and try again.")
       })
     }
     filereader.readAsDataURL(audio)
