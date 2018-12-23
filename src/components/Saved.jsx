@@ -86,7 +86,7 @@ export default class Saved extends Component {
     return set
   }
   addToPlaylist(i) {
-    const playlists = this.state.playlists
+    var playlists = this.state.playlists
     playlists[i].songs.push(this.state.saved[this.state.playlistSong])
     this.setState({playlists: playlists})
   }

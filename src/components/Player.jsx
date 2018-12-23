@@ -168,6 +168,9 @@ export default class Player extends React.Component {
                    onClick={() => this.save()}
                    value={this.state.saved? "\u2713" : "+"}/>
             {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+            {this.props.audio.private &&
+              <i className="fas fa-lock">{'\u00A0'}</i>
+            }
             {this.props.audio.title}
           </span>
           {this.state.isLoading &&

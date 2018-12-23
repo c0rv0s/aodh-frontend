@@ -18,12 +18,18 @@ export default class Playlists extends Component {
       saved: [],
       view: -1,
       name: "",
-      isLoading: false
+      isLoading: false,
+      showPlaylists: false,
+      playlistSong: 0
   	}
     this.handleSave = this.handleSave.bind(this)
     this.selectChange = this.selectChange.bind(this)
     this.removeFromPlaylist = this.removeFromPlaylist.bind(this)
     this.deletePlaylist = this.deletePlaylist.bind(this)
+    this.showPopup = this.showPopup.bind(this)
+    this.closePopup2 = this.closePopup2.bind(this)
+    this.fetchListNames = this.fetchListNames.bind(this)
+    this.addToPlaylist = this.addToPlaylist.bind(this)
   }
 
   componentDidMount() {
@@ -101,6 +107,33 @@ export default class Playlists extends Component {
     putFile(playlistsFileName, JSON.stringify(playlists), options)
   }
 
+  showPopup(i) {
+    this.setState({
+      showPlaylists: true,
+      playlistSong: i
+    })
+  }
+  closePopup2() {
+    const playlists = this.state.playlists
+    const options = { encrypt: false }
+    putFile(playlistsFileName, JSON.stringify(playlists), options)
+      .then(() => {
+        this.setState({showPlaylists: false, playlistSong: 0})
+      })
+  }
+  fetchListNames() {
+    var set = []
+    this.state.playlists.forEach(function(list){
+      set.push(list.name)
+    })
+    return set
+  }
+  addToPlaylist(i) {
+    var playlists = this.state.playlists
+    playlists[i].songs.push(this.state.playlists[this.state.view].songs[this.state.playlistSong])
+    this.setState({playlists: playlists})
+  }
+
   showPlayer(i) {
     if (this.state.isLoading) return null
     else {
@@ -111,7 +144,7 @@ export default class Playlists extends Component {
               saved={this.isSaved(i)}
               always={false}
               handleSave={this.handleSave}
-              addToPlaylist={() => alert("Sorry, this action is not currently available.")}
+              addToPlaylist={this.showPopup}
               removeFromPlaylist={this.removeFromPlaylist}
             />
     }
@@ -199,6 +232,12 @@ export default class Playlists extends Component {
         <h1>Playlists</h1>
         <div className="row">
           <div className="col-md-offset-3 col-md-6">
+            {this.state.showPlaylists &&
+              <ListPopup playlists={this.fetchListNames()}
+                         closePopup={this.closePopup2}
+                         add={this.addToPlaylist}
+              />
+            }
             <div id="overlay"></div>
             <div id="popup">
               <div className="input-wrapper">

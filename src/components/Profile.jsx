@@ -302,7 +302,7 @@ export default class Profile extends Component {
     return set
   }
   addToPlaylist(i) {
-    const playlists = this.state.playlists
+    var playlists = this.state.playlists
     playlists[i].songs.push(this.state.posts[this.state.playlistSong])
     this.setState({playlists: playlists})
   }
