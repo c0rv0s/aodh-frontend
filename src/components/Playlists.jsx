@@ -22,6 +22,7 @@ export default class Playlists extends Component {
   	}
     this.handleSave = this.handleSave.bind(this)
     this.selectChange = this.selectChange.bind(this)
+    this.removeFromPlaylist = this.removeFromPlaylist.bind(this)
   }
 
   componentDidMount() {
@@ -90,6 +91,15 @@ export default class Playlists extends Component {
     return retval
   }
 
+  removeFromPlaylist(i) {
+    var playlists = this.state.playlists
+    playlists[this.state.view].songs.splice(i, 1)
+    this.setState({playlists: playlists})
+    //update remote
+    const options = { encrypt: false }
+    putFile(playlistsFileName, JSON.stringify(playlists), options)
+  }
+
   showPlayer(i) {
     if (this.state.isLoading) return null
     else {
@@ -101,6 +111,7 @@ export default class Playlists extends Component {
               always={false}
               handleSave={this.handleSave}
               addToPlaylist={() => alert("Sorry, this action is not currently available.")}
+              removeFromPlaylist={this.removeFromPlaylist}
             />
     }
   }
@@ -192,12 +203,18 @@ export default class Playlists extends Component {
                      Cancel
                    </button>
                </span>
-               {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
-               {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
-               {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
-               {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
-               {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
-               {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+               {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+               {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+               {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+               {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+               {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+               {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+               {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+               {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+               {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+               {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+               {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+               {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
                <span className="right">
                    <button
                      className="btn btn-primary btn-lg"

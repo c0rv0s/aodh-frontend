@@ -126,9 +126,6 @@ export default class Player extends React.Component {
     if (!this.props.always)
       this.setState({saved: !this.state.saved})
   }
-  addToPlaylist() {
-    this.props.addToPlaylist(this.props.id)
-  }
 
   download() {
     const options = {username: this.props.audio.op, decrypt: false}
@@ -197,6 +194,9 @@ export default class Player extends React.Component {
                     className="controls dropbtn"/>
                   <div className="dropdown-content">
                     <a  onClick={() => this.props.addToPlaylist(this.props.id)}>Add to Playlist</a>
+                    {this.props.removeFromPlaylist &&
+                      <a  onClick={() => this.props.removeFromPlaylist(this.props.id)}>Remove</a>
+                    }
                     {this.props.local &&
                       <a  onClick={() => this.delete()}>Delete</a>
                     }
