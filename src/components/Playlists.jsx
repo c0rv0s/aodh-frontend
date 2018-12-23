@@ -23,6 +23,7 @@ export default class Playlists extends Component {
     this.handleSave = this.handleSave.bind(this)
     this.selectChange = this.selectChange.bind(this)
     this.removeFromPlaylist = this.removeFromPlaylist.bind(this)
+    this.deletePlaylist = this.deletePlaylist.bind(this)
   }
 
   componentDidMount() {
@@ -179,6 +180,18 @@ export default class Playlists extends Component {
     }
   }
 
+  deletePlaylist() {
+    var playlists = this.state.playlists
+    playlists.splice(this.state.view, 1)
+    this.setState({
+      playlists: playlists,
+      view: -1
+    })
+    //update remote
+    const options = { encrypt: false }
+    putFile(playlistsFileName, JSON.stringify(playlists), options)
+  }
+
   render() {
     return (
       !isSignInPending() ?
@@ -253,6 +266,16 @@ export default class Playlists extends Component {
                         New Playlist
                       </button>
                     </div>
+                  </th>
+                  <th>
+                    {this.state.view >= 0 &&
+                      <div className="col-md-12 text-right dropdown">
+                          <b>Options</b>
+                          <div className="dropdown-content">
+                            <a onClick={() => this.deletePlaylist()}>Delete</a>
+                          </div>
+                      </div>
+                    }
                   </th>
                 </tr>
               </tbody>
