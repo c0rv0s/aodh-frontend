@@ -108,7 +108,8 @@ export default class Upload extends Component {
       created_at: Date.now(),
       audio: audio.name,
       op: loadUserData().username,
-      downloadable: document.getElementById("downloadable").checked
+      downloadable: document.getElementById("downloadable").checked,
+      private: document.getElementById("private").checked
     }
     //console.log(post);
     // upload audio
@@ -187,8 +188,12 @@ export default class Upload extends Component {
                     onChange={e => this.handleNewTagChange(e)}
                     placeholder="Tags (seperate with commas)"
                   /> <br />
-                <input type="checkbox" name="downloadable"id="downloadable" />
+                <input type="checkbox" name="downloadable" id="downloadable" />
                 <label htmlFor="downloadable">{'\u00A0'}Allow downloads</label>
+                {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+                {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+                <input type="checkbox" name="private" id="private" />
+                <label htmlFor="private">{'\u00A0'}Private</label>
               </div>
 
                 {'\u00A0'}

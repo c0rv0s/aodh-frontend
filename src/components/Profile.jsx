@@ -202,6 +202,7 @@ export default class Profile extends Component {
       getFile(postFileName, options)
         .then((file) => {
           var posts = JSON.parse(file || '[]')
+          posts = posts.filter(post => !post.private)
           this.setState({
             postIndex: posts.length,
             posts: posts

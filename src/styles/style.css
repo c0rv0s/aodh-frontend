@@ -49,6 +49,7 @@ body {
 #discoverable {
   text-decoration: none;
 }
+label {font-weight: 400 !important}
 
 hr {
   border-color: #BBBBBB;

@@ -81,6 +81,7 @@ export default class Front extends Component {
       getFile(postFileName, options)
         .then((file) => {
           var userposts = JSON.parse(file || '[]')
+          userposts = userposts.filter(post => !post.private)
           if (userposts.length > 0) {
             posts.push(userposts[0])
           }
