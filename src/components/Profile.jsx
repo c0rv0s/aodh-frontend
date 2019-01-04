@@ -76,6 +76,12 @@ export default class Profile extends Component {
     this.fetchFollows()
   }
 
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.match.params.username != this.state.username) {
+      this.fetchData(nextProps.match.params.username)
+    }
+  }
+
   handleNewPostChange(event) {
     this.setState({
       description: event.target.value
@@ -159,14 +165,14 @@ export default class Profile extends Component {
       .catch((error) => {
         console.log('could not fetch follow info')
       })
-      .finally(() => {this.fetchData()})
+      .finally(() => {this.fetchData(this.props.match.params.username)})
   }
 
-  fetchData() {
+  fetchData(usr) {
     const options = { decrypt: false, zoneFileLookupURL: 'https://core.blockstack.org/v1/names/' }
     this.setState({ isLoading: true })
 
-    if (this.isLocal()) {
+    if (usr == loadUserData().username) {
       getFile(postFileName, options)
         .then((file) => {
           var posts = JSON.parse(file || '[]')
@@ -178,7 +184,7 @@ export default class Profile extends Component {
           })
         })
         .catch((error) => {
-          console.log('could not fetch posts')
+          console.log('could not fetch posts(local)')
         })
         .finally(() => {
           this.fetchDiscover() //get discoverable also

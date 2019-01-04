@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import {
   isSignInPending,
   loadUserData,
@@ -127,7 +128,7 @@ export default class Saved extends Component {
                   <div className="post" key={i} >
                     {this.showPlayer(i)}<br/>
                     {"by "}
-                    <a href={this.state.saved[i].op}>{this.state.saved[i].op.split('.')[0]}</a>
+                    <Link to={this.state.saved[i].op}>{this.state.saved[i].op.split('.')[0]}</Link>
                   </div>
                   )
               )}

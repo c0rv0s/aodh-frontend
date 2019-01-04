@@ -11,6 +11,9 @@ a:hover {
   color: rgb(241,158,85);
   text-decoration: none;
 }
+.blackText{
+  color: black !important;
+}
 html,
 body {
   height: 100%;

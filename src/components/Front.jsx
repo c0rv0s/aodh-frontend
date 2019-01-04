@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import {
   isSignInPending,
   loadUserData,
@@ -219,7 +220,7 @@ export default class Front extends Component {
                   <div className="post" key={i} >
                     {this.showPlayer(i)}<br/>
                     {"by "}
-                    <a href={post.op}>{post.op.split('.')[0]}</a>
+                    <Link to={post.op}>{post.op.split('.')[0]}</Link>
                   </div>
                   )
               )}

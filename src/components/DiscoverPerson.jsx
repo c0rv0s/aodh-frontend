@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import {
   isSignInPending,
   loadUserData,
@@ -49,7 +50,6 @@ export default class DiscoverPerson extends React.Component {
       bio: ""
     }
     this.fetchData = this.fetchData.bind(this)
-    this.doClick = this.doClick.bind(this)
   }
 
   componentDidMount() {
@@ -78,15 +78,12 @@ export default class DiscoverPerson extends React.Component {
     this.props.handleFollow(this.props.username)
   }
 
-  doClick() {
-    window.location = this.props.username
-  }
-
   render() {
     const { person } = this.state
     return (
       <span>
-        <span className="pointer" onClick={this.doClick}>
+        <span className="pointer">
+          <Link to={this.props.username} className="blackText">
             <div className="avatar-section">
               <img
                 src={ person.avatarUrl() ? person.avatarUrl() : avatarFallbackImage }
@@ -111,6 +108,7 @@ export default class DiscoverPerson extends React.Component {
             >
               {this.state.following? "Following" : "Follow"}
             </button>
+            </Link>
         </span>
       </span>
     )

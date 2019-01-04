@@ -1,4 +1,4 @@
-import React, { Component, Link } from 'react'
+import React, { Component } from 'react'
 import Profile from './Profile.jsx'
 import Front from './Front.jsx'
 import Signin from './Signin.jsx'
@@ -9,7 +9,7 @@ import Discover from './Discover.jsx'
 import Contact from './Contact.jsx'
 import Faq from './Faq.jsx'
 
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Link } from 'react-router-dom'
 import {
   isSignInPending,
   isUserSignedIn,
@@ -41,11 +41,11 @@ export default class App extends Component {
       <div className="site-wrapper">
         <div className="navbar">
           <span className="left">
-            <a href="/"><b>Home</b></a>
+            <Link to="/"><b>Home</b></Link>
             { !isUserSignedIn() ? null :
-              <a href={loadUserData().username}><b>My Profile</b></a>
+              <Link to={loadUserData().username}><b>My Profile</b></Link>
             }
-            <a href="/discover"><b>Discover</b></a>
+            <Link to="/discover"><b>Discover</b></Link>
           </span>
 
           <span className="right">
@@ -53,18 +53,18 @@ export default class App extends Component {
             <div className="dropdown">
                 <b>Support</b>
                   <div className="dropdown-content">
-                  <a href="/faq">FAQ</a>
-                  <a href="/contact">Contact</a>
+                  <Link to="/faq">FAQ</Link>
+                  <Link to="/contact">Contact</Link>
                 </div>
             </div>
             <div className="dropdown">
                 <b>Collection</b>
                   <div className="dropdown-content">
-                  <a href="/saved">Saved</a>
-                  <a href="/playlists">Playlists</a>
+                  <Link to="/saved">Saved</Link>
+                  <Link to="/playlists">Playlists</Link>
                 </div>
             </div>
-            <a href="/upload"><b>Upload</b></a>
+            <Link to="/upload"><b>Upload</b></Link>
 
           </span>
 
@@ -82,49 +82,52 @@ export default class App extends Component {
                 }
               />
               <Route
-                exact path='/upload'
+                path='/upload'
                 render={
                   routeProps => <Upload {...routeProps} />
                 }
               />
               <Route
-                exact path='/saved'
+                path='/saved'
                 render={
                   routeProps => <Saved {...routeProps} />
                 }
               />
               <Route
-                exact path='/playlists'
+                path='/playlists'
                 render={
                   routeProps => <Playlists {...routeProps} />
                 }
               />
               <Route
-                exact path='/discover'
+                path='/discover'
                 render={
                   routeProps => <Discover {...routeProps} />
                 }
               />
               <Route
-                exact path='/contact'
+                path='/contact'
                 render={
                   routeProps => <Contact {...routeProps} />
                 }
               />
               <Route
-                exact path='/faq'
+                path='/faq'
                 render={
                   routeProps => <Faq {...routeProps} />
                 }
               />
               <Route
-                path='/:username'
+                exact path='/:username'
                 render={
                   routeProps => <Profile handleSignOut={ this.handleSignOut } {...routeProps} />
                 }
               />
             </Switch>
           }
+        </div>
+
+        <div className="universal-controls">
         </div>
       </div>
     )
