@@ -8,6 +8,7 @@ import Playlists from './Playlists.jsx'
 import Discover from './Discover.jsx'
 import Contact from './Contact.jsx'
 import Faq from './Faq.jsx'
+import Footer from './Footer.jsx'
 
 import { Switch, Route, Link } from 'react-router-dom'
 import {
@@ -127,8 +128,8 @@ export default class App extends Component {
           }
         </div>
 
-        <div className="universal-controls">
-        </div>
+        
+
       </div>
     )
   }

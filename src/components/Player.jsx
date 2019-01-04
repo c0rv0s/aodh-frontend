@@ -3,10 +3,6 @@ import {
   getFile,
   putFile
 } from 'blockstack'
-import play from '../images/play.png'
-import pause from '../images/pause.png'
-import next from '../images/next.png'
-import more from '../images/more.png'
 
 import {
   aud_pausePlaying,
@@ -35,24 +31,6 @@ export default class Player extends React.Component {
     const options = {username: this.props.audio.op, decrypt: false}
     if (this.state.file == null) {
       this.setState({ isLoading: true })
-      if (this.props.local) {
-        getFile(this.props.audio.audio, {decrypt: false})
-          .then((file) => {
-            aud_queuereplace(0, file)
-            this.setState({file: file})
-            aud_loadfile(file,this.props.audio.created_at).then(
-              () => {this.setState({ playing: false})}
-            )
-          })
-          .catch((error) => {
-            console.log('could not fetch audio')
-          })
-          .finally(() => {
-            this.setState({ isLoading: false,
-                            playing: true})
-          })
-      }
-      else {
         getFile(this.props.audio.audio, options)
           .then((file) => {
             aud_queuereplace(0, file)
@@ -62,14 +40,13 @@ export default class Player extends React.Component {
             )
           })
           .catch((error) => {
+            console.log(error);
             console.log('could not fetch audio')
           })
           .finally(() => {
             this.setState({ isLoading: false,
                             playing: true})
           })
-      }
-
     }
     else {
       aud_queuereplace(0, this.state.file)
@@ -93,7 +70,8 @@ export default class Player extends React.Component {
 
   play_next() {
     if (this.state.file == null) {
-      getFile(this.props.audio.audio)
+      const options = { username: this.props.audio.op, decrypt: false}
+      getFile(this.props.audio.audio, options)
         .then((file) => {
           aud_addtoqueue(file).then(() => {
             this.setState({ playing: true})
@@ -181,20 +159,18 @@ export default class Player extends React.Component {
           {!this.state.isLoading &&
             <span className="myAudio">
 
-              <img src={this.state.playing ? pause:play}
-                   alt="play/pause"
-                   className="controls"
-                   onClick={() => this.play_pause()}/>
-              <img src={next}
-                  alt="play next"
-                  title="Add to queue"
-                  className="controls"
-                  onClick={() => this.play_next()}/>
+              <span onClick={() => this.play_pause()}className="pointer">
+                {this.state.playing ?  <i className="fas fa-pause-circle fa-2x"></i>
+                :<i className="fas fa-play-circle fa-2x"></i>}
+              </span>
+              {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+              <span onClick={() => this.play_next()} className="pointer">
+                <i className="fas fa-angle-double-up fa-2x"></i>
+              </span>
+              {'\u00A0'}{'\u00A0'}
 
-              <div className="dropdown">
-                <img src={more}
-                    alt="more options"
-                    className="controls dropbtn"/>
+              <div className="dropdown pointer" >
+                <i className="fas fa-ellipsis-v fa-2x"></i>
                   <div className="dropdown-content">
                     <a  onClick={() => this.props.addToPlaylist(this.props.id)}>Add to Playlist</a>
                     {this.props.removeFromPlaylist &&
@@ -208,6 +184,7 @@ export default class Player extends React.Component {
                     }
                   </div>
               </div>
+
 
             </span>
           }
