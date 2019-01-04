@@ -48,7 +48,8 @@ export default class ListPopup extends Component {
                          className="save-button"
                          onClick={() => this.add(i)}
                          value="+"/>
-                  {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+                  {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+                  {'\u00A0'}{'\u00A0'}
                   {list}
                 </div>
               )

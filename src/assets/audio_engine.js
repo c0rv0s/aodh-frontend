@@ -4,6 +4,7 @@
 // Audio context
 
 var queue = []
+var meta_queue = []
 var audioContext = new (window.AudioContext || window.webkitAudioContext)();
 var source = audioContext.createBufferSource();
 var suspended = false
@@ -19,11 +20,33 @@ export function get_paused() {
   return paused
 }
 
+export function aud_nowPlaying() {
+  if (playing){
+    return {
+      status: 2,
+      metadata: meta_queue[0]
+    }
+  }
+  else if (!playing && meta_queue.length > 0) {
+    return {
+      status: 1,
+      metadata: meta_queue[0]
+    }
+  }
+  else {
+    return {
+      status: 0,
+      metadata: {}
+    }
+  }
+}
+
 export function aud_over() {
     playfrom = 0
     playing = false
     song_ended()
     queue.shift()
+    meta_queue.shift()
 }
 
 export function aud_pausePlaying(current) {
@@ -33,8 +56,16 @@ export function aud_pausePlaying(current) {
   audioContext.suspend()
 }
 
-export function aud_addtoqueue(file) {
+export function aud_resumePlaying() {
+  audioContext.resume()
+  suspended = false
+  playing = true
+  paused = ""
+}
+
+export function aud_addtoqueue(file, metadata) {
   queue.push(file)
+  meta_queue.push(metadata)
   // promise to change player to pause
   var o_start = ended+queue.length - 1
   var promise = new Promise(function(resolve, reject) {
@@ -50,19 +81,21 @@ export function aud_addtoqueue(file) {
   return promise
 }
 
+// probably rewrite this to take meta as arg
 export function aud_removefromqueue(file) {
-  var index = array.indexOf(file);
+  var index = queue.indexOf(file);
   if (index > -1) {
-    array.splice(index, 1);
+    queue.splice(index, 1);
+    meta_queue.splice(index, 1);
   }
 }
 
-export function aud_queuereplace(index, file) {
+export function aud_queuereplace(index, file, metadata) {
   queue[index] = file
+  meta_queue[index] = metadata
 }
 
 export function aud_loadfile(file, current) {
-  // console.log(file);
   if (playing || (suspended && current != paused)) {
     // stop what's currently playing
     source.stop();
@@ -71,10 +104,7 @@ export function aud_loadfile(file, current) {
     suspended = false
   }
   if (suspended && current == paused) {
-       audioContext.resume()
-       suspended = false
-       playing = true
-       paused = ""
+       aud_resumePlaying()
   }
   else {
     source = audioContext.createBufferSource();
@@ -110,7 +140,10 @@ export function aud_loadfile(file, current) {
     var promise = new Promise(function(resolve, reject) {
       setInterval(function(){
         if (ended == o_ended + 1) {
-          resolve("Stuff worked!");
+          resolve("song ended");
+        }
+        if (!playing) {
+          resolve("paused from footer");
         }
         else if (ended > o_ended + 1) {
           reject(Error("It broke"));

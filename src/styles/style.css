@@ -14,6 +14,12 @@ a:hover {
 .blackText{
   color: black !important;
 }
+.marginright {
+  margin-right: 12%;
+}
+.marginleft {
+  margin-left: 12%;
+}
 html,
 body {
   height: 100%;
@@ -262,6 +268,7 @@ hr {
 
 /* footer thing with player */
 .footer {
+    padding: 7px;
     height: 50px;
     position: fixed;
     bottom:0%;
