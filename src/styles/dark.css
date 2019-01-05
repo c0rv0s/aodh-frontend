@@ -44,7 +44,7 @@ body {
 
 .footer {
     /*dark mode */
-    background-color: #000;
+    background-color: #121212;
     /*dark mode */
     border-top: 2px solid #fff;
 }
@@ -52,7 +52,7 @@ body {
 /* The navigation bar */
 .navbar {
     /*dark mode */
-    background-color: #000;
+    background-color: #121212;
     /*dark mode */
     border-bottom: 2px solid #fff;
 }
