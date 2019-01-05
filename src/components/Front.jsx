@@ -217,10 +217,10 @@ export default class Front extends Component {
                 this.state.posts.length == 0 &&
                 <h3>Your follows haven't posted anything yet!</h3>}
               {this.state.posts.map((post, i) => (
-                  <div className="post" key={i} >
-                    {this.showPlayer(i)}<br/>
-                    {"by "}
-                    <Link to={post.op}>{post.op.split('.')[0]}</Link>
+                  <div className="post" key={i} >                
+                      {this.showPlayer(i)}<br/>
+                      {"by "}
+                      <Link to={post.op}>{post.op.split('.')[0]}</Link>
                   </div>
                   )
               )}

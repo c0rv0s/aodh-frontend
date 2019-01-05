@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import {
   getFile,
   putFile
@@ -149,7 +150,10 @@ export default class Player extends React.Component {
             {this.props.audio.private &&
               <i className="fas fa-lock">{'\u00A0'}</i>
             }
-            {this.props.audio.title}
+            <Link to={'/'+this.props.audio.op+'/'+this.props.audio.title} className="blackText">
+              {this.props.audio.title}
+            </Link>
+
           </span>
           {this.state.isLoading &&
               <span className="myAudio">

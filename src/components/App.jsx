@@ -9,6 +9,7 @@ import Discover from './Discover.jsx'
 import Contact from './Contact.jsx'
 import Faq from './Faq.jsx'
 import Footer from './Footer.jsx'
+import Song from './Song.jsx'
 
 import { Switch, Route, Link } from 'react-router-dom'
 import {
@@ -44,7 +45,7 @@ export default class App extends Component {
           <span className="left">
             <Link to="/"><b>Home</b></Link>
             { !isUserSignedIn() ? null :
-              <Link to={loadUserData().username}><b>My Profile</b></Link>
+              <Link to={'/'+loadUserData().username}><b>My Profile</b></Link>
             }
             <Link to="/discover"><b>Discover</b></Link>
           </span>
@@ -122,6 +123,12 @@ export default class App extends Component {
                 exact path='/:username'
                 render={
                   routeProps => <Profile handleSignOut={ this.handleSignOut } {...routeProps} />
+                }
+              />
+              <Route
+                exact path='/:username/:title'
+                render={
+                  routeProps => <Song handleSignOut={ this.handleSignOut } {...routeProps} />
                 }
               />
             </Switch>
