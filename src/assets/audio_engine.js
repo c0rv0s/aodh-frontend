@@ -12,6 +12,9 @@ var playfrom = 0
 var ended = 0
 var playing = false
 var paused = ""
+var song_length = 0
+
+var play_start = 0
 
 export function song_ended() {
   ended += 1
@@ -24,7 +27,9 @@ export function aud_nowPlaying() {
   if (playing){
     return {
       status: 2,
-      metadata: meta_queue[0]
+      metadata: meta_queue[0],
+      time: audioContext.currentTime - play_start,
+      duration: song_length
     }
   }
   else if (!playing && meta_queue.length > 0) {
@@ -61,6 +66,7 @@ export function aud_resumePlaying() {
   suspended = false
   playing = true
   paused = ""
+  play_start = audioContext.currentTime
 }
 
 export function aud_addtoqueue(file, metadata) {
@@ -119,10 +125,12 @@ export function aud_loadfile(file, current) {
       // Decode the audio once the require is complete
       audioContext.decodeAudioData(request.response, function(buffer) {
         source.buffer = buffer;
+        song_length = buffer.duration
         // Connect the audio to source (multiple audio buffers can be connected!)
         source.connect(audioContext.destination);
         // Play the sound!
         source.start(0, playfrom);
+        play_start = audioContext.currentTime
       }, function(e) {
         console.log('Audio error! ', e);
       });
