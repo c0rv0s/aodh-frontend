@@ -1,0 +1,107 @@
+.blackText{
+  /*dark mode */
+  color: white !important;
+}
+
+body {
+  /*dark mode */
+  background-color: #121212;
+}
+body {
+  /*dark mode */
+  color: #fff;
+}
+
+.post {
+  /*dark mode */
+  background-color: #2E2E2E;
+}
+
+.dropdown {
+    /* dark mode */
+    color: #fff;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    /* dark mode */
+    background-color: #2E2E2E;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    /* dark mode */
+    color: white;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  /* dark mode */
+  background-color: #4A4A4A;
+  /* dark mode */
+  color: white;
+}
+
+.footer {
+    /*dark mode */
+    background-color: #000;
+    /*dark mode */
+    border-top: 2px solid #fff;
+}
+
+/* The navigation bar */
+.navbar {
+    /*dark mode */
+    background-color: #000;
+    /*dark mode */
+    border-bottom: 2px solid #fff;
+}
+
+/* Links inside the navbar */
+.navbar a {
+    /*dark mode */
+    color: #fff;
+}
+
+.navbar a:hover {
+    /*dark mode */
+    background: #4D4D4D;
+    /*dark mode */
+    color: white;
+}
+
+.save-button{
+  /* dark mode */
+  color: #fff;
+}
+
+#popup {
+   /* dark mode */
+   background-color: #2E2E2E;
+}
+
+.upload-ting {
+  color: #fff;
+}
+
+.input-big {
+  color: #fff;
+  border-bottom: 2px solid #fff;
+}
+
+.input-post {
+  background: #2E2E2E;
+}
+
+.input-tags {
+  background: #2E2E2E;
+}
+
+.form-control {
+  background: #2E2E2E;
+  color: #fff;
+}
+
+#select-list {
+  background: #2E2E2E;
+}

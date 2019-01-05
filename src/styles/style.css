@@ -20,12 +20,14 @@ a:hover {
 .marginleft {
   margin-left: 2%;
 }
+.inline {
+  display: inline-block;
+}
 
 html,
 body {
   height: 100%;
   text-align: center;
-  /* background-color: #3100D7; */
 }
 body {
   color: #000;
@@ -218,8 +220,6 @@ hr {
   border-radius: 6px;
   min-height: 90px;
   text-align: left;
-  /* top: 50%;
-  position: absolute; */
 }
 
 .selectable {
@@ -242,13 +242,23 @@ hr {
   float:  right;
 }
 
+/* theme */
+.theme {
+  margin-top: 12px;
+  z-index: 5;
+  position: fixed;
+  right: 0;
+  top: 0;
+  margin-right: 16px;
+}
+
 /* dropdown delete menu */
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
     position: relative;
     display: inline-block;
 
-    color: #000000;
+    color: #000;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
@@ -311,7 +321,7 @@ hr {
 /* Links inside the navbar */
 .navbar a {
     display: block;
-    color: #000000;
+    color: #000;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
@@ -409,7 +419,7 @@ hr {
    height: auto;
    margin-top:-250px;      /* To get the popup to center correctly we need                                    */
    margin-left:-250px;    /* To displace the the top/left margins by half of the width/height                */
-   background:#FFFFFF;    /* Background of white                                                             */
+   background:#FFFFFF;    /* Background of white                                                        */
    z-index:100000;        /* Set z-index to 1 more than that of the overlay so the popup is over the overlay */
    padding: 15px;
 }

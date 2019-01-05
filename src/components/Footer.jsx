@@ -83,13 +83,13 @@ export default class Footer extends Component {
 
   title() {
     if (this.state.audio == null) {
-      return <div className="marginright" style={{display:"inline-block"}}>
+      return <div className="marginright inline" >
                 Not Playing
              </div>
     }
     else {
       return (
-        <div className="marginright" style={{display:"inline-block"}}>
+        <div className="marginright inline" >
           {this.state.audio.title + " by\u00A0"}
           <Link to={this.state.audio.op}>{this.state.audio.op.split('.')[0]}</Link>
         </div>
@@ -100,7 +100,7 @@ export default class Footer extends Component {
   button() {
     if (this.state.playing) {
       return (
-        <div className="marginleft" style={{display:"inline-block"}}>
+        <div className="marginleft inline" >
           <i className="fas fa-pause-circle fa-2x pointer"
           onClick={() => this.play_pause()} ></i>
         </div>
@@ -108,7 +108,7 @@ export default class Footer extends Component {
     }
     else if (!this.state.playing && this.state.audio != null) {
       return (
-        <div className="marginleft" style={{display:"inline-block"}}>
+        <div className="marginleft inline" >
             <i className="fas fa-play-circle fa-2x pointer"
             onClick={() => this.play_pause()} ></i>
         </div>
@@ -116,7 +116,7 @@ export default class Footer extends Component {
     }
     else if (!this.state.playing && this.state.audio == null) {
       return (
-        <div className="marginleft" style={{display:"inline-block"}}>
+        <div className="marginleft inline" >
           <i className="fas fa-play-circle fa-2x" style={{color:"grey"}}></i>
         </div>
       )
@@ -132,14 +132,14 @@ export default class Footer extends Component {
         </span>
 
         <span className="left" id="scrub-container">
-          <div id="time-markers" style={{display:"inline-block"}}>
+          <div id="time-markers" className="inline">
             {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
             {'\u00A0'}{'\u00A0'}{this.state.current_time}{'\u00A0'}{'\u00A0'}
           </div>
           <div id="scrub">
             <div id="scrubbar"></div>
           </div>
-          <div id="time-markers" style={{display:"inline-block"}}>
+          <div id="time-markers" className="inline">
               {'\u00A0'}{'\u00A0'}{this.state.duration}
           </div>
         </span>

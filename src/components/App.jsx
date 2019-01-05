@@ -25,6 +25,9 @@ export default class App extends Component {
 
   constructor(props) {
   	super(props)
+    this.state = {
+      theme: "light"
+    }
   }
 
   handleSignIn(e) {
@@ -38,8 +41,28 @@ export default class App extends Component {
     signUserOut(window.location.origin);
   }
 
+  changeTheme() {
+    if (this.state.theme == 'light') {
+      document.styleSheets[3].disabled = false
+      this.setState({theme:'dark'})
+    }
+    if (this.state.theme == 'dark') {
+      document.styleSheets[3].disabled = true
+      this.setState({theme:'light'})
+    }
+  }
+
+  theme() {
+    if (this.state.theme == 'light')
+      return <i className="fas fa-moon fa-2x theme" onClick={() => this.changeTheme()}></i>
+    if (this.state.theme == 'dark')
+      return <i className="fas fa-sun fa-2x theme" onClick={() => this.changeTheme()}></i>
+  }
+
   render() {
     return (
+      <div>
+        {this.theme()}
       <div className="site-wrapper">
         <div className="navbar">
           <span className="left">
@@ -137,6 +160,7 @@ export default class App extends Component {
 
         <Footer />
 
+      </div>
       </div>
     )
   }
