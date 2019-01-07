@@ -168,12 +168,12 @@ export default class Player extends React.Component {
                 :<i className="fas fa-play-circle fa-2x"></i>}
               </span>
               {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
-              <span onClick={() => this.play_next()} className="pointer">
+              <span onClick={() => this.play_next()} className="pointer" title="Add to Next Up">
                 <i className="fas fa-angle-double-up fa-2x"></i>
               </span>
               {'\u00A0'}{'\u00A0'}
 
-              <div className="dropdown pointer" >
+              <div className="dropdown pointer solar-player" >
                 <i className="fas fa-ellipsis-v fa-2x"></i>
                   <div className="dropdown-content">
                     <a  onClick={() => this.props.addToPlaylist(this.props.id)}>Add to Playlist</a>

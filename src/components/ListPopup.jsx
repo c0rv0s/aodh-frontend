@@ -45,7 +45,7 @@ export default class ListPopup extends Component {
           {this.props.playlists.map((list, i) => (
                 <div key={i}>
                   <input type='button'
-                         className="save-button"
+                         className="save-button solar-popup"
                          onClick={() => this.add(i)}
                          value="+"/>
                   {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}

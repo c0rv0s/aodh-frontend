@@ -1,0 +1,252 @@
+
+a {
+  color: #ff02e5;
+}
+
+a:hover,
+.fa-2x:hover,
+.save-button:hover {
+  color: white;
+  -webkit-animation: neontext 1.5s ease-in-out infinite alternate;
+  -moz-animation: neontext 1.5s ease-in-out infinite alternate;
+  animation: neontext 1.5s ease-in-out infinite alternate;
+}
+
+.discover-icon:hover,
+.discover-icon:focus,
+.discover-icon:active {
+  color: white;
+  -webkit-animation: neontext 1.5s ease-in-out infinite alternate;
+  -moz-animation: neontext 1.5s ease-in-out infinite alternate;
+  animation: neontext 1.5s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes neontext {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #228DFF, 0 0 70px #228DFF, 0 0 80px #228DFF, 0 0 100px #228DFF, 0 0 150px #228DFF;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #228DFF, 0 0 35px #228DFF, 0 0 40px #228DFF, 0 0 50px #228DFF, 0 0 75px #228DFF;
+  }
+}
+@-moz-keyframes neontext {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #228DFF, 0 0 70px #228DFF, 0 0 80px #228DFF, 0 0 100px #228DFF, 0 0 150px #228DFF;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #228DFF, 0 0 35px #228DFF, 0 0 40px #228DFF, 0 0 50px #228DFF, 0 0 75px #228DFF;
+  }
+}
+@keyframes neontext {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #228DFF, 0 0 70px #228DFF, 0 0 80px #228DFF, 0 0 100px #228DFF, 0 0 150px #228DFF;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #228DFF, 0 0 35px #228DFF, 0 0 40px #228DFF, 0 0 50px #228DFF, 0 0 75px #228DFF;
+  }
+}
+
+@-webkit-keyframes neonbox {
+  from {
+    box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #228DFF, 0 0 70px #228DFF, 0 0 80px #228DFF, 0 0 100px #228DFF, 0 0 150px #228DFF;
+  }
+  to {
+    box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #228DFF, 0 0 35px #228DFF, 0 0 40px #228DFF, 0 0 50px #228DFF, 0 0 75px #228DFF;
+  }
+}
+@-moz-keyframes neonbox {
+  from {
+    box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #228DFF, 0 0 70px #228DFF, 0 0 80px #228DFF, 0 0 100px #228DFF, 0 0 150px #228DFF;
+  }
+  to {
+    box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #228DFF, 0 0 35px #228DFF, 0 0 40px #228DFF, 0 0 50px #228DFF, 0 0 75px #228DFF;
+  }
+}
+@keyframes neonbox {
+  from {
+    box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #228DFF, 0 0 70px #228DFF, 0 0 80px #228DFF, 0 0 100px #228DFF, 0 0 150px #228DFF;
+  }
+  to {
+    box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #228DFF, 0 0 35px #228DFF, 0 0 40px #228DFF, 0 0 50px #228DFF, 0 0 75px #228DFF;
+  }
+}
+
+.blackText{
+  /*dark mode */
+  color: white !important;
+}
+
+body {
+  background: linear-gradient(270deg, #00ffbd, #dc00ff, #ff3a00, #fffa00, #00ff0a);
+  background-size: 1000% 1000%;
+
+  -webkit-animation: AnimationName 6s ease infinite;
+  -moz-animation: AnimationName 6s ease infinite;
+  animation: AnimationName 6s ease infinite;
+}
+body {
+  /*dark mode */
+  color: #fff;
+}
+
+.post {
+  /*dark mode */
+  background-color: #000000;
+}
+
+.dropdown {
+    /* dark mode */
+    color: #fff;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    /* dark mode */
+    background-color: #000000;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    /* dark mode */
+    color: white;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background: transparent;
+  color: white;
+}
+
+.footer {
+    /*dark mode */
+    background-color: transparent;
+    /*dark mode */
+    border-top: 2px solid #fff;
+}
+
+/* The navigation bar */
+.navbar {
+    /*dark mode */
+    background-color: transparent;
+    /*dark mode */
+    border-bottom: 2px solid #fff;
+}
+
+/* Links inside the navbar */
+.navbar a {
+    /*dark mode */
+    color: #fff;
+}
+
+.navbar a:hover {
+  background: transparent;
+    color: white;
+}
+
+.save-button{
+  /* dark mode */
+  color: #fff;
+}
+
+#popup {
+   /* dark mode */
+   background-color: #000000;
+}
+
+.upload-ting {
+  color: #fff;
+}
+
+.input-big {
+  color: #fff;
+  border-bottom: 2px solid #fff;
+}
+
+.input-post {
+  background: transparent;
+}
+
+.input-tags {
+  background: transparent;
+}
+
+.form-control {
+  background: transparent;
+  color: #fff;
+}
+
+#scrub {
+  background-color: white;
+}
+
+#scrubbar {
+  background-color: #ff02e5;
+  -webkit-animation: neonbox 1.5s ease-in-out infinite alternate;
+  -moz-animation: neonbox 1.5s ease-in-out infinite alternate;
+  animation: neonbox 1.5s ease-in-out infinite alternate;
+}
+
+.lds-grid div {
+  background: #ff02e5;
+}
+
+.lds-ellipsis div {
+  background: #ff02e5;
+}
+
+.lds-circle {
+  background: #ff02e5;
+}
+
+#select-list {
+  background: #000000;
+}
+
+.btn-primary {
+  border: 1px solid #4274D6;
+  background-color: #4274D6;
+}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+  border: 1px solid #A57BE1;
+  background-color: #A57BE1;
+}
+
+
+
+@-webkit-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
+.post {
+  border: 20px solid transparent;
+      box-sizing: border-box;
+      background-image:
+        linear-gradient(black, black),
+        linear-gradient(180deg, cornflowerblue, purple 50%, cornflowerblue);
+
+      background-repeat: no-repeat;
+      background-size: 100% 100%, 100% 200%;
+      background-position: 0 0, 0 100%;
+      background-origin: padding-box, border-box;
+      animation: postborder 1s infinite alternate;
+}
+
+@keyframes postborder {
+  100% {
+    background-position: 0 0, 0 0;
+  }
+}

@@ -1,0 +1,135 @@
+a {
+  color: #FDAC14;
+}
+a:focus,
+a:hover {
+  color: #E69236;
+}
+
+.blackText{
+  color: white !important;
+}
+
+body {
+  background-color: #FFFDF9;
+}
+body {
+  color: #8F8779;
+}
+
+.post {
+  background-color: #A49F90;
+  color: white;
+}
+
+.dropdown {
+    color: #8F8779;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    background-color: #FFFDF9;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: #8F8779;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background: #736C59;
+  color: #EEECE5;
+}
+
+.footer {
+    background-color: #FFFDF9;
+    border-top: 2px solid #8F8779;
+}
+
+/* The navigation bar */
+.navbar {
+    background-color: #FFFDF9;
+    border-bottom: 2px solid #8F8779;
+}
+
+/* Links inside the navbar */
+.navbar a {
+    color: #8F8779;
+}
+
+.navbar a:hover {
+    background: #736C59;
+    color: #EEECE5;
+}
+
+.save-button{
+  color: #fff;
+}
+
+#popup {
+   color: #8F8779 !important;
+   background-color: #FFFDF9;
+}
+
+.upload-ting {
+  color: #8F8779;
+}
+
+.input-big {
+  color: #8F8779;
+  border-bottom: 2px solid #8F8779;
+}
+
+.input-post {
+  background: #FFFDF9;
+}
+
+.input-tags {
+  background: #FFFDF9;
+}
+
+.form-control {
+  background: #FFFDF9;
+  color: #8F8779;
+}
+
+#select-list {
+  color: #8F8779;
+  background: #FFFDF9;
+}
+
+.solar-player {
+  color: white !important;
+}
+
+.solar-popup {
+  color: #8F8779;
+}
+
+.btn-primary {
+  border: 1px solid #42C082;
+  background-color: #42C082;
+}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+  border: 1px solid #6DB6DA;
+  background-color: #6DB6DA;
+}
+
+#scrubbar {
+  background-color: #FDAC14;
+}
+
+.lds-grid div {
+  background: #FDAC14;
+}
+
+.lds-ellipsis div {
+  background: #FDAC14;
+}
+
+.lds-circle {
+  background: #FDAC14;
+}

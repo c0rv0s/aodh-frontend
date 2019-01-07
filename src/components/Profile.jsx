@@ -58,7 +58,8 @@ export default class Profile extends Component {
       follows: [],
       saved: [],
       showPlaylists: false,
-      playlistSong: 0
+      playlistSong: 0,
+      discoverable: true
   	}
     this.handleDelete = this.handleDelete.bind(this)
     this.handleFollow = this.handleFollow.bind(this)
@@ -95,10 +96,12 @@ export default class Profile extends Component {
         .then((data) => {
           // console.log(data);
           if (data.discoverable == 1) {
-            document.getElementById("discoverable").checked = true
+            this.setState({discoverable: true})
+            // document.getElementById("discoverable").checked = true
           }
           else {
-            document.getElementById("discoverable").checked = false
+            this.setState({discoverable: false})
+            // document.getElementById("discoverable").checked = false
           }
         })
       })
@@ -108,9 +111,9 @@ export default class Profile extends Component {
   }
 
   changeDiscover() {
-    let val = 0
-    if (document.getElementById("discoverable").checked)
-      val = 1
+    let val = 1
+    if (this.state.discoverable)
+      val = 0
     let username = this.state.username.split('.')[0]
     var data = {val: val, username: username}
     var request = new Request('https://aodh.xyz/api/user', {
@@ -118,7 +121,7 @@ export default class Profile extends Component {
       headers: new Headers({'Content-Type': 'application/json'}),
       body: JSON.stringify(data)
     })
-
+    this.setState({discoverable: !this.state.discoverable})
     fetch(request)
     .then((response) => {
       // console.log(response);
@@ -355,7 +358,21 @@ export default class Profile extends Component {
                 <div className="username">
                   <h1>
                     <span id="heading-name">{ person.name() ? person.name()
-                      : 'Nameless Person' }</span>
+                      : 'Nameless Person' }{'\u00A0'}
+                      {this.isLocal() &&
+                        <span className="pointer discover-icon"
+                              onClick={this.changeDiscover}
+                              title={this.state.discoverable ?
+                              "Your profile will appear in 'Discover'":
+                              "Your profile is hidden from 'Discover'"}>
+
+                          {this.state.discoverable ?  <i className="fas fa-bolt"></i>
+                          :<i className="fas fa-user-secret"></i>
+                          }
+
+                        </span>
+                      }
+                    </span>
                   </h1>
                   <span>{username.split('.')[0]}</span>
                   {this.isLocal() &&
@@ -369,13 +386,7 @@ export default class Profile extends Component {
               </div>
               <div className="left-text">
                 <p>{person.description()}</p>
-                  {this.isLocal() &&
-                    <div>
-                      <input type="checkbox" name="discoverable"id="discoverable"
-                             onClick={this.changeDiscover}/>
-                      <label htmlFor="discoverable">{'\u00A0'}Discoverable</label>
-                    </div>
-                  }
+
               </div>
             </div>
             {!this.isLocal() &&

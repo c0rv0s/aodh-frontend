@@ -42,24 +42,57 @@ export default class App extends Component {
   }
 
   changeTheme() {
-    if (this.state.theme == 'light') {
-      document.styleSheets[3].disabled = false
-      this.setState({theme:'dark'})
-    }
-    if (this.state.theme == 'dark') {
-      document.styleSheets[3].disabled = true
-      this.setState({theme:'light'})
+    switch(this.state.theme) {
+      case 'light':
+        document.styleSheets[4].disabled = false
+        document.styleSheets[5].disabled = true
+        document.styleSheets[6].disabled = true
+        this.setState({theme:'dark'})
+        break;
+      case 'dark':
+        document.styleSheets[4].disabled = true
+        document.styleSheets[5].disabled = false
+        document.styleSheets[6].disabled = true
+        this.setState({theme:'solar'})
+        break;
+      case 'solar':
+        document.styleSheets[4].disabled = true
+        document.styleSheets[5].disabled = true
+        document.styleSheets[6].disabled = false
+        this.setState({theme:'hypersonic'})
+        break;
+      case 'hypersonic':
+        document.styleSheets[4].disabled = true
+        document.styleSheets[5].disabled = true
+        document.styleSheets[6].disabled = true
+        this.setState({theme:'light'})
+        break;
+      default:
+        document.styleSheets[4].disabled = true
+        document.styleSheets[5].disabled = true
+        document.styleSheets[6].disabled = true
+        this.setState({theme:'light'})
     }
   }
 
   theme() {
     if (this.state.theme == 'light')
-      return <i className="fas fa-moon fa-2x theme" onClick={() => this.changeTheme()}></i>
+      return <i className="fas fa-adjust fa-2x theme pointer" title="Light Theme"
+        onClick={() => this.changeTheme()}></i>
     if (this.state.theme == 'dark')
-      return <i className="fas fa-sun fa-2x theme" onClick={() => this.changeTheme()}></i>
+      return <i className="fas fa-moon fa-2x theme pointer" title="Dark Theme"
+        onClick={() => this.changeTheme()}></i>
+    if (this.state.theme == 'solar')
+      return <i className="fas fa-sun fa-2x theme pointer" title="Solaris Theme"
+        onClick={() => this.changeTheme()}></i>
+    if (this.state.theme == 'hypersonic')
+      return <i className="fas fa-candy-cane fa-2x theme pointer" title="Hypersonic Theme"
+        onClick={() => this.changeTheme()}></i>
   }
 
   render() {
+    console.log(document.styleSheets.length);
+
     return (
       <div>
         {this.theme()}

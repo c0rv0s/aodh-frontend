@@ -16,9 +16,10 @@ export default class Faq extends Component {
             section</p> <br/>
 
             <h3>I don't want people to see my profile in the Discover tab.</h3>
-            <p>Click on 'My Profile'. Under your bio is a checkbox titled
-            'Discoverable'. Uncheck this and you will no longer appear under
-            Discover.</p> <br/>
+            <p>Click on 'My Profile'. Next to your name will be an icon of a
+            lightning bolt or a secret agent. The lightning bolt means you will
+            appear in Discover, the secret agent means you are hidden<br /><br />
+            Click the icon to switch modes.</p> <br/>
 
             <h3>Where is my data?</h3>
             <p>All of your data - including uploads, playlists, the people you

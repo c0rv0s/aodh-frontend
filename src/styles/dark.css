@@ -105,3 +105,14 @@ body {
 #select-list {
   background: #2E2E2E;
 }
+
+.btn-primary {
+  border: 1px solid #4274D6;
+  background-color: #4274D6;
+}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+  border: 1px solid #A57BE1;
+  background-color: #A57BE1;
+}
