@@ -176,7 +176,7 @@ export default class Upload extends Component {
             <div className="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
             <p>Please don't navigate away or refresh the page until the upload is complete</p>
             {this.state.isStillUploading &&
-              <p>Thank you for your patience. This might take a few minutes.</p>
+              <p>Thank you for your patience. This may take a few minutes.</p>
             }
             </div>
           }
