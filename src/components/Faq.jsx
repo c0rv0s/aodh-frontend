@@ -34,7 +34,7 @@ export default class Faq extends Component {
           <h3>How come I can't upload files that are over 25mb?</h3>
             <p>We are working hard to provide the best experience for Aodh users
             and will provide updates on this soon. Audio files rendered in MP3
-            format are usually within this constraint.</p> <br/>
+            format are typically within this constraint.</p> <br/>
 
           </div>
         </div>
