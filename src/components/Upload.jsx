@@ -22,6 +22,7 @@ export default class Upload extends Component {
       posts: [],
       postIndex: 0,
       isUploading: false,
+      isStillUploading: false,
       complete: false
   	}
     this.handleAccept = this.handleAccept.bind(this)
@@ -83,14 +84,18 @@ export default class Upload extends Component {
     if (this.state.title == "") alert("Title missing")
     else if (this.state.audio == "") alert("Audio missing")
     else {
-      this.saveNewPost()
       this.setState({
-        description: "",
-        audio: "",
-        title: "",
-        tags: "",
         isUploading: true
       })
+      var that = this
+      setTimeout(function(){
+        if (that.state.isUploading) {
+          that.setState({
+            isStillUploading: true
+          })
+        }
+      }, 10000)
+      this.saveNewPost()
     }
   }
 
@@ -131,7 +136,12 @@ export default class Upload extends Component {
           this.setState({
             posts: posts,
             isUploading: false,
-            complete: true
+            description: "",
+            audio: "",
+            title: "",
+            tags: "",
+            complete: true,
+            isStillUploading: false
           })
 
         })
@@ -141,7 +151,7 @@ export default class Upload extends Component {
           isUploading: false,
         })
         console.error(e)
-        alert("Something went wrong. If your file is over 5mb reduce its size and try again.")
+        alert("Something went wrong. If your file is over 25mb reduce its size and try again.")
       })
     }
     filereader.readAsDataURL(audio)
@@ -165,6 +175,9 @@ export default class Upload extends Component {
               <div>
             <div className="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
             <p>Please don't navigate away or refresh the page until the upload is complete</p>
+            {this.state.isStillUploading &&
+              <p>Thank you for your patience. This might take a few minutes.</p>
+            }
             </div>
           }
           {this.message()}

@@ -33,7 +33,7 @@ export default class Accept extends React.Component {
             >
               <aside>
                 <p>Drop an audio file here or click to select<br/>
-                   Note: Aodh Beta doesn't currently support file sizes over 5mb.
+                   Note: Aodh Beta doesn't currently support file sizes over 25mb.
                 </p>
                 <ul>
                   {

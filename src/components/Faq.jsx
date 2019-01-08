@@ -31,9 +31,10 @@ export default class Faq extends Component {
             expected please use the Contact page to reach us with a detailed description
             of what went wrong.</p> <br/>
 
-          <h3>How come I can't upload files that are over 5mb?</h3>
-            <p>Simply put, there are some complications that need to be worked out.
-            We are working on this and hope that it will be resolved soon.</p> <br/>
+          <h3>How come I can't upload files that are over 25mb?</h3>
+            <p>We are working hard to provide the best experience for Aodh users
+            and will provide updates on this soon. Audio files rendered in MP3
+            format are usually within this constraint.</p> <br/>
 
           </div>
         </div>
