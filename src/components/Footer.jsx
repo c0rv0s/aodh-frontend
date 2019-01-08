@@ -8,7 +8,8 @@ import {
   song_ended,
   aud_queuereplace,
   aud_resumePlaying,
-  get_paused
+  get_paused,
+  next_song
 } from '../assets/audio_engine.js'
 
 export default class Footer extends Component {
@@ -81,6 +82,10 @@ export default class Footer extends Component {
 
   }
 
+  fast_forward() {
+    next_song()
+  }
+
   title() {
     if (this.state.audio == null) {
       return <div className="marginright inline" >
@@ -103,6 +108,9 @@ export default class Footer extends Component {
         <div className="marginleft inline" >
           <i className="fas fa-pause-circle fa-2x pointer"
           onClick={() => this.play_pause()} ></i>
+        {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+          <i className="fas fa-fast-forward fa-2x pointer"
+          onClick={() => this.fast_forward()} ></i>
         </div>
       )
     }
@@ -111,6 +119,9 @@ export default class Footer extends Component {
         <div className="marginleft inline" >
             <i className="fas fa-play-circle fa-2x pointer"
             onClick={() => this.play_pause()} ></i>
+          {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+            <i className="fas fa-fast-forward fa-2x pointer"
+            onClick={() => this.fast_forward()} ></i>
         </div>
       )
     }
@@ -118,6 +129,8 @@ export default class Footer extends Component {
       return (
         <div className="marginleft inline" >
           <i className="fas fa-play-circle fa-2x" style={{color:"grey"}}></i>
+          {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+          <i className="fas fa-fast-forward fa-2x" style={{color:"grey"}}></i>
         </div>
       )
     }

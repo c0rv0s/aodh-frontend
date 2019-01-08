@@ -23,6 +23,17 @@ export function get_paused() {
   return paused
 }
 
+export function next_song() {
+  if (meta_queue.length > 1) {
+    source.stop();
+    source.disconnect()
+    audioContext.resume()
+    suspended = false
+    aud_over()
+  }
+
+}
+
 export function aud_nowPlaying() {
   if (playing){
     return {
