@@ -297,6 +297,11 @@ export default class Song extends Component {
                   {this.showPlayer()}<br/>
                   {"by "}
                   <Link to={'/'+this.state.song.op}>{this.state.song.op.split('.')[0]}</Link>
+                  <br /><br />
+                  <div className="left-text">
+                    <p>{this.state.song.text}</p>
+                  </div>
+                  <br />
                 </div>
                 :
                 <div>
