@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import {
   isSignInPending,
   loadUserData,
@@ -106,7 +107,7 @@ export default class Upload extends Component {
     let posts = this.state.posts
     let title = this.state.title
     let tags = this.state.tags
-    let post = {
+    var post = {
       id: this.state.postIndex++,
       title: title,
       text: postText.trim(),
@@ -136,33 +137,36 @@ export default class Upload extends Component {
           console.log('index updated');
           var username = loadUserData().username
 
-          var data = {val: 1, username: username}
-          var request2 = new Request('https://aodh.xyz/api/change_posts', {
-            method: 'POST',
-            headers: new Headers({'Content-Type': 'application/json'}),
-            body: JSON.stringify(data)
-          })
-          fetch(request2)
-          .then((response) => {
-            if (posts.length == 1) {
-              var data = {val: 1, username: username}
-              var request = new Request('https://aodh.xyz/api/user', {
-                method: 'POST',
-                headers: new Headers({'Content-Type': 'application/json'}),
-                body: JSON.stringify(data)
-              })
-              fetch(request)
-              .then((response) => {
-                // console.log(response);
-              })
-              .catch((err) => {
-                console.log(err);
-              })
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-          })
+          if (!post.private){
+            var data = {val: 1, username: username}
+            var request2 = new Request('https://aodh.xyz/api/change_posts', {
+              method: 'POST',
+              headers: new Headers({'Content-Type': 'application/json'}),
+              body: JSON.stringify(data)
+            })
+            fetch(request2)
+            .then((response) => {
+              const priv = posts.filter(post => !post.private);
+              if (priv.length == 1) {
+                var data = {val: 1, username: username}
+                var request = new Request('https://aodh.xyz/api/user', {
+                  method: 'POST',
+                  headers: new Headers({'Content-Type': 'application/json'}),
+                  body: JSON.stringify(data)
+                })
+                fetch(request)
+                .then((response) => {
+                  // console.log(response);
+                })
+                .catch((err) => {
+                  console.log(err);
+                })
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            })
+          }
 
           this.setState({
             posts: posts,
@@ -190,7 +194,11 @@ export default class Upload extends Component {
 
   message() {
     if (this.state.complete)
-    return <div className="header"><h1>Success! Your new upload is available on your profile.</h1></div>
+    return <div className="header">
+            <h1>Success! Your new upload is available on your
+             <Link to={'/'+loadUserData().username}><b> profile </b></Link>
+            </h1>
+           </div>
     else
     return <div className="header"></div>
   }

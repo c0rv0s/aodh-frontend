@@ -212,12 +212,18 @@ export default class Front extends Component {
             <div className="col-md-12 posts">
               {this.state.isLoading && <div className="lds-circle"></div>}
               {!this.state.isLoading && this.state.follows.length == 0 &&
-              <h3>You aren't following anyone yet!</h3>}
+              <h3>You aren't following anyone yet! Find new people in
+                <Link to="/Discover"><b> Discover </b></Link> or
+                  <Link to="/upload"><b> Upload </b></Link> something of your own
+              </h3>}
               {!this.state.isLoading && this.state.follows.length > 0 &&
                 this.state.posts.length == 0 &&
-                <h3>Your follows haven't posted anything yet!</h3>}
+                <h3>Your follows haven't posted anything yet! Find new people in
+                  <Link to="/Discover"><b> Discover </b></Link> or
+                  <Link to="/upload"><b> Upload </b></Link> something of your own
+                </h3>}
               {this.state.posts.map((post, i) => (
-                  <div className="post" key={i} >                
+                  <div className="post" key={i} >
                       {this.showPlayer(i)}<br/>
                       {"by "}
                       <Link to={post.op}>{post.op.split('.')[0]}</Link>
