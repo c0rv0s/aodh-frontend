@@ -57,7 +57,7 @@ export default class DiscoverPerson extends React.Component {
   }
 
   fetchData() {
-    lookupProfile(this.props.username)
+    lookupProfile(this.props.user.username)
       .then((profile) => {
         this.setState({
           person: new Person(profile),
@@ -75,7 +75,7 @@ export default class DiscoverPerson extends React.Component {
     this.setState({
       following: !following
     })
-    this.props.handleFollow(this.props.username)
+    this.props.handleFollow(this.props.user.username)
   }
 
   render() {
@@ -83,7 +83,7 @@ export default class DiscoverPerson extends React.Component {
     return (
       <span>
         <span className="pointer">
-          <Link to={this.props.username} className="blackText">
+          <Link to={this.props.user.username} className="blackText">
             <div className="avatar-section">
               <img
                 src={ person.avatarUrl() ? person.avatarUrl() : avatarFallbackImage }
@@ -95,13 +95,13 @@ export default class DiscoverPerson extends React.Component {
                   <span id="heading-name">{ person.name() ? person.name()
                     : 'Nameless Person' }</span>
                 </h1>
-                <span>{this.props.username.split('.')[0]}</span>
+                <span>{this.props.user.username.split('.')[0]}</span>
               </div>
             </div>
             <div className="left-text">
-              <p>{person.description()}</p>
+              <p>{person.description()} <br/> {this.props.user.posts} uploads</p>
             </div>
-            <br /><hr />
+            <br /><br /><hr />
             <button
               className="btn btn-primary btn-lg"
               onClick={() => this.handleFollow()}

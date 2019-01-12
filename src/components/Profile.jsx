@@ -114,7 +114,7 @@ export default class Profile extends Component {
     let val = 1
     if (this.state.discoverable)
       val = 0
-    let username = this.state.username.split('.')[0]
+    let username = this.state.username
     var data = {val: val, username: username}
     var request = new Request('https://aodh.xyz/api/user', {
       method: 'POST',

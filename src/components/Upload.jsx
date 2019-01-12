@@ -85,6 +85,7 @@ export default class Upload extends Component {
     else if (this.state.audio == "") alert("Audio missing")
     else {
       this.setState({
+        complete: false,
         isUploading: true
       })
       var that = this
@@ -133,6 +134,36 @@ export default class Upload extends Component {
         // update state
         .then(() => {
           console.log('index updated');
+          var username = loadUserData().username
+
+          var data = {val: 1, username: username}
+          var request2 = new Request('https://aodh.xyz/api/change_posts', {
+            method: 'POST',
+            headers: new Headers({'Content-Type': 'application/json'}),
+            body: JSON.stringify(data)
+          })
+          fetch(request2)
+          .then((response) => {
+            if (posts.length == 1) {
+              var data = {val: 1, username: username}
+              var request = new Request('https://aodh.xyz/api/user', {
+                method: 'POST',
+                headers: new Headers({'Content-Type': 'application/json'}),
+                body: JSON.stringify(data)
+              })
+              fetch(request)
+              .then((response) => {
+                // console.log(response);
+              })
+              .catch((err) => {
+                console.log(err);
+              })
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+
           this.setState({
             posts: posts,
             isUploading: false,

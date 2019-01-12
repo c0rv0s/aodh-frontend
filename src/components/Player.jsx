@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import {
   getFile,
-  putFile
+  putFile,
+  loadUserData
 } from 'blockstack'
 
 import {
@@ -94,6 +95,22 @@ export default class Player extends React.Component {
 
   delete() {
     this.props.handleDelete(this.props.id)
+
+    let username = loadUserData().username
+    var data = {val: -1, username: username}
+    var request = new Request('https://aodh.xyz/api/change_posts', {
+      method: 'POST',
+      headers: new Headers({'Content-Type': 'application/json'}),
+      body: JSON.stringify(data)
+    })
+    fetch(request)
+    .then((response) => {
+      // console.log(response);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+
     putFile(this.props.audio.audio, JSON.stringify(""))
     .then(() => {
       console.log('replaced with empty file');

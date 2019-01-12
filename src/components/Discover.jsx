@@ -74,7 +74,7 @@ export default class Discover extends Component {
             if (entry.username != "derpderpderp.id.blockstack" &&
                 entry.username != null &&
                 entry.username != self)
-              discover.push(entry.username)
+              discover.push({username: entry.username,posts:entry.posts})
           })
           var new_ids = ids.concat(data.ids)
           that.setState({
@@ -90,22 +90,6 @@ export default class Discover extends Component {
         max: true
       })
     })
-
-
-    // fetch('https://aodh.xyz/api/list_ten')
-    //   .then((response) => {
-    //     response.json()
-    //     .then((data) => {
-    //       data.forEach(function(entry) {
-    //         if (entry.username != "derpderpderp.id.blockstack" &&
-    //             entry.username != null)
-    //           discover.push(entry.username)
-    //       })
-    //       that.setState({
-    //         discover: discover
-    //       })
-    //     })
-    //   })
   }
 
   handleFollow(username) {
@@ -130,7 +114,7 @@ export default class Discover extends Component {
 
   showUser(i) {
     return <DiscoverPerson
-              username={this.state.discover[i]}
+              user={this.state.discover[i]}
               following={this.state.follows.includes(this.state.discover[i])}
               handleFollow={this.handleFollow}
            />
