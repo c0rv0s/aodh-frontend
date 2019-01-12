@@ -87,21 +87,22 @@ export default class Upload extends Component {
     else {
       this.setState({
         complete: false,
-        isUploading: true
+        isUploading: true,
+        isStillUploading: false
       })
       var that = this
-      setTimeout(function(){
+      var patience = setTimeout(function(){
         if (that.state.isUploading) {
           that.setState({
             isStillUploading: true
           })
         }
       }, 10000)
-      this.saveNewPost()
+      this.saveNewPost(patience)
     }
   }
 
-  saveNewPost() {
+  saveNewPost(patience) {
     let postText = this.state.description
     let audio = this.state.audio
     let posts = this.state.posts
@@ -167,7 +168,7 @@ export default class Upload extends Component {
               console.log(err);
             })
           }
-
+          clearTimeout(patience)
           this.setState({
             posts: posts,
             isUploading: false,
