@@ -18,7 +18,7 @@ body {
 }
 
 .solarbrown {
-  color: #8F8779;
+  color: #8F8779 !important;
 }
 
 .post {
