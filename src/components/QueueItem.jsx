@@ -18,7 +18,7 @@ export default class QueueItem extends Component {
           {item.title}
         </Link>
         {'\u00A0'}by{'\u00A0'}
-        <Link to={'/'+item.op} className="blackText">{item.op.split('.')[0]}</Link>
+        <Link to={'/'+item.op} className="blackText solarbrown">{item.op.split('.')[0]}</Link>
         {'\u00A0'}{'\u00A0'}
         <i className="fas fa-times pointer"
            onClick={() => this.props.remove(this.props.id)}></i>
