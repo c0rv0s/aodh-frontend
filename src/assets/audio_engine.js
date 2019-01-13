@@ -18,6 +18,7 @@ var play_start = 0
 var extra_time = 0
 
 export function song_ended() {
+  playfrom = 0
   ended += 1
 }
 export function get_paused() {
