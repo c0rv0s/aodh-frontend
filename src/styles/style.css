@@ -262,6 +262,7 @@ hr {
   float:  right;
 }
 
+
 /* theme */
 .theme {
   margin-top: 12px;
@@ -325,6 +326,31 @@ hr {
     z-index: 3;
     background-color: #fff;
     border-top: 2px solid #000;
+}
+
+/* queue */
+.queue {
+  z-index: 6;
+  position: fixed;
+  right: 6%;
+  bottom: 10%;
+  border: 1px solid #ddd;
+  box-shadow:10px 10px 20px grey;
+  height: 40%;
+  width: 20%;
+  overflow: scroll;
+  padding-bottom: 12px;
+}
+
+.queue div {
+  display: block;
+  text-align: left;
+  margin-left: -16px;
+}
+
+.fa-times {
+  float: right;
+  margin-right: 4px;
 }
 
 /* The navigation bar */

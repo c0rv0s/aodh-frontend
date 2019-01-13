@@ -53,8 +53,9 @@ export default class Song extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.match.params.username != this.state.username) {
-      this.fetchData(nextProps.match.params.username)
+    if(nextProps.match.params.username != this.state.username ||
+      nextProps.match.params.title != this.props.match.params.title) {
+        this.fetchData(this.props.match.params.username)
     }
   }
 

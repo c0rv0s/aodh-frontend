@@ -226,7 +226,7 @@ export default class Front extends Component {
                   <div className="post" key={i} >
                       {this.showPlayer(i)}<br/>
                       {"by "}
-                      <Link to={post.op}>{post.op.split('.')[0]}</Link>
+                      <Link to={'/'+post.op}>{post.op.split('.')[0]}</Link>
                   </div>
                   )
               )}

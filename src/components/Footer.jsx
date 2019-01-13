@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import QueueItem from './QueueItem.jsx'
 import {
   aud_nowPlaying,
   aud_pausePlaying,
@@ -10,7 +11,8 @@ import {
   aud_resumePlaying,
   get_paused,
   next_song,
-  set_playfrom
+  set_playfrom,
+  get_queue
 } from '../assets/audio_engine.js'
 
 export default class Footer extends Component {
@@ -21,8 +23,11 @@ export default class Footer extends Component {
       isLoading: false,
       audio: null,
       current_time: "--:--",
-      duration: "--:--"
+      duration: "--:--",
+      show: false,
+      queue: []
     }
+    this.show_queue = this.show_queue.bind(this)
   }
 
   componentDidMount() {
@@ -121,11 +126,14 @@ export default class Footer extends Component {
              </div>
     }
     else {
+      const aud = this.state.audio
       return (
         <div className="marginright inline" >
-          {this.state.audio.title + " by\u00A0"}
-          <Link to={this.state.audio.op}>{this.state.audio.op.split('.')[0]}</Link>
+            <Link to={'/'+aud.op+'/'+aud.title} className="blackText">
+              {aud.title + ' by ' +aud.op.split('.')[0]}
+            </Link>
         </div>
+
       )
     }
   }
@@ -164,12 +172,46 @@ export default class Footer extends Component {
     }
   }
 
+  show_queue() {
+    var queue = get_queue()
+    this.setState({
+      show: !this.state.show,
+      queue: queue
+    })
+  }
+
+  remove(i) {
+    aud_removefromqueue(i)
+  }
+  play(i) {
+    while (i > 0) {
+      next_song()
+      i--
+    }
+  }
+
   render() {
     return (
+      <div>
+
+        <ul className="queue" title="Now Playing Queue"
+          style={{display: this.state.show?"block":"none"}}>
+            {
+              this.state.queue.map((item, i) => (
+                <div key={i} >
+                  <QueueItem  item={item} id={i}
+                              remove={this.remove}
+                              play={this.play}/>
+                </div>
+                )
+              )
+            }
+        </ul>
+
       <div className="footer">
+
         <span className="left">
           {this.button()}
-
         </span>
 
         <span className="left" id="scrub-container">
@@ -183,12 +225,20 @@ export default class Footer extends Component {
           <div id="time-markers" className="inline">
               {'\u00A0'}{'\u00A0'}{this.state.duration}
           </div>
+          <div className="inline" >
+            {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+            <i className="fas fa-list fa-2x pointer"
+              onClick={() => this.show_queue()}>
+            </i>
+          </div>
         </span>
+
 
         <span className="right">
           {this.title()}
         </span>
 
+      </div>
       </div>
     )
   }

@@ -25,6 +25,10 @@ export function get_paused() {
   return paused
 }
 
+export function get_queue() {
+  return meta_queue
+}
+
 export function set_playfrom(num) {
   playfrom = num * song_length
   if (playing) {
@@ -122,8 +126,7 @@ export function aud_addtoqueue(file, metadata) {
 }
 
 // probably rewrite this to take meta as arg
-export function aud_removefromqueue(file) {
-  var index = queue.indexOf(file);
+export function aud_removefromqueue(index) {
   if (index > -1) {
     queue.splice(index, 1);
     meta_queue.splice(index, 1);
@@ -167,6 +170,9 @@ export function aud_loadfile(file, current) {
         play_start = audioContext.currentTime
       }, function(e) {
         console.log('Audio error! ', e);
+        source.stop();
+        source.disconnect()
+        audioContext.resume()
       });
     }
     // Send the request which kicks off

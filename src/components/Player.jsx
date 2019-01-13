@@ -9,7 +9,6 @@ import {
 import {
   aud_pausePlaying,
   aud_addtoqueue,
-  aud_removefromqueue,
   aud_loadfile,
   song_ended,
   aud_queuereplace,
