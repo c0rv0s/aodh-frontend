@@ -15,12 +15,24 @@ var paused = ""
 var song_length = 0
 
 var play_start = 0
+var extra_time = 0
 
 export function song_ended() {
   ended += 1
 }
 export function get_paused() {
   return paused
+}
+
+export function set_playfrom(num) {
+  playfrom = num * song_length
+  if (playing) {
+    source.stop();
+    source.disconnect()
+    audioContext.resume()
+    suspended = false
+    aud_loadfile(queue[0])
+  }
 }
 
 export function next_song() {
@@ -39,7 +51,7 @@ export function aud_nowPlaying() {
     return {
       status: 2,
       metadata: meta_queue[0],
-      time: audioContext.currentTime - play_start,
+      time: audioContext.currentTime - play_start + playfrom,
       duration: song_length
     }
   }
@@ -73,6 +85,13 @@ export function aud_pausePlaying(current) {
 }
 
 export function aud_resumePlaying() {
+  if (playfrom != 0) {
+    source.stop();
+    source.disconnect()
+    audioContext.resume()
+    suspended = false
+    aud_loadfile(queue[0])
+  }
   audioContext.resume()
   suspended = false
   playing = true

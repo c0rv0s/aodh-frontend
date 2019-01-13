@@ -9,7 +9,8 @@ import {
   aud_queuereplace,
   aud_resumePlaying,
   get_paused,
-  next_song
+  next_song,
+  set_playfrom
 } from '../assets/audio_engine.js'
 
 export default class Footer extends Component {
@@ -26,8 +27,8 @@ export default class Footer extends Component {
 
   componentDidMount() {
     var that = this
+    var elem = document.getElementById("scrubbar");
     setInterval(function(){
-      var elem = document.getElementById("scrubbar");
       var width = 0
       var audio = aud_nowPlaying()
       if (audio.status === 2) {
@@ -67,6 +68,19 @@ export default class Footer extends Component {
         })
       }
     }, 50);
+
+    document.getElementById('scrub').addEventListener('click', function (e) {
+      if (that.state.audio != null) {
+        var x = e.pageX - this.offsetLeft - 100, // or e.offsetX (less support, though)
+        y = e.pageY - this.offsetTop,  // or e.offsetY
+        scrub_width = this.offsetWidth;
+
+        var width = x/scrub_width
+        elem.style.width = (100*width) + '%';
+
+        set_playfrom(width)
+      }
+    });
   }
 
   play_pause() {
@@ -149,7 +163,7 @@ export default class Footer extends Component {
             {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
             {'\u00A0'}{'\u00A0'}{this.state.current_time}{'\u00A0'}{'\u00A0'}
           </div>
-          <div id="scrub">
+          <div id="scrub" className="pointer">
             <div id="scrubbar"></div>
           </div>
           <div id="time-markers" className="inline">
