@@ -53,9 +53,23 @@ export default class Footer extends Component {
         })
       }
       else if (audio.status === 1) {
+        if (audio.duration > 0) {
+          width = 100 * audio.time / audio.duration
+          if (width > 100) width = 0
+        }
+        elem.style.width = width + '%';
+        var d_minutes = Math.floor(audio.duration/60)
+        var d_seconds = Math.floor(audio.duration%60)
+        var c_minutes = Math.floor(audio.time/60)
+        var c_seconds = Math.floor(audio.time%60)
+
+        if (d_seconds < 10) d_seconds = '0'.concat(d_seconds)
+        if (c_seconds < 10) c_seconds = '0'.concat(c_seconds)
         that.setState({
           playing: false,
           audio:audio.metadata,
+          duration: d_minutes + ":" + d_seconds,
+          current_time: c_minutes + ":" + c_seconds
         })
       }
       else {

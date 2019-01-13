@@ -58,7 +58,9 @@ export function aud_nowPlaying() {
   else if (!playing && meta_queue.length > 0) {
     return {
       status: 1,
-      metadata: meta_queue[0]
+      metadata: meta_queue[0],
+      time: playfrom,
+      duration: song_length
     }
   }
   else {
@@ -81,6 +83,7 @@ export function aud_pausePlaying(current) {
   suspended = true
   playing = false
   paused = current
+  playfrom = audioContext.currentTime - play_start + playfrom
   audioContext.suspend()
 }
 
