@@ -129,7 +129,7 @@ export default class Footer extends Component {
       const aud = this.state.audio
       return (
         <div className="marginright inline" >
-            <Link to={'/'+aud.op+'/'+aud.title} className="blackText">
+            <Link to={'/'+aud.op+'/'+aud.title} className="blackText solarbrown">
               {aud.title + ' by ' +aud.op.split('.')[0]}
             </Link>
         </div>
