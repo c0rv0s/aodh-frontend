@@ -187,7 +187,7 @@ export default class Upload extends Component {
           isUploading: false,
         })
         console.error(e)
-        alert("Something went wrong. If your file is over 25mb reduce its size and try again.")
+        alert("Something went wrong. If your file is over 25mb reduce its size and try again. \n\nIf the problem persists try logging out and logging back in.")
       })
     }
     filereader.readAsDataURL(audio)
