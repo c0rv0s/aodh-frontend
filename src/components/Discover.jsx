@@ -130,7 +130,7 @@ export default class Discover extends Component {
             <div className="col-md-12 posts">
               {this.state.isLoading && <div className="lds-circle"></div>}
               {!this.state.isLoading && this.state.discover.length == 0 &&
-              <h3>huh, looks like we couldn't find anything...</h3>}
+              <h3>Huh, looks like we couldn't find anything...<br/><br/>Try checking back later</h3>}
               {this.state.discover.map((user, i) => (
                   <div className="post" key={i} >
 
