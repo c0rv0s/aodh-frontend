@@ -147,6 +147,7 @@ export default class Playlists extends Component {
               handleSave={this.handleSave}
               addToPlaylist={this.showPopup}
               removeFromPlaylist={this.removeFromPlaylist}
+              now={this.props.now}
             />
     }
   }

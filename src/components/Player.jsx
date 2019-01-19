@@ -22,7 +22,6 @@ export default class Player extends React.Component {
     this.state = {
       isLoading: false,
       file: null,
-      playing: false,
       saved: this.props.saved
     }
     this.fetchData = this.fetchData.bind(this)
@@ -36,36 +35,38 @@ export default class Player extends React.Component {
           .then((file) => {
             aud_queuereplace(0, file, this.props.audio)
             this.setState({file: file})
-            aud_loadfile(file,this.props.audio.created_at).then(
-              () => {this.setState({ playing: false})}
-            )
+            aud_loadfile(file,this.props.audio.created_at)
           })
           .catch((error) => {
             console.log(error);
             console.log('could not fetch audio')
           })
           .finally(() => {
-            this.setState({ isLoading: false,
-                            playing: true})
+            this.setState({ isLoading: false})
           })
     }
     else {
       aud_queuereplace(0, this.state.file, this.props.audio)
-      aud_loadfile(this.state.file,this.props.audio.created_at).then(() => {this.setState({ playing: false})})
-      this.setState({ isLoading: false,
-                      playing: true})
+      aud_loadfile(this.state.file,this.props.audio.created_at)
+      this.setState({ isLoading: false})
     }
   }
 
   play_pause() {
-    if (!this.state.playing) {
+    if (this.props.now.status != 2) {
       if (get_paused() != this.props.audio.created_at)
         song_ended()
       this.fetchData()
     }
     else {
-      this.setState({playing: false})
-      aud_pausePlaying(this.props.audio.created_at)
+      if (this.props.audio.created_at == this.props.now.metadata.created_at) {
+        aud_pausePlaying(this.props.audio.created_at)
+      }
+      else {
+        if (get_paused() != this.props.audio.created_at)
+          song_ended()
+        this.fetchData()
+      }
     }
   }
 
@@ -74,10 +75,7 @@ export default class Player extends React.Component {
       const options = { username: this.props.audio.op, decrypt: false}
       getFile(this.props.audio.audio, options)
         .then((file) => {
-          aud_addtoqueue(file, this.props.audio).then(() => {
-            this.setState({ playing: true})
-            aud_loadfile(this.state.file,this.props.audio.created_at).then(() => {this.setState({ playing: false})})
-          })
+          aud_addtoqueue(file, this.props.audio)
           this.setState({file: file})
         })
         .catch((error) => {
@@ -85,10 +83,7 @@ export default class Player extends React.Component {
         })
     }
     else {
-      aud_addtoqueue(this.state.file, this.props.audio).then(() => {
-        this.setState({ playing: true})
-        aud_loadfile(this.state.file,this.props.audio.created_at).then(() => {this.setState({ playing: false})})
-      })
+      aud_addtoqueue(this.state.file, this.props.audio)
     }
   }
 
@@ -158,6 +153,7 @@ export default class Player extends React.Component {
   }
 
   render() {
+
       return (
         <span>
           <span>
@@ -183,8 +179,11 @@ export default class Player extends React.Component {
             <span className="myAudio">
 
               <span onClick={() => this.play_pause()}className="pointer">
-                {this.state.playing ?  <i className="fas fa-pause-circle fa-2x"></i>
-                :<i className="fas fa-play-circle fa-2x"></i>}
+                {(this.props.now.status == 2
+                  && this.props.now.metadata.created_at == this.props.audio.created_at
+                  && this.props.now.metadata.audio == this.props.audio.audio) ?
+                  <i className="fas fa-pause-circle fa-2x"></i>
+                 :<i className="fas fa-play-circle fa-2x"></i>}
               </span>
               {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
               <span onClick={() => this.play_next()} className="pointer" title="Add to Next Up">

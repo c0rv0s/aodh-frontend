@@ -271,6 +271,7 @@ export default class Song extends Component {
               always={false}
               handleSave={this.handleSave}
               addToPlaylist={this.showPopup}
+              now={this.props.now}
             />
     }
   }

@@ -21,12 +21,17 @@ import {
   loadUserData
 } from 'blockstack'
 
+import {
+  aud_nowPlaying
+} from '../assets/audio_engine.js'
+
 export default class App extends Component {
 
   constructor(props) {
   	super(props)
     this.state = {
-      theme: "light"
+      theme: "light",
+      now_playing: {}
     }
   }
 
@@ -39,6 +44,13 @@ export default class App extends Component {
   handleSignOut(e) {
     e.preventDefault();
     signUserOut(window.location.origin);
+  }
+
+  componentDidMount() {
+    var that = this
+    setInterval(function(){
+      that.setState({now_playing: aud_nowPlaying()})
+    }, 100);
   }
 
   changeTheme() {
@@ -130,11 +142,11 @@ export default class App extends Component {
           { !isUserSignedIn() ?
             <Signin handleSignIn={ this.handleSignIn } />
             :
-            <Switch>
+            <Switch >
               <Route
                 exact path='/'
                 render={
-                  routeProps => <Front {...routeProps} />
+                  routeProps => <Front now={this.state.now_playing} {...routeProps} />
                 }
               />
               <Route
@@ -146,13 +158,13 @@ export default class App extends Component {
               <Route
                 path='/saved'
                 render={
-                  routeProps => <Saved {...routeProps} />
+                  routeProps => <Saved now={this.state.now_playing} {...routeProps} />
                 }
               />
               <Route
                 path='/playlists'
                 render={
-                  routeProps => <Playlists {...routeProps} />
+                  routeProps => <Playlists now={this.state.now_playing} {...routeProps} />
                 }
               />
               <Route
@@ -176,20 +188,22 @@ export default class App extends Component {
               <Route
                 exact path='/:username'
                 render={
-                  routeProps => <Profile handleSignOut={ this.handleSignOut } {...routeProps} />
+                  routeProps => <Profile handleSignOut={ this.handleSignOut }
+                                         now={this.state.now_playing} {...routeProps} />
                 }
               />
               <Route
                 exact path='/:username/:title'
                 render={
-                  routeProps => <Song handleSignOut={ this.handleSignOut } {...routeProps} />
+                  routeProps => <Song handleSignOut={ this.handleSignOut }
+                                      now={this.state.now_playing} {...routeProps} />
                 }
               />
             </Switch>
           }
         </div>
 
-        <Footer />
+        <Footer  now={this.state.now_playing} />
 
       </div>
       </div>

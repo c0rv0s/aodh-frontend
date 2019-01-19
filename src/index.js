@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
 
 import App from './components/App.jsx'
+import ScrollToTop from './components/ScrollToTop.jsx'
 
 // Require Sass file so webpack can build it
 import fontawesome from './styles/fontawesome.css'
@@ -18,7 +19,9 @@ document.styleSheets[5].disabled = true
 document.styleSheets[6].disabled = true
 
 ReactDOM.render(<BrowserRouter>
-                  <App />
+                  <ScrollToTop>
+                    <App />
+                  </ScrollToTop>
                 </BrowserRouter>,
                  document.getElementById('root')
  )

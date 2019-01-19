@@ -88,6 +88,12 @@ body {
   /*dark mode */
   color: #fff;
 }
+.queue-box {
+  background-color: #000;
+  -webkit-animation: neonbox 1.5s ease-in-out infinite alternate;
+  -moz-animation: neonbox 1.5s ease-in-out infinite alternate;
+  animation: neonbox 1.5s ease-in-out infinite alternate;
+}
 
 .post {
   /*dark mode */

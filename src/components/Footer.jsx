@@ -12,7 +12,8 @@ import {
   get_paused,
   next_song,
   set_playfrom,
-  get_queue
+  get_queue,
+  cut_queue
 } from '../assets/audio_engine.js'
 
 export default class Footer extends Component {
@@ -30,13 +31,12 @@ export default class Footer extends Component {
     this.show_queue = this.show_queue.bind(this)
   }
 
-  componentDidMount() {
-    var that = this
+  componentWillReceiveProps(nextProps) {
     var elem = document.getElementById("scrubbar");
-    setInterval(function(){
+    if (nextProps.now) {
       var width = 0
-      var audio = aud_nowPlaying()
-      if (audio.status === 2) {
+      var audio = nextProps.now
+      if (audio.status === 2 || audio.status === 1) {
         if (audio.duration > 0) {
           width = 100 * audio.time / audio.duration
           if (width > 100) width = 0
@@ -50,28 +50,8 @@ export default class Footer extends Component {
         if (d_seconds < 10) d_seconds = '0'.concat(d_seconds)
         if (c_seconds < 10) c_seconds = '0'.concat(c_seconds)
 
-        that.setState({
-          playing: true,
-          audio:audio.metadata,
-          duration: d_minutes + ":" + d_seconds,
-          current_time: c_minutes + ":" + c_seconds
-        })
-      }
-      else if (audio.status === 1) {
-        if (audio.duration > 0) {
-          width = 100 * audio.time / audio.duration
-          if (width > 100) width = 0
-        }
-        elem.style.width = width + '%';
-        var d_minutes = Math.floor(audio.duration/60)
-        var d_seconds = Math.floor(audio.duration%60)
-        var c_minutes = Math.floor(audio.time/60)
-        var c_seconds = Math.floor(audio.time%60)
-
-        if (d_seconds < 10) d_seconds = '0'.concat(d_seconds)
-        if (c_seconds < 10) c_seconds = '0'.concat(c_seconds)
-        that.setState({
-          playing: false,
+        this.setState({
+          playing: audio.status == 2 ? true : false,
           audio:audio.metadata,
           duration: d_minutes + ":" + d_seconds,
           current_time: c_minutes + ":" + c_seconds
@@ -79,15 +59,18 @@ export default class Footer extends Component {
       }
       else {
         elem.style.width = width + '%';
-        that.setState({
+        this.setState({
           playing: false,
           audio: null,
           current_time: "--:--",
           duration: "--:--"
         })
       }
-    }, 50);
+    }
+  }
 
+  componentDidMount() {
+    var that = this
     document.getElementById('scrub').addEventListener('click', function (e) {
       if (that.state.audio != null) {
         var x = e.pageX - this.offsetLeft - 100, // or e.offsetX (less support, though)
@@ -95,7 +78,7 @@ export default class Footer extends Component {
         scrub_width = this.offsetWidth;
 
         var width = x/scrub_width
-        elem.style.width = (100*width) + '%';
+        document.getElementById("scrubbar").style.width = (100*width) + '%';
 
         set_playfrom(width)
       }
@@ -103,7 +86,7 @@ export default class Footer extends Component {
   }
 
   play_pause() {
-    var audio = aud_nowPlaying()
+    var audio = this.props.now
     if (audio.status === 2) {
       aud_pausePlaying(audio.metadata.created_at)
       this.setState({playing: false})
@@ -126,14 +109,23 @@ export default class Footer extends Component {
              </div>
     }
     else {
-      const aud = this.state.audio
+      let aud = this.state.audio
       return (
         <div className="marginright inline" >
-            <Link to={'/'+aud.op+'/'+aud.title} className="blackText solarbrown">
-              {aud.title + ' by ' +aud.op.split('.')[0]}
-            </Link>
-        </div>
+          <div>
+            <Link to={'/'+aud.op} className="blackText solarbrown">{aud.op.split('.')[0]}</Link>
+          </div>
 
+          <div>{'\u00A0'}by{'\u00A0'}</div>
+
+          <div>
+            <Link to={'/'+aud.op+'/'+aud.title} >
+              {aud.title}
+            </Link>
+          </div>
+
+
+        </div>
       )
     }
   }
@@ -184,8 +176,12 @@ export default class Footer extends Component {
     aud_removefromqueue(i)
   }
   play(i) {
+    cut_queue(i)
+  }
+  clear() {
+    var i = this.state.queue.length
     while (i > 0) {
-      next_song()
+      this.remove(i)
       i--
     }
   }
@@ -194,8 +190,16 @@ export default class Footer extends Component {
     return (
       <div>
 
-        <ul className="queue" title="Now Playing Queue"
+        <div className="queue-box" title="Now Playing Queue"
           style={{display: this.state.show?"block":"none"}}>
+          <div className="left-align queue-title">
+            {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+            <b>Now Playing</b>
+            <span className="queue-control pointer" onClick={() => this.show_queue()}>Close</span>
+            <span className="queue-control pointer" onClick={() => this.clear()}>Clear</span>
+
+          </div>
+          <div className="queue">
             {
               this.state.queue.map((item, i) => (
                 <div key={i} >
@@ -206,7 +210,8 @@ export default class Footer extends Component {
                 )
               )
             }
-        </ul>
+          </div>
+        </div>
 
       <div className="footer">
 

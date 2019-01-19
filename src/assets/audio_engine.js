@@ -5,21 +5,20 @@
 
 var queue = []
 var meta_queue = []
-var audioContext = new (window.AudioContext || window.webkitAudioContext)();
-var source = audioContext.createBufferSource();
+var audioContext
+var source
 var suspended = false
 var playfrom = 0
-var ended = 0
-var playing = false
+var aud_playing = false
 var paused = ""
 var song_length = 0
 
 var play_start = 0
 var extra_time = 0
 
+
 export function song_ended() {
   playfrom = 0
-  ended += 1
 }
 export function get_paused() {
   return paused
@@ -31,7 +30,7 @@ export function get_queue() {
 
 export function set_playfrom(num) {
   playfrom = num * song_length
-  if (playing) {
+  if (aud_playing) {
     source.stop();
     source.disconnect()
     audioContext.resume()
@@ -52,7 +51,7 @@ export function next_song() {
 }
 
 export function aud_nowPlaying() {
-  if (playing){
+  if (aud_playing){ //playing
     return {
       status: 2,
       metadata: meta_queue[0],
@@ -60,7 +59,7 @@ export function aud_nowPlaying() {
       duration: song_length
     }
   }
-  else if (!playing && meta_queue.length > 0) {
+  else if (!aud_playing && meta_queue.length > 0) { //something is paused
     return {
       status: 1,
       metadata: meta_queue[0],
@@ -68,28 +67,52 @@ export function aud_nowPlaying() {
       duration: song_length
     }
   }
-  else {
+  else {        //empty queue
     return {
       status: 0,
-      metadata: {}
+      metadata: {created_at: null}
     }
+  }
+}
+
+//when you hit the little play on a song down the queue
+export function cut_queue(i) {
+  if (suspended) {
+    source.stop();
+    source.disconnect()
+  }
+
+  while (i > 0) {
+    queue.shift()
+    meta_queue.shift()
+    i--
+  }
+  if (suspended) {
+    audioContext.resume()
+    suspended = false
+    aud_over()
+  }
+
+  else {
+    aud_loadfile(queue[0],meta_queue[0].created_at)
   }
 }
 
 export function aud_over() {
     playfrom = 0
-    playing = false
+    aud_playing = false
     song_ended()
     queue.shift()
     meta_queue.shift()
+    aud_loadfile(queue[0],meta_queue[0].created_at)
 }
 
 export function aud_pausePlaying(current) {
+  audioContext.suspend()
   suspended = true
-  playing = false
+  aud_playing = false
   paused = current
   playfrom = audioContext.currentTime - play_start + playfrom
-  audioContext.suspend()
 }
 
 export function aud_resumePlaying() {
@@ -100,29 +123,21 @@ export function aud_resumePlaying() {
     suspended = false
     aud_loadfile(queue[0])
   }
-  audioContext.resume()
-  suspended = false
-  playing = true
-  paused = ""
-  play_start = audioContext.currentTime
+  if (suspended) {
+    audioContext.resume()
+    suspended = false
+    aud_playing = true
+    paused = ""
+    play_start = audioContext.currentTime
+  }
+  else {
+    aud_loadfile(queue[0],meta_queue[0].created_at)
+  }
 }
 
 export function aud_addtoqueue(file, metadata) {
   queue.push(file)
   meta_queue.push(metadata)
-  // promise to change player to pause
-  var o_start = ended+queue.length - 1
-  var promise = new Promise(function(resolve, reject) {
-    setInterval(function(){
-      if (ended == o_start) {
-        resolve("Stuff worked!");
-      }
-      else if (ended > o_start + 1) {
-        reject(Error("It broke"));
-      }
-    }, 100);
-  });
-  return promise
 }
 
 // probably rewrite this to take meta as arg
@@ -139,7 +154,7 @@ export function aud_queuereplace(index, file, metadata) {
 }
 
 export function aud_loadfile(file, current) {
-  if (playing || (suspended && current != paused)) {
+  if (aud_playing || (suspended && current != paused)) {
     // stop what's currently playing
     source.stop();
     source.disconnect()
@@ -150,6 +165,7 @@ export function aud_loadfile(file, current) {
        aud_resumePlaying()
   }
   else {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
     source = audioContext.createBufferSource();
     // Create the XHR which will grab the audio contents
     var request = new XMLHttpRequest();
@@ -177,27 +193,11 @@ export function aud_loadfile(file, current) {
     }
     // Send the request which kicks off
     request.send();
-    playing = true
+    aud_playing = true
   }
-    // do the promise stuff
-    source.onended = function(event) {
-      event.preventDefault()
-      aud_over()
-    }
-    var o_ended = ended
-    var promise = new Promise(function(resolve, reject) {
-      setInterval(function(){
-        if (ended == o_ended + 1) {
-          resolve("song ended");
-        }
-        if (!playing) {
-          resolve("paused from footer");
-        }
-        else if (ended > o_ended + 1) {
-          reject(Error("It broke"));
-        }
-      }, 100);
-    });
-    return promise
+  source.onended = function(event) {
+    event.preventDefault()
+    aud_over()
+  }
 
 }

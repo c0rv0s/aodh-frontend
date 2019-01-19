@@ -103,6 +103,7 @@ export default class Saved extends Component {
               always={true}
               handleSave={this.handleSave}
               addToPlaylist={this.showPopup}
+              now={this.props.now}
             />
     }
   }
