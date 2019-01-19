@@ -97,7 +97,7 @@ export default class Upload extends Component {
             isStillUploading: true
           })
         }
-      }, 10000)
+      }, 15000)
       this.saveNewPost(patience)
     }
   }

@@ -108,6 +108,11 @@ export default class Footer extends Component {
                 Not Playing
              </div>
     }
+    else if (this.props.now.loading) {
+      return <div className="marginright inline" >
+              <div className="lds-ellipsis up"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+            </div>
+    }
     else {
       let aud = this.state.audio
       return (

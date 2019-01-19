@@ -9,10 +9,9 @@ import {
 import {
   aud_pausePlaying,
   aud_addtoqueue,
-  aud_loadfile,
   song_ended,
-  aud_queuereplace,
-  get_paused
+  get_paused,
+  aud_fetchData
 } from '../assets/audio_engine.js'
 
 export default class Player extends React.Component {
@@ -21,70 +20,42 @@ export default class Player extends React.Component {
     super(props)
     this.state = {
       isLoading: false,
-      file: null,
       saved: this.props.saved
-    }
-    this.fetchData = this.fetchData.bind(this)
-  }
-
-  fetchData() {
-    const options = {username: this.props.audio.op, decrypt: false}
-    if (this.state.file == null) {
-      this.setState({ isLoading: true })
-        getFile(this.props.audio.audio, options)
-          .then((file) => {
-            aud_queuereplace(0, file, this.props.audio)
-            this.setState({file: file})
-            aud_loadfile(file,this.props.audio.created_at)
-          })
-          .catch((error) => {
-            console.log(error);
-            console.log('could not fetch audio')
-          })
-          .finally(() => {
-            this.setState({ isLoading: false})
-          })
-    }
-    else {
-      aud_queuereplace(0, this.state.file, this.props.audio)
-      aud_loadfile(this.state.file,this.props.audio.created_at)
-      this.setState({ isLoading: false})
     }
   }
 
   play_pause() {
+    // not playing
     if (this.props.now.status != 2) {
-      if (get_paused() != this.props.audio.created_at)
+      this.setState({isLoading: true})
+      if (get_paused() != this.props.audio.created_at){
         song_ended()
-      this.fetchData()
+      }
+      aud_fetchData(this.props.audio).then(() => {
+        this.setState({isLoading: false})
+      })
     }
+    // playing
     else {
+      // playing this player's song
       if (this.props.audio.created_at == this.props.now.metadata.created_at) {
         aud_pausePlaying(this.props.audio.created_at)
       }
+      // playing someting else
       else {
-        if (get_paused() != this.props.audio.created_at)
+        if (get_paused() != this.props.audio.created_at){
           song_ended()
-        this.fetchData()
+        }
+        this.setState({isLoading: true})
+        aud_fetchData(this.props.audio).then(() => {
+          this.setState({isLoading: false})
+        })
       }
     }
   }
 
   play_next() {
-    if (this.state.file == null) {
-      const options = { username: this.props.audio.op, decrypt: false}
-      getFile(this.props.audio.audio, options)
-        .then((file) => {
-          aud_addtoqueue(file, this.props.audio)
-          this.setState({file: file})
-        })
-        .catch((error) => {
-          console.log('could not fetch audio')
-        })
-    }
-    else {
-      aud_addtoqueue(this.state.file, this.props.audio)
-    }
+    aud_addtoqueue(this.props.audio)
   }
 
   delete() {
@@ -126,29 +97,20 @@ export default class Player extends React.Component {
     element.style.display = 'none';
     document.body.appendChild(element);
 
-    if (this.state.file == null) {
-      this.setState({ isLoading: true })
-      getFile(this.props.audio.audio, options)
-        .then((file) => {
-          element.setAttribute('href', file);
-          element.setAttribute('download', this.props.audio.title);
-          element.click();
-          document.body.removeChild(element);
-          this.setState({file: file})
-        })
-        .catch((error) => {
-          console.log('could not complete download')
-        })
-        .finally(() => {
-          this.setState({ isLoading: false})
-        })
-    }
-    else {
-      element.setAttribute('href', this.state.file);
-      element.setAttribute('download', this.props.audio.title);
-      element.click();
-      document.body.removeChild(element);
-    }
+    this.setState({ isLoading: true })
+    getFile(this.props.audio.audio, options)
+      .then((file) => {
+        element.setAttribute('href', file);
+        element.setAttribute('download', this.props.audio.title);
+        element.click();
+        document.body.removeChild(element);
+      })
+      .catch((error) => {
+        console.log('could not complete download')
+      })
+      .finally(() => {
+        this.setState({ isLoading: false})
+      })
 
   }
 
