@@ -723,6 +723,10 @@ footer {
   background-color: #222222;
 }
 
+footer a {
+  color: rgba(255, 255, 255, 0.3);
+}
+
 footer p {
   font-size: 12px;
   margin: 0;

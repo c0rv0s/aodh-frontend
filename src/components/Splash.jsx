@@ -104,6 +104,7 @@ render();
       <footer>
         <div className="container">
           <p>&copy; Aodh 2018. All Rights Reserved.</p>
+          <p>Animation by <a href="https://codepen.io/shshaw/">Shaw</a> on CodePen</p>
         </div>
       </footer>
       </div>
