@@ -8,6 +8,7 @@ const ManifestAssetPlugin = new CopyWebpackPlugin([ { from: 'src/assets/manifest
 const IconAssetPlugin = new CopyWebpackPlugin([
 		 { from: 'src/images/icon-192x192.png', to: 'images/icon-192x192.png' },
 		{ from: 'src/images/favicon.ico', to: 'images/favicon.ico' },
+		{ from: 'src/images/bg-pattern.png', to: 'images/bg-pattern.png' },
 ]);
 
 const UglifyEsPlugin = require('uglify-es-webpack-plugin');

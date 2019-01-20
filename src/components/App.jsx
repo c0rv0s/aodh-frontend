@@ -10,6 +10,7 @@ import Contact from './Contact.jsx'
 import Faq from './Faq.jsx'
 import Footer from './Footer.jsx'
 import Song from './Song.jsx'
+import Splash from './Splash.jsx'
 
 import { Switch, Route, Link } from 'react-router-dom'
 import {
@@ -103,6 +104,10 @@ export default class App extends Component {
   }
 
   render() {
+    if (!isUserSignedIn()) {
+      return (<Splash handleSignIn={ this.handleSignIn } />)
+    }
+    else {
     return (
       <div>
         {this.theme()}
@@ -139,9 +144,6 @@ export default class App extends Component {
         </div>
 
         <div className="site-wrapper-inner">
-          { !isUserSignedIn() ?
-            <Signin handleSignIn={ this.handleSignIn } />
-            :
             <Switch >
               <Route
                 exact path='/'
@@ -200,7 +202,6 @@ export default class App extends Component {
                 }
               />
             </Switch>
-          }
         </div>
 
         <Footer  now={this.state.now_playing} />
@@ -208,6 +209,7 @@ export default class App extends Component {
       </div>
       </div>
     )
+    }
   }
 
   componentWillMount() {

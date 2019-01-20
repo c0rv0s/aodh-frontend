@@ -73,7 +73,7 @@ export default class Footer extends Component {
     var that = this
     document.getElementById('scrub').addEventListener('click', function (e) {
       if (that.state.audio != null) {
-        var x = e.pageX - this.offsetLeft - 100, // or e.offsetX (less support, though)
+        var x = e.pageX - this.offsetLeft, // or e.offsetX (less support, though)
         y = e.pageY - this.offsetTop,  // or e.offsetY
         scrub_width = this.offsetWidth;
 

@@ -13,10 +13,12 @@ import style from './styles/style.css'
 import dark from './styles/dark.css'
 import solaris from './styles/solar.css'
 import hypersonic from './styles/hypersonic.css'
+// import newage from './styles/new-age.css'
 
 document.styleSheets[4].disabled = true
 document.styleSheets[5].disabled = true
 document.styleSheets[6].disabled = true
+// document.styleSheets[7].disabled = true
 
 ReactDOM.render(<BrowserRouter>
                   <ScrollToTop>
