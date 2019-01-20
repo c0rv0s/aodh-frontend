@@ -12,8 +12,8 @@ import {
 var queue = []
 var meta_queue = []
 
-var cache = []
-var meta_cache = []
+// var cache = []
+// var meta_cache = []
 
 var audioContext
 var source
@@ -89,14 +89,14 @@ export function aud_nowPlaying() {
   }
 }
 
-function cache_song() {
-  cache.push(queue[0])
-  meta_cache.push(meta_queue[0])
-  if (cache.length > 25) {
-    cache.shift()
-    meta_cache.shift()
-  }
-}
+// function cache_song() {
+//   cache.push(queue[0])
+//   meta_cache.push(meta_queue[0])
+//   if (cache.length > 25) {
+//     cache.shift()
+//     meta_cache.shift()
+//   }
+// }
 
 //when you hit the little play on a song down the queue
 export function cut_queue(i) {
@@ -106,7 +106,7 @@ export function cut_queue(i) {
   }
 
   while (i > 0) {
-    cache_song()
+    // cache_song()
     queue.shift()
     meta_queue.shift()
     i--
@@ -125,7 +125,7 @@ export function cut_queue(i) {
 export function aud_over() {
     aud_playing = false
     song_ended()
-    cache_song()
+    // cache_song()
     queue.shift()
     meta_queue.shift()
     if (queue.length != meta_queue.length) {
@@ -181,14 +181,14 @@ export function aud_addtoqueue(audio) {
     meta_queue.push(audio)
     queue.push(queue[index])
   }
-  else if (meta_cache.filter(a => a.created_at == audio.created_at).length > 0) {
-    let index = 0
-    meta_cache.forEach(function(e, i){
-      if (e.created_at == audio.created_at) index = i
-    })
-    meta_queue.push(audio)
-    queue.push(cache[index])
-  }
+  // else if (meta_cache.filter(a => a.created_at == audio.created_at).length > 0) {
+  //   let index = 0
+  //   meta_cache.forEach(function(e, i){
+  //     if (e.created_at == audio.created_at) index = i
+  //   })
+  //   meta_queue.push(audio)
+  //   queue.push(cache[index])
+  // }
   else {
     meta_queue.push(audio)
     getFile(audio.audio, options)
@@ -236,15 +236,15 @@ export function aud_fetchData(audio) {
     aud_loadfile(queue[index], audio.created_at)
     file_obtained = true
   }
-  else if (meta_cache.filter(a => a.created_at == audio.created_at).length > 0) {
-    let index = 0
-    meta_cache.forEach(function(e, i){
-      if (e.created_at == audio.created_at) index = i
-    })
-    aud_queuereplace(0, cache[index], audio)
-    aud_loadfile(cache[index], audio.created_at)
-    file_obtained = true
-  }
+  // else if (meta_cache.filter(a => a.created_at == audio.created_at).length > 0) {
+  //   let index = 0
+  //   meta_cache.forEach(function(e, i){
+  //     if (e.created_at == audio.created_at) index = i
+  //   })
+  //   aud_queuereplace(0, cache[index], audio)
+  //   aud_loadfile(cache[index], audio.created_at)
+  //   file_obtained = true
+  // }
   else {
     getFile(audio.audio, options)
       .then((file) => {
@@ -265,7 +265,7 @@ export function aud_fetchData(audio) {
 export function aud_loadfile(file, current) {
   if (aud_playing || (suspended && current != paused)) {
     // stop what's currently playing
-    cache_song()
+    // cache_song()
     source.stop();
     source.disconnect()
     audioContext.resume()
