@@ -29,6 +29,7 @@ var extra_time = 0
 
 
 export function song_ended() {
+  console.log('ended');
   playfrom = 0
 }
 export function get_paused() {
@@ -114,11 +115,22 @@ export function cut_queue(i) {
   if (suspended) {
     audioContext.resume()
     suspended = false
-    aud_over()
+    // aud_over()
   }
 
+  song_ended()
+  if (queue.length != meta_queue.length) {
+    loading = true
+    var o = setInterval(function(){
+      if (queue.length == meta_queue.length) {
+        clearInterval(o)
+        loading = false
+        aud_loadfile(queue[0],meta_queue[0].created_at)
+      }
+    }, 50);
+  }
   else {
-    aud_loadfile(queue[0],meta_queue[0].created_at)
+      aud_loadfile(queue[0],meta_queue[0].created_at)
   }
 }
 
@@ -134,12 +146,14 @@ export function aud_over() {
         if (queue.length == meta_queue.length) {
           clearInterval(o)
           loading = false
-          aud_loadfile(queue[0],meta_queue[0].created_at)
+          if (meta_queue.length > 0)
+            aud_loadfile(queue[0],meta_queue[0].created_at)
         }
       }, 100);
     }
     else {
-      aud_loadfile(queue[0],meta_queue[0].created_at)
+      if (meta_queue.length > 0)
+        aud_loadfile(queue[0],meta_queue[0].created_at)
     }
 }
 
@@ -232,6 +246,7 @@ export function aud_fetchData(audio) {
     meta_queue.forEach(function(e, i){
       if (e.created_at == audio.created_at) index = i
     })
+    if (meta_queue.length>0 && meta_queue[0].created_at != audio.created_at && meta_queue[0].audio != audio.audio) song_ended()
     aud_queuereplace(0, queue[index], audio)
     aud_loadfile(queue[index], audio.created_at)
     file_obtained = true
@@ -248,6 +263,7 @@ export function aud_fetchData(audio) {
   else {
     getFile(audio.audio, options)
       .then((file) => {
+        if (meta_queue.length>0 && meta_queue[0].created_at != audio.created_at && meta_queue[0].audio != audio.audio) song_ended()
         aud_queuereplace(0, file, audio)
         aud_loadfile(file, audio.created_at)
         file_obtained = true

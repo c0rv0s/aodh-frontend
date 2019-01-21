@@ -11,8 +11,10 @@ export default class QueueItem extends Component {
     return (
       <div>
         <br/>
-        <i className="fas fa-play-circle pointer"
-           onClick={() => this.props.play(this.props.id)}></i>
+        {this.props.id != 0 &&
+          <i className="fas fa-play-circle pointer"
+             onClick={() => this.props.play(this.props.id)}></i>
+        }
         {'\u00A0'}{'\u00A0'}
         <Link to={'/'+item.op+'/'+item.title} >
           {item.title}

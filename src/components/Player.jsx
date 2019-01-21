@@ -9,7 +9,6 @@ import {
 import {
   aud_pausePlaying,
   aud_addtoqueue,
-  song_ended,
   get_paused,
   aud_fetchData
 } from '../assets/audio_engine.js'
@@ -28,9 +27,9 @@ export default class Player extends React.Component {
     // not playing
     if (this.props.now.status != 2) {
       this.setState({isLoading: true})
-      if (get_paused() != this.props.audio.created_at){
-        song_ended()
-      }
+      // if (get_paused() != this.props.audio.created_at){
+      //   song_ended()
+      // }
       aud_fetchData(this.props.audio).then(() => {
         this.setState({isLoading: false})
       })
@@ -43,9 +42,9 @@ export default class Player extends React.Component {
       }
       // playing someting else
       else {
-        if (get_paused() != this.props.audio.created_at){
-          song_ended()
-        }
+        // if (get_paused() != this.props.audio.created_at){
+        //   song_ended()
+        // }
         this.setState({isLoading: true})
         aud_fetchData(this.props.audio).then(() => {
           this.setState({isLoading: false})
@@ -91,19 +90,49 @@ export default class Player extends React.Component {
       this.setState({saved: !this.state.saved})
   }
 
+
+ convertDataURIToBinary(dataURI) {
+   var BASE64_MARKER = ';base64,';
+  var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+  var base64 = dataURI.substring(base64Index);
+  var raw = window.atob(base64);
+  var rawLength = raw.length;
+  var array = new Uint8Array(new ArrayBuffer(rawLength));
+  for(i = 0; i < rawLength; i++) {
+      array[i] = raw.charCodeAt(i);
+    }
+  return array;
+}
+
   download() {
     const options = {username: this.props.audio.op, decrypt: false}
-    var element = document.createElement('a');
-    element.style.display = 'none';
-    document.body.appendChild(element);
 
     this.setState({ isLoading: true })
     getFile(this.props.audio.audio, options)
       .then((file) => {
+        var element = document.createElement('a');
+        element.style.display = 'none';
+        document.body.appendChild(element);
         element.setAttribute('href', file);
         element.setAttribute('download', this.props.audio.title);
         element.click();
         document.body.removeChild(element);
+        // console.log(file);
+        // var binary= this.convertDataURIToBinary(file);
+        // var blob = new Blob([file], {type: 'audio/wav'});
+        //  var filename =  this.props.audio.title
+        //  if(window.navigator.msSaveOrOpenBlob) {
+        //      window.navigator.msSaveBlob(blob, filename);
+        //  }
+        //  else{
+        //      var elem = window.document.createElement('a');
+        //      elem.style.display = 'none';
+        //      elem.href = window.URL.createObjectURL(blob);
+        //      elem.download = filename;
+        //      document.body.appendChild(elem);
+        //      elem.click();
+        //      document.body.removeChild(elem);
+        //  }
       })
       .catch((error) => {
         console.log('could not complete download')

@@ -91,7 +91,7 @@ render();
                 </div>
               </div>
             </div>
-            <div class="col-lg-5 my-auto">
+            <div className="col-lg-5 my-auto">
 
               <canvas id="canvas" />
 
