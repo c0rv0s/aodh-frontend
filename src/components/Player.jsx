@@ -91,48 +91,28 @@ export default class Player extends React.Component {
   }
 
 
- convertDataURIToBinary(dataURI) {
-   var BASE64_MARKER = ';base64,';
-  var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
-  var base64 = dataURI.substring(base64Index);
-  var raw = window.atob(base64);
-  var rawLength = raw.length;
-  var array = new Uint8Array(new ArrayBuffer(rawLength));
-  for(i = 0; i < rawLength; i++) {
-      array[i] = raw.charCodeAt(i);
-    }
-  return array;
-}
-
   download() {
     const options = {username: this.props.audio.op, decrypt: false}
 
     this.setState({ isLoading: true })
     getFile(this.props.audio.audio, options)
       .then((file) => {
-        var element = document.createElement('a');
+        let element = document.createElement('a');
+        let title = this.props.audio.title
+        if(navigator.userAgent.indexOf("Firefox") != -1 )
+        {
+         title += '.wav'
+        }
+        if(navigator.userAgent.indexOf("Chrome") != -1 )
+        {
+         alert('This feature is only partially supported by this browser. If the download is unsuccessful please try another browser.')
+        }
         element.style.display = 'none';
         document.body.appendChild(element);
         element.setAttribute('href', file);
-        element.setAttribute('download', this.props.audio.title);
+        element.setAttribute('download', title);
         element.click();
         document.body.removeChild(element);
-        // console.log(file);
-        // var binary= this.convertDataURIToBinary(file);
-        // var blob = new Blob([file], {type: 'audio/wav'});
-        //  var filename =  this.props.audio.title
-        //  if(window.navigator.msSaveOrOpenBlob) {
-        //      window.navigator.msSaveBlob(blob, filename);
-        //  }
-        //  else{
-        //      var elem = window.document.createElement('a');
-        //      elem.style.display = 'none';
-        //      elem.href = window.URL.createObjectURL(blob);
-        //      elem.download = filename;
-        //      document.body.appendChild(elem);
-        //      elem.click();
-        //      document.body.removeChild(elem);
-        //  }
       })
       .catch((error) => {
         console.log('could not complete download')
