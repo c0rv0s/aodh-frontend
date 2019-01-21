@@ -161,9 +161,9 @@ export default class Footer extends Component {
     else if (!this.state.playing && this.state.audio == null) {
       return (
         <div className="marginleft inline" >
-          <i className="fas fa-play-circle fa-2x" style={{color:"grey"}}></i>
+          <i className="fas fa-play-circle fa-2x grey" ></i>
           {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
-          <i className="fas fa-fast-forward fa-2x" style={{color:"grey"}}></i>
+          <i className="fas fa-fast-forward fa-2x grey" ></i>
         </div>
       )
     }
@@ -194,9 +194,8 @@ export default class Footer extends Component {
   render() {
     return (
       <div>
-
-        <div className="queue-box" title="Now Playing Queue"
-          style={{display: this.state.show?"block":"none"}}>
+        {this.state.show &&
+        <div className="queue-box" title="Now Playing Queue" >
           <div className="left-align queue-title">
             {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
             <b>Now Playing</b>
@@ -217,7 +216,7 @@ export default class Footer extends Component {
             }
           </div>
         </div>
-
+      }
       <div className="footer">
 
         <span className="left">

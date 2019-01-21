@@ -329,6 +329,10 @@ hr {
     border-top: 2px solid #000;
 }
 
+.grey {
+  color: grey;
+}
+
 /* queue */
 .queue-box {
   background-color: white;

@@ -15,7 +15,8 @@ var meta_queue = []
 // var cache = []
 // var meta_cache = []
 
-var audioContext
+var touched = false
+var audioContext = new (window.AudioContext || window.webkitAudioContext)();
 var source
 var suspended = false
 var playfrom = 0
@@ -27,9 +28,9 @@ var loading = false
 var play_start = 0
 var extra_time = 0
 
+var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
 
 export function song_ended() {
-  console.log('ended');
   playfrom = 0
 }
 export function get_paused() {
@@ -158,11 +159,11 @@ export function aud_over() {
 }
 
 export function aud_pausePlaying(current) {
-  audioContext.suspend()
   suspended = true
   aud_playing = false
   paused = current
   playfrom = audioContext.currentTime - play_start + playfrom
+  audioContext.suspend()
 }
 
 export function aud_resumePlaying() {
@@ -194,6 +195,9 @@ export function aud_addtoqueue(audio) {
     })
     meta_queue.push(audio)
     queue.push(queue[index])
+    if (meta_queue.length == 1) {
+      aud_loadfile(queue[0], queue[0].created_at)
+    }
   }
   // else if (meta_cache.filter(a => a.created_at == audio.created_at).length > 0) {
   //   let index = 0
@@ -208,6 +212,9 @@ export function aud_addtoqueue(audio) {
     getFile(audio.audio, options)
       .then((file) => {
         queue.push(file)
+        if (meta_queue.length == 1) {
+          aud_loadfile(queue[0], queue[0].created_at)
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -291,8 +298,9 @@ export function aud_loadfile(file, current) {
        aud_resumePlaying()
   }
   else {
-    audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    source = audioContext.createBufferSource();
+    if (!touched ) {
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    }
     // Create the XHR which will grab the audio contents
     var request = new XMLHttpRequest();
 
@@ -300,9 +308,10 @@ export function aud_loadfile(file, current) {
     request.open('GET', file, true);
     // Setting the responseType to arraybuffer sets up the audio decoding
     request.responseType = 'arraybuffer';
-    request.onload = function() {
+    request.addEventListener('load', function() {
       // Decode the audio once the require is complete
       audioContext.decodeAudioData(request.response, function(buffer) {
+        source = audioContext.createBufferSource();
         source.buffer = buffer;
         song_length = buffer.duration
         // Connect the audio to source (multiple audio buffers can be connected!)
@@ -310,20 +319,29 @@ export function aud_loadfile(file, current) {
         // Play the sound!
         source.start(0, playfrom);
         play_start = audioContext.currentTime
+        aud_playing = true
+
+
+        if (!touched) {
+          touched = true
+          if (isSafari) {
+            aud_pausePlaying(current)
+          }
+        }
+
+        source.onended = function(event) {
+          event.preventDefault()
+          aud_over()
+        }
       }, function(e) {
         console.log('Audio error! ', e);
         // source.stop();
         // source.disconnect()
         // audioContext.resume()
       });
-    }
+    }, false);
     // Send the request which kicks off
     request.send();
-    aud_playing = true
-  }
-  source.onended = function(event) {
-    event.preventDefault()
-    aud_over()
   }
 
 }
