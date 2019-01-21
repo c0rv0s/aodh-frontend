@@ -16,7 +16,7 @@ var meta_queue = []
 // var meta_cache = []
 
 var touched = false
-var audioContext = new (window.AudioContext || window.webkitAudioContext)();
+var audioContext //= new (window.AudioContext || window.webkitAudioContext)();
 var source
 var suspended = false
 var playfrom = 0
@@ -28,6 +28,7 @@ var loading = false
 var play_start = 0
 var extra_time = 0
 
+var isFirefox = typeof InstallTrigger !== 'undefined';
 var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
 
 export function song_ended() {
@@ -44,11 +45,11 @@ export function get_queue() {
 export function set_playfrom(num) {
   playfrom = num * song_length
   if (aud_playing) {
-    source.stop();
-    source.disconnect()
-    audioContext.resume()
+    // source.stop();
+    // source.disconnect()
+    // audioContext.resume()
     suspended = false
-    aud_loadfile(queue[0])
+    aud_loadfile(queue[0], meta_queue[0].created_at)
   }
 }
 
@@ -64,10 +65,15 @@ export function next_song() {
 }
 
 export function aud_nowPlaying() {
+  // console.log(meta_queue[0]);
+  var md = meta_queue[0]
+  if (md == undefined) {
+    md = {created_at: null, op: '-'}
+  }
   if (aud_playing){ //playing
     return {
       status: 2,
-      metadata: meta_queue[0],
+      metadata: md,
       time: audioContext.currentTime - play_start + playfrom,
       duration: song_length,
       loading: loading
@@ -76,7 +82,7 @@ export function aud_nowPlaying() {
   else if (!aud_playing && meta_queue.length > 0) { //something is paused
     return {
       status: 1,
-      metadata: meta_queue[0],
+      metadata: md,
       time: playfrom,
       duration: song_length,
       loading: loading
@@ -287,6 +293,7 @@ export function aud_fetchData(audio) {
 // takes the file passed to it and starts playing
 export function aud_loadfile(file, current) {
   if (aud_playing || (suspended && current != paused)) {
+    console.log('nigger');
     // stop what's currently playing
     // cache_song()
     source.stop();
@@ -295,9 +302,11 @@ export function aud_loadfile(file, current) {
     suspended = false
   }
   if (suspended && current == paused) {
+    console.log('faggot');
        aud_resumePlaying()
   }
   else {
+    console.log('balls');
     if (!touched ) {
       audioContext = new (window.AudioContext || window.webkitAudioContext)();
     }
@@ -308,7 +317,8 @@ export function aud_loadfile(file, current) {
     request.open('GET', file, true);
     // Setting the responseType to arraybuffer sets up the audio decoding
     request.responseType = 'arraybuffer';
-    request.addEventListener('load', function() {
+    request.onload = function() {
+    // request.addEventListener('load', function() {
       // Decode the audio once the require is complete
       audioContext.decodeAudioData(request.response, function(buffer) {
         source = audioContext.createBufferSource();
@@ -320,7 +330,6 @@ export function aud_loadfile(file, current) {
         source.start(0, playfrom);
         play_start = audioContext.currentTime
         aud_playing = true
-
 
         if (!touched) {
           touched = true
@@ -339,7 +348,7 @@ export function aud_loadfile(file, current) {
         // source.disconnect()
         // audioContext.resume()
       });
-    }, false);
+    }
     // Send the request which kicks off
     request.send();
   }

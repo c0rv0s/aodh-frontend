@@ -24,8 +24,9 @@ export default class Player extends React.Component {
   }
 
   play_pause() {
+    const now = this.props.now
     // not playing
-    if (this.props.now.status != 2) {
+    if (now.status != 2) {
       this.setState({isLoading: true})
       // if (get_paused() != this.props.audio.created_at){
       //   song_ended()
@@ -37,7 +38,7 @@ export default class Player extends React.Component {
     // playing
     else {
       // playing this player's song
-      if (this.props.audio.created_at == this.props.now.metadata.created_at) {
+      if (this.props.audio.created_at == now.metadata.created_at) {
         aud_pausePlaying(this.props.audio.created_at)
       }
       // playing someting else
@@ -45,6 +46,7 @@ export default class Player extends React.Component {
         // if (get_paused() != this.props.audio.created_at){
         //   song_ended()
         // }
+
         this.setState({isLoading: true})
         aud_fetchData(this.props.audio).then(() => {
           this.setState({isLoading: false})
@@ -124,7 +126,7 @@ export default class Player extends React.Component {
   }
 
   render() {
-
+    const now = this.props.now
       return (
         <span>
           <span>
@@ -150,9 +152,9 @@ export default class Player extends React.Component {
             <span className="myAudio">
 
               <span onClick={() => this.play_pause()}className="pointer">
-                {(this.props.now.status == 2
-                  && this.props.now.metadata.created_at == this.props.audio.created_at
-                  && this.props.now.metadata.audio == this.props.audio.audio) ?
+                {(now.status == 2
+                  && now.metadata.created_at == this.props.audio.created_at
+                  && now.metadata.audio == this.props.audio.audio) ?
                   <i className="fas fa-pause-circle fa-2x"></i>
                  :<i className="fas fa-play-circle fa-2x"></i>}
               </span>
