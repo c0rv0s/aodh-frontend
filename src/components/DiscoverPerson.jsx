@@ -101,6 +101,7 @@ export default class DiscoverPerson extends React.Component {
             <div className="left-text">
               <p>{person.description()} <br/> {this.props.user.posts} uploads</p>
             </div>
+            </Link>
             <br /><br /><hr />
             <button
               className="btn btn-primary btn-lg"
@@ -108,7 +109,7 @@ export default class DiscoverPerson extends React.Component {
             >
               {this.state.following? "Following" : "Follow"}
             </button>
-            </Link>
+
         </span>
       </span>
     )
