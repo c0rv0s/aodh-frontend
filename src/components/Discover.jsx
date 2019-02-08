@@ -143,7 +143,7 @@ export default class Discover extends Component {
               {this.state.max &&
                 <h3>That's everyone!</h3>
               }
-              {(this.state.discover.length >= 3) && !this.state.max &&
+              {(this.state.discover.length >= 1) && !this.state.max &&
                 <button
                   className="btn btn-primary btn-lg"
                   onClick={() => this.fetchDiscover()}
