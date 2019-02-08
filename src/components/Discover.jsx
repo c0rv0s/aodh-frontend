@@ -46,6 +46,18 @@ export default class Discover extends Component {
       })
   }
 
+  /**
+ * Shuffles array in place. ES6 version
+ * @param {Array} a items An array containing the items.
+ */
+ shuffle(a) {
+      for (let i = a.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+  }
+
   //retrive items from postgres
   fetchDiscover() {
     var ids = this.state.ids
@@ -78,7 +90,7 @@ export default class Discover extends Component {
           })
           var new_ids = ids.concat(data.ids)
           that.setState({
-            discover: discover,
+            discover: that.shuffle(discover),
             ids: new_ids
           })
         }
