@@ -90,7 +90,7 @@ export default class Discover extends Component {
           })
           var new_ids = ids.concat(data.ids)
           that.setState({
-            discover: that.shuffle(discover),
+            discover: discover,
             ids: new_ids
           })
         }
