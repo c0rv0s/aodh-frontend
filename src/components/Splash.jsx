@@ -101,10 +101,74 @@ render();
 
       </header>
 
+      <section className="features" id="features">
+        <div className="container">
+          <div className="section-heading text-center">
+            <h2>What? How? Why?</h2>
+            <hr/>
+          </div>
+          <div className="row">
+            <div className="col-lg-4 my-auto">
+              <div className="device-container">
+                <div className="device-mockup iphone6_plus portrait white">
+                  <div className="screen">
+                    <img src="http://i63.tinypic.com/vctheo.png" class="img-fluid" width="400" alt="" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-8 my-auto">
+              <div className="container-fluid">
+                <div className="row">
+                  <div className="col-lg-6">
+                    <div className="feature-item">
+                      <i className="icon-screen-smartphone text-primary"></i>
+                      <h3>Free</h3>
+                      <p>Everything you post is saved and delivered through the Blockstack network.
+                        Post as much as you want forever, no data harvesting, you aren't the product,
+                        your music is and you are the owner.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="col-lg-6">
+                    <div className="feature-item">
+                      <i className="icon-camera text-primary"></i>
+                      <h3>Secure</h3>
+                      <p>Only your private key unlocks your account. Set your permissions and
+                        control your data.</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-6">
+                    <div className="feature-item">
+                      <i className="icon-lock-open text-primary"></i>
+                      <h3>How do I use Aodh?</h3>
+                      <p>First you need to download the
+                        <a href="https://blockstack.org/install/"> Blockstack Browser </a>at blockstack.org
+                       to access the decentralized internet and be able to use apps like Aodh.</p>
+                    </div>
+                  </div>
+                  <div className="col-lg-6">
+                    <div className="feature-item">
+                      <i className="icon-lock-open text-primary"></i>
+                      <h3>Coming Soon: Monetization</h3>
+                      <p>You put your life into your music. Let your music pay for your life.
+                        <a href="https://airtext.xyz/blog/c0rv0s69.id.blockstack"> Check for updates on the blog.</a> </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <footer>
         <div className="container">
           <p>&copy; Aodh 2018. All Rights Reserved.</p>
           <p>Animation by <a href="https://codepen.io/shshaw/">Shaw</a> on CodePen</p>
+          <p><a href="https://airtext.xyz/blog/c0rv0s69.id.blockstack">About/Blog</a></p>
         </div>
       </footer>
       </div>
