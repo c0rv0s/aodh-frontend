@@ -112,7 +112,7 @@ render();
               <div className="device-container">
                 <div className="device-mockup iphone6_plus portrait white">
                   <div className="screen">
-                    <img src="http://i63.tinypic.com/vctheo.png" class="img-fluid" width="400" alt="" />
+                    <img src="http://i63.tinypic.com/vctheo.png" class="img-fluid" width="375" alt="" />
                   </div>
                 </div>
               </div>
@@ -162,6 +162,19 @@ render();
             </div>
           </div>
         </div>
+      </section>
+
+      <section className="cta">
+        <div className="cta-content">
+          <div className="container">
+            <h2>Get Started Now.</h2>
+              <div className="button" onClick={this.signin} >
+                <br/><br/>
+                <Signin handleSignIn={ this.props.handleSignIn } />
+              </div>
+          </div>
+        </div>
+        <div className="overlay"></div>
       </section>
 
       <footer>
