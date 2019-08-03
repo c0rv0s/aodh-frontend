@@ -63,7 +63,6 @@ export default class Discover extends Component {
     var ids = this.state.ids
     var discover = this.state.discover
     var that = this
-    var self = loadUserData().username
 
     var data = {d: ids}
     var request = new Request('https://aodh.xyz/api/list_ten', {
@@ -84,8 +83,7 @@ export default class Discover extends Component {
         else {
           data.rows.forEach(function(entry) {
             if (entry.username != "derpderpderp.id.blockstack" &&
-                entry.username != null &&
-                entry.username != self)
+                entry.username != null)
               discover.push({username: entry.username,posts:entry.posts})
           })
           var new_ids = ids.concat(data.ids)
