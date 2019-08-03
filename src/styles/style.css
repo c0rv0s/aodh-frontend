@@ -24,6 +24,15 @@ a:hover {
   display: inline-block;
 }
 
+.vert{
+  vertical-align: middle;
+}
+
+.move-up {
+  position: 'relative';
+    top: '15px';
+}
+
 html,
 body {
   text-align: center;
@@ -333,6 +342,18 @@ hr {
   color: grey;
 }
 
+.truncate {
+  width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.truncate-small {
+  max-width: 175px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 /* queue */
 .queue-box {
   background-color: white;

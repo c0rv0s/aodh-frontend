@@ -129,7 +129,7 @@ export default class Player extends React.Component {
     const now = this.props.now
       return (
         <span>
-          <span>
+          <span className="vert">
             <input type='button'
                    className="save-button"
                    onClick={() => this.save()}
@@ -139,7 +139,7 @@ export default class Player extends React.Component {
               <i className="fas fa-lock">{'\u00A0'}</i>
             }
             <Link to={'/'+this.props.audio.op+'/'+this.props.audio.title} className="blackText">
-              {this.props.audio.title}
+              <div className="inline vert truncate">{this.props.audio.title}</div>
             </Link>
 
           </span>

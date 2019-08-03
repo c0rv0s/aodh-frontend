@@ -118,14 +118,16 @@ export default class Footer extends Component {
       return (
         <div className="marginright inline" >
           <div>
-            <Link to={'/'+aud.op} className="blackText solarbrown">{aud.op.split('.')[0]}</Link>
+            <Link to={'/'+aud.op} className="blackText solarbrown">
+              <div className="inline truncate-small">{aud.op.split('.')[0]}</div>
+            </Link>
           </div>
 
           <div>{'\u00A0'}by{'\u00A0'}</div>
 
           <div>
             <Link to={'/'+aud.op+'/'+aud.title} >
-              {aud.title}
+              <div className="inline truncate-small">{aud.title}</div>
             </Link>
           </div>
 
