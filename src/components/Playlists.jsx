@@ -250,12 +250,7 @@ export default class Playlists extends Component {
                </div>
 
                <span className="left">
-                   <button
-                     className="btn btn-primary btn-lg"
-                     onClick={e => this.closePopup()}
-                   >
-                     Cancel
-                   </button>
+                     <b className=" pointer" onClick={e => this.closePopup()}>Cancel</b>
                </span>
                {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
                {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
