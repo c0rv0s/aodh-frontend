@@ -171,12 +171,16 @@ export default class Player extends React.Component {
                     {this.props.removeFromPlaylist &&
                       <a  onClick={() => this.props.removeFromPlaylist(this.props.id)}>Remove</a>
                     }
-                    {this.props.local &&
-                      <a  onClick={() => this.delete()}>Delete</a>
-                    }
                     {this.props.audio.downloadable &&
                       <a onClick={() => this.download()}>Download</a>
                     }
+                    {this.props.local &&
+                      <a  onClick={() => this.props.edit(this.props.id)}>Edit</a>
+                    }
+                    {this.props.local &&
+                      <a  onClick={() => this.delete()}>Delete</a>
+                    }
+
                   </div>
               </div>
 

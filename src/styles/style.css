@@ -234,6 +234,7 @@ hr {
   text-align: right;
 }
 
+
 /* Posts */
 .posts {
   padding-top: 30px;
@@ -522,6 +523,26 @@ hr {
    background:#FFFFFF;    /* Background of white                                                        */
    z-index:100000;        /* Set z-index to 1 more than that of the overlay so the popup is over the overlay */
    padding: 15px;
+}
+
+#edit-popup {
+   display:none;
+   position:fixed;
+   left:50%;              /* left and top here position top left page                                        */
+   top:50%;               /* of the element to the center of the                                             */
+   width:700px;           /* Set the popup to have a specific width/height                                   */
+   /* height:170px; */
+   height: auto;
+   margin-top:-250px;      /* To get the popup to center correctly we need                                    */
+   margin-left:-350px;    /* To displace the the top/left margins by half of the width/height                */
+   background:#FFFFFF;    /* Background of white                                                        */
+   z-index:100000;        /* Set z-index to 1 more than that of the overlay so the popup is over the overlay */
+   padding: 15px;
+   vertical-align: middle;
+}
+
+.newedit {
+  margin-left:-350px;
 }
 
 .col-md-12 {

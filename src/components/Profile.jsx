@@ -10,6 +10,7 @@ import {
 
 import Player from './Player.jsx'
 import ListPopup from './ListPopup.jsx'
+import Edit from './Edit.jsx'
 
 const avatarFallbackImage = 'https://s3.amazonaws.com/onename/avatar-placeholder.png'
 const postFileName = 'posts.json'
@@ -53,12 +54,13 @@ export default class Profile extends Component {
   	  },
       posts: [],
       username: "",
-      postIndex: 0,
       isLoading: false,
       follows: [],
       saved: [],
       showPlaylists: false,
       playlistSong: 0,
+      showEdit: false,
+      editSong: 0,
       discoverable: true
   	}
     this.handleDelete = this.handleDelete.bind(this)
@@ -70,6 +72,8 @@ export default class Profile extends Component {
     this.showPopup = this.showPopup.bind(this)
     this.fetchDiscover = this.fetchDiscover.bind(this)
     this.changeDiscover = this.changeDiscover.bind(this)
+    this.edit = this.edit.bind(this)
+    this.closeEdit = this.closeEdit.bind(this)
   }
 
   componentDidMount() {
@@ -152,8 +156,7 @@ export default class Profile extends Component {
     putFile(postFileName, JSON.stringify(posts), options)
       .then(() => {
         this.setState({
-          posts: posts,
-          postIndex: posts.length,
+          posts: posts
         })
       })
   }
@@ -182,7 +185,6 @@ export default class Profile extends Component {
           this.setState({
             person: new Person(loadUserData().profile),
             username: loadUserData().username,
-            postIndex: posts.length,
             posts: posts,
           })
         })
@@ -211,9 +213,9 @@ export default class Profile extends Component {
       getFile(postFileName, options)
         .then((file) => {
           var posts = JSON.parse(file || '[]')
+
           posts = posts.filter(post => !post.private)
           this.setState({
-            postIndex: posts.length,
             posts: posts
           })
         })
@@ -283,6 +285,18 @@ export default class Profile extends Component {
     return retval
   }
 
+  edit(i) {
+    this.setState({
+      showEdit: true,
+      editSong: i
+    })
+  }
+  closeEdit(i) {
+    this.setState({
+      showEdit: false
+    })
+  }
+
   showPopup(i) {
     const options = { decrypt: false, zoneFileLookupURL: 'https://core.blockstack.org/v1/names/' }
     getFile(playlistsFileName, options)
@@ -329,6 +343,7 @@ export default class Profile extends Component {
               handleSave={this.handleSave}
               addToPlaylist={this.showPopup}
               now={this.props.now}
+              edit={this.edit}
             />
     }
   }
@@ -347,6 +362,12 @@ export default class Profile extends Component {
               <ListPopup playlists={this.fetchListNames()}
                          closePopup={this.closePopup}
                          add={this.addToPlaylist}
+              />
+            }
+            {this.state.showEdit &&
+              <Edit closePopup={this.closeEdit}
+                    postid={this.state.editSong}
+                    posts={this.state.posts}
               />
             }
             <div className="col-md-12">

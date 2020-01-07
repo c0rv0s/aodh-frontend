@@ -40,7 +40,7 @@ export default class Upload extends Component {
         .then((file) => {
           var posts = JSON.parse(file || '[]')
           this.setState({
-            postIndex: posts.length,
+            postIndex: posts[-1][id],
             posts: posts,
           })
         })

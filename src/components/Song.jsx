@@ -11,6 +11,7 @@ import {
 
 import Player from './Player.jsx'
 import ListPopup from './ListPopup.jsx'
+import Edit from './Edit.jsx'
 
 const postFileName = 'posts.json'
 const playlistsFileName = "playlists.json"
@@ -36,7 +37,9 @@ export default class Song extends Component {
       isLoading: false,
       follows: [],
       saved: [],
-      showPlaylists: false
+      showPlaylists: false,
+      showEdit: false,
+      editSong: 0
   	}
     this.handleDelete = this.handleDelete.bind(this)
     this.handleFollow = this.handleFollow.bind(this)
@@ -45,6 +48,8 @@ export default class Song extends Component {
     this.closePopup = this.closePopup.bind(this)
     this.addToPlaylist = this.addToPlaylist.bind(this)
     this.showPopup = this.showPopup.bind(this)
+    this.edit = this.edit.bind(this)
+    this.closeEdit = this.closeEdit.bind(this)
   }
 
   componentDidMount() {
@@ -258,6 +263,18 @@ export default class Song extends Component {
     this.setState({playlists: playlists})
   }
 
+  edit(i) {
+    i = this.state.posts.indexOf(this.state.song)
+    this.setState({
+      showEdit: true,
+      editSong:i
+    })
+  }
+  closeEdit(i) {
+    this.setState({
+      showEdit: false
+    })
+  }
 
   showPlayer() {
     if (this.state.isLoading) return null
@@ -272,6 +289,7 @@ export default class Song extends Component {
               handleSave={this.handleSave}
               addToPlaylist={this.showPopup}
               now={this.props.now}
+              edit={this.edit}
             />
     }
   }
@@ -292,7 +310,12 @@ export default class Song extends Component {
                          add={this.addToPlaylist}
               />
             }
-
+            {this.state.showEdit &&
+              <Edit closePopup={this.closeEdit}
+                    postid={this.state.editSong}
+                    posts={this.state.posts}
+              />
+            }
             <div className="col-md-12 posts">
               {this.state.song.op != null ?
                 <div className="post" >
