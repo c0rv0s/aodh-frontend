@@ -112,7 +112,7 @@ export default class Splash extends Component {
               <div className="device-container">
                 <div className="device-mockup iphone6_plus portrait white">
                   <div className="screen">
-                    <img src="http://i63.tinypic.com/vctheo.png" class="img-fluid" width="375" alt="" />
+                    <img src="https://drive.google.com/file/d/1xq3H7UIgj3I2ipYzkE0mI7d7tXQPGDyK/view?usp=sharing" class="img-fluid" width="375" alt="" />
                   </div>
                 </div>
               </div>
