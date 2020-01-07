@@ -112,7 +112,7 @@ export default class Splash extends Component {
               <div className="device-container">
                 <div className="device-mockup iphone6_plus portrait white">
                   <div className="screen">
-                    <img src="https://drive.google.com/file/d/1xq3H7UIgj3I2ipYzkE0mI7d7tXQPGDyK/view?usp=sharing" class="img-fluid" width="375" alt="" />
+                    <img src="https://i.ibb.co/xJPKBX2/Screen-Shot-2020-01-06-at-10-23-40-PM.png" class="img-fluid" width="375" alt="" />
                   </div>
                 </div>
               </div>
@@ -167,7 +167,7 @@ export default class Splash extends Component {
       <section className="cta">
         <div className="cta-content">
           <div className="container">
-            <h2>Get Started Now.</h2>
+            <h2>Get Started. Now.</h2>
               <div className="button" onClick={this.signin} >
                 <br/><br/>
                 <Signin handleSignIn={ this.props.handleSignIn } />
