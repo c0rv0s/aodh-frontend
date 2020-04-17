@@ -35,9 +35,10 @@ export default class Contact extends Component {
 
     return (
       <div className="container">
-        <h1>Contact</h1>
         <div className="row">
           <div className="col-md-offset-3 col-md-6">
+            <h1>Contact</h1>
+            <br/><br/>
             <p>You can reach Aodh with the following form: </p>
 
             <form id="contact-form" onSubmit={this.handleSubmit.bind(this)} method="POST">

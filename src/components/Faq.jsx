@@ -6,10 +6,10 @@ export default class Faq extends Component {
 
     return (
       <div className="container">
-        <h1>FAQ</h1>
         <div className="row">
           <div className="col-md-offset-3 col-md-6 left-align">
-
+            <h1>FAQ</h1>
+            
             <h3>How do I change my profile picture, name or bio?</h3>
             <p>These are fetched from your Blockstack profile. Open the blockstack
             browser and you'll be able to change these values under the 'IDs'

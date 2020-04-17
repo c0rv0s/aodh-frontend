@@ -112,9 +112,9 @@ export default class Saved extends Component {
     return (
       !isSignInPending() ?
       <div className="container">
-        <h1>Saved</h1>
         <div className="row">
           <div className="col-md-offset-3 col-md-6">
+            <h1 className="post-header">Saved</h1>
             {this.state.showPlaylists &&
               <ListPopup playlists={this.fetchListNames()}
                          closePopup={this.closePopup}

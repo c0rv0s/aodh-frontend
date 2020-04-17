@@ -211,6 +211,7 @@ export default class Upload extends Component {
       <div className="container">
         <div className="row">
           <div className="col-md-offset-3 col-md-6">
+            <h1 className="post-header">Upload a New Song</h1>
             {this.state.isUploading &&
               <div>
             <div className="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>

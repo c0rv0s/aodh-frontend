@@ -11,6 +11,12 @@ a:hover {
   color: rgb(241,158,85);
   text-decoration: none;
 }
+h1 {
+  text-align: left;
+}
+.post-header {
+  padding-left: 14px;
+}
 .blackText{
   color: black !important;
 }

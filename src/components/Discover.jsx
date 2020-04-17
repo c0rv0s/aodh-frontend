@@ -134,9 +134,9 @@ export default class Discover extends Component {
     return (
       !isSignInPending() ?
       <div className="container">
-        <h1>Discover</h1>
         <div className="row">
           <div className="col-md-offset-3 col-md-6">
+            <h1 className="post-header">Discover</h1>
             <div className="col-md-12 posts">
               {this.state.isLoading && <div className="lds-circle"></div>}
               {!this.state.isLoading && this.state.discover.length == 0 &&
