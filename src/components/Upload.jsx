@@ -39,14 +39,17 @@ export default class Upload extends Component {
       getFile(postFileName, options)
         .then((file) => {
           var posts = JSON.parse(file || '[]')
+          console.log(posts)
           this.setState({
-            postIndex: posts[-1][id],
+            postIndex: posts[posts.length-1].id,
             posts: posts,
           })
+          
         })
-        .catch(() => {
+        .catch((e) => {
+          console.log("posts not fetched", e)
           this.setState({
-            posts: []
+            posts: false
           })
         })
         .finally(() => {
