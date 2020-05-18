@@ -46,7 +46,7 @@ export default class Upload extends Component {
         })
         .catch(() => {
           this.setState({
-            posts: false
+            posts: []
           })
         })
         .finally(() => {
