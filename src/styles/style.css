@@ -563,6 +563,20 @@ hr {
   margin-top: -20px;
 }
 
+.upload-placeholder {
+  position: fixed;
+  height: 200px;
+  width: 500px;
+  left: 50%;
+  top: 50%;
+  margin-left: -250px;
+  margin-top: -100px;
+}
+
+#add-margin {
+  margin-top: 16px;
+}
+
 /* upload grid */
 .lds-grid {
   display: inline-block;

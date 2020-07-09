@@ -196,15 +196,13 @@ export default class Upload extends Component {
     filereader.readAsDataURL(audio)
   }
 
-  message() {
+  header() {
     if (this.state.complete)
-    return <div className="header">
-            <h1>Success! Your new upload is available on your
-             <Link to={'/'+loadUserData().username}><b> profile </b></Link>
-            </h1>
-           </div>
+      return (<h1 className="post-header">Success! Your new upload is available on your
+          <Link to={'/'+loadUserData().username}><b> profile </b></Link>
+      </h1>)
     else
-    return <div className="header"></div>
+      return <h1 className="post-header">Upload a New Song</h1>
   }
 
   render() {
@@ -214,17 +212,16 @@ export default class Upload extends Component {
       <div className="container">
         <div className="row">
           <div className="col-md-offset-3 col-md-6">
-            <h1 className="post-header">Upload a New Song</h1>
+            {this.header()}
             {this.state.isUploading &&
-              <div>
-            <div className="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-            <p>Please don't navigate away or refresh the page until the upload is complete</p>
-            {this.state.isStillUploading &&
-              <p>Thank you for your patience. This may take a few minutes.</p>
+              <div className="upload-placeholder">
+                <div className="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                  <p id="add-margin">Please don't navigate away or refresh the page until the upload is complete</p>
+                  {this.state.isStillUploading &&
+                    <p>Thank you for your patience. This may take a few minutes.</p>
+                  }
+              </div>
             }
-            </div>
-          }
-          {this.message()}
             {!this.state.isUploading &&
               <div className="new-post">
                 <div className="col-md-12">
