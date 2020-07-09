@@ -119,64 +119,61 @@ export default class Edit extends Component {
       !isSignInPending() ?
       <div>
         <div id="overlay"></div>
-        <div id="edit-popup">
+          <div id="edit-popup">
+          <div className=" new-edit">
+            <div className="col-md-12">
+              <div className="input-wrapper">
+                <input className="upload-ting input-big"
+                        type="text" autoFocus
+                        value={this.state.title}
+                        placeholder="title"
+                        onChange={e => this.handleNewTitleChange(e)}/>
+              </div>
+              <br />
+                <textarea className="upload-ting input-post"
+                  value={this.state.description}
+                  onChange={e => this.handleNewPostChange(e)}
+                  placeholder="Description"
+                />
+              <textarea className="upload-ting input-tags"
+                  value={this.state.tags}
+                  onChange={e => this.handleNewTagChange(e)}
+                  placeholder="Tags (seperate with commas)"
+                /> <br />
+              <input type="checkbox" name="downloadable" id="downloadable" />
+              <label htmlFor="downloadable">{'\u00A0'}Allow downloads</label>
+              {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+              {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+              <input type="checkbox" name="private" id="private" />
+              <label htmlFor="private">{'\u00A0'}Private</label>
+                <br />
+                <br />
+            </div>
 
-        <div className=" new-edit">
+            <span className="left">
+                  <b className=" pointer" onClick={e => this.props.closePopup()}>Cancel</b>
+            </span>
+            {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+            {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+            {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+            {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+            {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+            {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+            {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+            {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+            {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+            {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+            {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
+            {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
 
-                  <div className="col-md-12">
-                    <div className="input-wrapper">
-                      <input className="upload-ting input-big"
-                             type="text" autoFocus
-                             value={this.state.title}
-                             placeholder="title"
-                             onChange={e => this.handleNewTitleChange(e)}/>
-                    </div>
-                  <br />
-                    <textarea className="upload-ting input-post"
-                      value={this.state.description}
-                      onChange={e => this.handleNewPostChange(e)}
-                      placeholder="Description"
-                    />
-                  <textarea className="upload-ting input-tags"
-                      value={this.state.tags}
-                      onChange={e => this.handleNewTagChange(e)}
-                      placeholder="Tags (seperate with commas)"
-                    /> <br />
-                  <input type="checkbox" name="downloadable" id="downloadable" />
-                  <label htmlFor="downloadable">{'\u00A0'}Allow downloads</label>
-                  {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
-                  {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
-                  <input type="checkbox" name="private" id="private" />
-                  <label htmlFor="private">{'\u00A0'}Private</label>
-                    <br />
-                    <br />
-                </div>
-
-                <span className="left">
-                      <b className=" pointer" onClick={e => this.props.closePopup()}>Cancel</b>
-                </span>
-                {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
-                {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
-                {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
-                {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
-                {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
-                {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
-                {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
-                {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
-                {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
-                {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
-                {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
-                {'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}{'\u00A0'}
-
-                <span className="right">
-                  <button
-                    className="btn btn-primary btn-lg"
-                    onClick={e => this.handleNewPostSubmit(e)}
-                  >
-                    Done
-                  </button>
-                </span>
-
+            <span className="right">
+              <button
+                className="btn btn-primary btn-lg"
+                onClick={e => this.handleNewPostSubmit(e)}
+              >
+                Done
+              </button>
+            </span>
         </div>
       </div>
     </div>: null

@@ -48,10 +48,29 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    var that = this
-    setInterval(function(){
-      that.setState({now_playing: aud_nowPlaying()})
-    }, 100);
+    setInterval(() => {
+      this.setState({now_playing: aud_nowPlaying()})
+    }, 200);
+
+    if (isSignInPending()) {
+      handlePendingSignIn().then((userData) => {
+        window.location = window.location.origin
+
+        var request = new Request('https://aodh.xyz/api/add_user', {
+          method: 'POST',
+          headers: new Headers({'Content-Type': 'application/json'}),
+          body: JSON.stringify({username: userData.username})
+        })
+
+        fetch(request)
+        .then((response) => {
+          // console.log(response);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+      })
+    }
   }
 
   changeTheme() {
@@ -209,28 +228,6 @@ export default class App extends Component {
       </div>
       </div>
     )
-    }
-  }
-
-  componentWillMount() {
-    if (isSignInPending()) {
-      handlePendingSignIn().then((userData) => {
-        window.location = window.location.origin
-
-        var request = new Request('https://aodh.xyz/api/add_user', {
-          method: 'POST',
-          headers: new Headers({'Content-Type': 'application/json'}),
-          body: JSON.stringify({username: userData.username})
-        })
-
-        fetch(request)
-        .then((response) => {
-          // console.log(response);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-      })
     }
   }
 }
