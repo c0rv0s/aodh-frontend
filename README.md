@@ -3,7 +3,7 @@
 First navigate to the folder where you'd like to save the project, then open the command line and run the following commands:
 ```
 git clone git@gitlab.com:c0rv0s/aodh.git
-cd aodh
+cd aodh-frontend
 npm install
 npm run start
 ```
